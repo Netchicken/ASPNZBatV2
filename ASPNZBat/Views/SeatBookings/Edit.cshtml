@@ -1,0 +1,357 @@
+﻿@model ASPNZBat.Models.SeatBooking
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<!-- Header -->
+<header id="header">
+    <div class="intro ">
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="intro-text">
+                        <h1 style="color:azure">Welcome to <span class="brand">Vision College</span></h1>
+                        <h2>Edit Your Seat bookings</h2>
+                        <h2 class="brand">@Html.DisplayTextFor(model => model.SeatDate.Date)  </h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div id="services" class="text-center">
+    <form asp-action="Create">
+        <div class="container-fluid  ">
+            <div class="row ">
+                <div class="col-md-2 col-xs-2  col-md-offset-1">
+                    <label class="badge badge-default trigger">Monday</label>
+                </div>
+                <div class="col-md-2 col-xs-2 ">
+                    <label class="badge badge-default trigger">Tuesday</label>
+                </div>
+                <div class="col-md-2 col-xs-2 ">
+                    <label class="badge badge-default trigger">Wednesday</label>
+                </div>
+                <div class="col-md-2 col-xs-2 ">
+                    <label class="badge badge-default trigger">Thursday</label>
+                </div>
+                <div class="col-md-2 col-xs-2 ">
+                    <label class="badge badge-default trigger">Friday</label>
+                </div>
+            </div>
+
+            <div class="container-fluid  ui-btn ui-corner-all col-md-offset-1 trigger">
+                <div class="row ">
+                    <label class="">Morning 9am - 11:30am</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-1 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox custom-control custom-checkbox ">
+                                <label id="S1L" for="S1" class="custom-control-label ui-corner-all alert-heading ">
+                                    <input id="S1" class="custom-control-input checkbox-info" asp-for="S1" type="checkbox" />
+
+                                    @Html.DisplayNameFor(model => model.S1)
+
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-xs-2 ">
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S4L">
+                                    <input id="S4" asp-for="S4" type="checkbox" /> @Html.DisplayNameFor(model => model.S4)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-xs-2 ">
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S7L">
+
+                                    <input id="S7" asp-for="S7" type="checkbox" /> @Html.DisplayNameFor(model => model.S7)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2 col-xs-2 ">
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S10L">
+                                    <input id="S10" asp-for="S10" type="checkbox" /> @Html.DisplayNameFor(model => model.S10)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S13L">
+                                    <input id="S13" asp-for="S13" type="checkbox" /> @Html.DisplayNameFor(model => model.S13)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container-fluid ui-btn ui-corner-all col-md-offset-1 trigger">
+                <div class="row">
+                    <label class=""> Afternoon 12pm - 2:30pm</label>
+                </div>
+
+                @*Row 2*@
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-1 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S2L">
+                                    <input id="S2" asp-for="S2" type="checkbox" /> @Html.DisplayNameFor(model => model.S2)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S5L">
+                                    <input id="S5" asp-for="S5" type="checkbox" /> @Html.DisplayNameFor(model => model.S5)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S8L">
+                                    <input id="S8" asp-for="S8" type="checkbox" /> @Html.DisplayNameFor(model => model.S8)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S11L">
+                                    <input id="S11" asp-for="S11" type="checkbox" /> @Html.DisplayNameFor(model => model.S11)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S14L">
+                                    <input id="S14" asp-for="S14" type="checkbox" /> @Html.DisplayNameFor(model => model.S14)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid ui-btn ui-corner-all col-md-offset-1 trigger">
+                <div class="row">
+                    <label class=""> Evening 5:30pm - 8:30pm</label>
+                </div>
+                @*Row 3*@
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-1 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S3L">
+                                    <input id="S3" asp-for="S3" type="checkbox" /> @Html.DisplayNameFor(model => model.S3)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S6L">
+                                    <input id="S6" asp-for="S6" type="checkbox" /> @Html.DisplayNameFor(model => model.S6)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S9L">
+                                    <input id="S9" asp-for="S9" type="checkbox" /> @Html.DisplayNameFor(model => model.S9)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S12L">
+                                    <input id="S12" asp-for="S12" type="checkbox" /> @Html.DisplayNameFor(model => model.S12)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S15L">
+                                    <input id="S15" asp-for="S15" type="checkbox" /> @Html.DisplayNameFor(model => model.S15)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </form>
+</div>
+
+
+
+@*<div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="ID" />
+                <div class="form-group">
+                    <label asp-for="SeatDate" class="control-label"></label>
+                    <input asp-for="SeatDate" class="form-control" />
+                    <span asp-validation-for="SeatDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S1" /> @Html.DisplayNameFor(model => model.S1)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S2" /> @Html.DisplayNameFor(model => model.S2)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S3" /> @Html.DisplayNameFor(model => model.S3)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S4" /> @Html.DisplayNameFor(model => model.S4)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S5" /> @Html.DisplayNameFor(model => model.S5)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S6" /> @Html.DisplayNameFor(model => model.S6)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S7" /> @Html.DisplayNameFor(model => model.S7)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S8" /> @Html.DisplayNameFor(model => model.S8)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S9" /> @Html.DisplayNameFor(model => model.S9)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S10" /> @Html.DisplayNameFor(model => model.S10)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S11" /> @Html.DisplayNameFor(model => model.S11)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S12" /> @Html.DisplayNameFor(model => model.S12)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S13" /> @Html.DisplayNameFor(model => model.S13)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S14" /> @Html.DisplayNameFor(model => model.S14)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="S15" /> @Html.DisplayNameFor(model => model.S15)
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </form>
+        </div>
+    </div>*@
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

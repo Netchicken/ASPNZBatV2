@@ -1,0 +1,353 @@
+﻿@using System.Security.Cryptography
+@using ASPNZBat.ViewModels
+@using Humanizer
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.CodeAnalysis.CSharp
+@model ASPNZBat.Models.SeatBookingVM
+
+@{
+    ViewData["Title"] = "Create";
+
+}
+<!-- Header -->
+<header id="header">
+    <div class="intro ">
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="intro-text">
+                        <h1 style="color:azure">Welcome to <span class="brand">Vision College</span></h1>
+                        <h2>Create a new Session booking</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Services Section -->
+<div id="services" class="text-center">
+    <form asp-action="Create">
+        <div class="container-fluid ">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12  col-md-offset-1 ">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <p></p>
+                    <div class="form-group ">
+                        <label for="count-checkboxes" class="badge badge-default trigger"> Choose which of the next 4 weeks you want to book</label>
+                        @foreach (var week in ViewData["ThisWeek"] as List<DateTime>)
+
+                        {
+                            <div class="form-check text-left">
+                                @Html.RadioButtonFor(m => m.SeatDate, week.Date.ToShortDateString())
+                                <label class="form-check-label text-left" asp-for="SeatDate">@week.Date.ToShortDateString()  - @week.Date.Humanize() </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-2 col-xs-0  no-gutters">  </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-5 col-xs-12 ">
+                    <div class="form-group">
+                        <p>
+                            @if (User.Identity.IsAuthenticated == false)
+                            {
+                                <label class=" label label-danger"> You must be logged in to Book</label>
+                            }
+                        </p>
+                        <div class=" text-center py-2 mt-4">
+                            <input type="submit" value="Add Your Booking" class="btn-default btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-1" />
+                            <p></p>
+                            <input placeholder="You must attend at least 4 sessions a week" type="text" id="count-checkboxes" class="form-control">
+                            <label for="count-checkboxes" class="badge badge-default trigger"> You must attend at least 4 sessions a week</label>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p></p>
+        <div class="container-fluid  ">
+            <div class="row ">
+                <div class="col-md-2 col-xs-2  col-md-offset-1">
+                    <label class="badge badge-default trigger">Monday</label>
+                </div>
+                <div class="col-md-2 col-xs-2 ">
+                    <label class="badge badge-default trigger">Tuesday</label>
+                </div>
+                <div class="col-md-2 col-xs-2 ">
+                    <label class="badge badge-default trigger">Wednesday</label>
+                </div>
+                <div class="col-md-2 col-xs-2 ">
+                    <label class="badge badge-default trigger">Thursday</label>
+                </div>
+                <div class="col-md-2 col-xs-2 ">
+                    <label class="badge badge-default trigger">Friday</label>
+                </div>
+            </div>
+
+            <div class="container-fluid  ui-btn ui-corner-all col-md-offset-1 trigger">
+                <div class="row ">
+                    <label class="">Morning 9am - 11:30am</label>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-1 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox custom-control custom-checkbox ">
+                                <label id="S1L" for="S1" class="custom-control-label ui-corner-all alert-heading">
+                                    <input id="S1" class="custom-control-input checkbox-info" asp-for="S1" type="checkbox" />
+
+                                    @Html.DisplayNameFor(model => model.S1)
+
+                                </label>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-xs-2 ">
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S4L" class="custom-control-label ui-corner-all alert-heading">
+                                    <input id="S4" asp-for="S4" type="checkbox" /> @Html.DisplayNameFor(model => model.S4)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-xs-2 ">
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label asp-for="S7L" id="S7L">
+
+                                    <input id="S7" asp-for="S7" type="checkbox" /> @Html.DisplayNameFor(model => model.S7)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-2 col-xs-2 ">
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S10L">
+                                    <input id="S10" asp-for="S10" type="checkbox" /> @Html.DisplayNameFor(model => model.S10)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S13L">
+                                    <input id="S13" asp-for="S13" type="checkbox" /> @Html.DisplayNameFor(model => model.S13)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="container-fluid ui-btn ui-corner-all col-md-offset-1 trigger">
+                <div class="row">
+                    <label class=""> Afternoon 12pm - 2:30pm</label>
+                </div>
+
+                @*Row 2*@
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-1 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S2L">
+                                    <input id="S2" asp-for="S2" type="checkbox" /> @Html.DisplayNameFor(model => model.S2)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S5L">
+                                    <input id="S5" asp-for="S5" type="checkbox" /> @Html.DisplayNameFor(model => model.S5)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S8L">
+                                    <input id="S8" asp-for="S8" type="checkbox" /> @Html.DisplayNameFor(model => model.S8)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S11L">
+                                    <input id="S11" asp-for="S11" type="checkbox" /> @Html.DisplayNameFor(model => model.S11)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S14L">
+                                    <input id="S14" asp-for="S14" type="checkbox" /> @Html.DisplayNameFor(model => model.S14)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid ui-btn ui-corner-all col-md-offset-1 trigger">
+                <div class="row">
+                    <label class=""> Evening 5:30pm - 8:30pm</label>
+                </div>
+                @*Row 3*@
+                <div class="row">
+                    <div class="col-md-2 col-md-offset-1 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S3L">
+                                    <input id="S3" asp-for="S3" type="checkbox" /> @Html.DisplayNameFor(model => model.S3)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S6L">
+                                    <input id="S6" asp-for="S6" type="checkbox" /> @Html.DisplayNameFor(model => model.S6)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S9L">
+                                    <input id="S9" asp-for="S9" type="checkbox" /> @Html.DisplayNameFor(model => model.S9)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S12L">
+                                    <input id="S12" asp-for="S12" type="checkbox" /> @Html.DisplayNameFor(model => model.S12)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-xs-2 ">
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label id="S15L">
+                                    <input id="S15" asp-for="S15" type="checkbox" /> @Html.DisplayNameFor(model => model.S15)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@await Html.PartialAsync("~/Views/Shared/_Stats.cshtml")
+
+
+@section Scripts {
+    @{
+        //counting checkboxes and changing text
+        <script>
+            //make a variable for each checkbox
+            var $checkboxes = $('input[type="checkbox"]');
+
+            //when the checkboxes change
+            $checkboxes.change(function () {
+                //count how many are ticked
+                var countCheckedCheckboxes = $checkboxes.filter(':checked').length;
+                //add that to the input box with some text
+                $('#count-checkboxes').val(countCheckedCheckboxes + " sessions selected");
+                //when 4 are checked make happy,
+                if (countCheckedCheckboxes >= 4) {
+                    $('#count-checkboxes').css("background-color", "#34DB34");
+                    $('#countlabel').text("Congratulations!");
+                }
+                if (countCheckedCheckboxes < 4) {
+                    $('#count-checkboxes').css("background-color", "#FFFFFF");
+                    $('#countlabel').text("Keep Going!!");
+                }
+
+            });
+        </script>
+
+
+
+
+        //Show and hide sessions that are not being used
+        var lblid = "#S1L"; //create a session label for the session
+        var cbxid = "#S1"; //create a checkbox ID
+
+
+        List<bool> SessionVis = new List
+            <bool>();
+        SessionVis = ViewData["SessionVisible"] as List
+            <bool>;
+
+        for (int i = 1; i < 16; i++)
+        {
+            lblid = "#S" + i + "L";
+            cbxid = "#S" + i;
+
+            if (SessionVis[i] == false) //true
+            {
+                <script>
+                    $(document).ready(function() {
+                        //Hide the checkbox intially id="S1L"
+                        $('@cbxid').css('display', 'none');
+                        $("label[for= '@lblid']").css('display', 'none');
+                    });
+                </script>
+
+
+
+            }
+
+            else //false
+            {
+                <script>
+                    $(document).ready(function() {
+                        //Show the checkbox intially id="S1L"
+                        $('@cbxid').css('display', 'block');
+                        $("label[for='@lblid']").css('display', 'block');
+                    });
+                </script>
+
+            }
+
+        }
+    }
+
+
+
+    <script src="~/js/Create.js"></script>
+
+
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

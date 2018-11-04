@@ -1,0 +1,163 @@
+﻿@model IEnumerable<ASPNZBat.Models.SeatBooking>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<!-- Header -->
+<header id="header">
+    <div class="intro ">
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="intro-text">
+                        <h1 style="color:azure">Welcome to <span class="brand">Vision College</span></h1>
+                        <h2>Your Seat bookings</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<div id="services" class="text-center">
+    <div class="container-fluid ">
+
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("Session Date")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S1)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S2)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S3)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S4)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S5)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S6)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S7)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S8)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S9)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S10)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S11)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S12)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S13)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S14)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.S15)
+                    </th>
+                    @*<th>
+                            @Html.DisplayNameFor(model => model.S16)
+                        </th>*@
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <label class="badge badge-default trigger">@item.SeatDate.Date.ToShortDateString()</label>
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S1)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S2)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S3)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S4)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S5)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S6)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S7)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S8)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S9)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S10)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S11)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S12)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S13)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S14)
+                        </td>
+                        <td class="sess">
+                            @Html.DisplayFor(modelItem => item.S15)
+                        </td>
+
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    @*//no formatting for checkboxes*@
+    @*http://jsfiddle.net/8L7v0pbp/*@
+    <script>
+        $(document).ready(function () {
+            $('td.sess').each(function () {
+                if (document.getElementById(this).checked = true) {
+                    $(this).css('background', 'rgb(170, 218, 170)');
+                };
+            });
+
+    </script>
+}

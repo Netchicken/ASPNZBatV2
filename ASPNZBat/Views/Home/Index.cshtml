@@ -1,0 +1,240 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+
+@*<link href="~/css/jsgrid.min.css" rel="stylesheet" />
+    <link href="~/css/jsgrid-theme.min.css" rel="stylesheet" />*@
+
+
+<h1>NZBAT TimeTable</h1>
+<div class="row">
+    <div class="col-md-12">
+        @*<div id="jsGrid"></div>*@
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+
+        <p>Three-column Layout With Multiple Rows:</p>
+        <div class="ui-grid-d ui-controlgroup-controls ">
+            @*First row with the days*@
+            <div class="ui-block-a">
+                <div class="ui-bar ui-bar-a  ui-corner-all ">Monday</div>
+            </div>
+            <div class="ui-block-b">
+                <div class="ui-bar ui-bar-a  ui-corner-all ">Tuesday</div>
+            </div>
+            <div class="ui-block-c">
+                <div class="ui-bar ui-bar-a ui-corner-all ">Wednesday</div>
+            </div>
+            <div class="ui-block-d">
+                <div class="ui-bar ui-bar-a ui-corner-all ">Thursday</div>
+            </div>
+            <div class="ui-block-e">
+                <div class="ui-bar ui-bar-a ui-corner-all ">Friday</div>
+            </div>
+
+            @*15 cells with their sessions in them*@
+
+            @{ string session = "Morning"; }
+            @{ string newID = "1"; }
+
+            @for (int i = 1; i < 16; i++)
+            {
+                if (i < 6)
+                {
+                    session = "Morning";
+                }
+                else if (i < 11)
+                {
+                    session = "Afternoon";
+                }
+                else
+                {
+                    session = "Evening";
+                }
+
+                //5 columns for each day a b c d e
+                if (i == 1 || i == 6 || i == 11)
+                {
+                    @:<div class="ui-block-a ui-checkbox">
+                    }
+
+                    if (i == 2 || i == 7 || i == 12)
+                    {
+                        @:<div class="ui-block-b ui-checkbox">
+                        }
+                        if (i == 3 || i == 8 || i == 13)
+                        {
+                            @:<div class="ui-block-c ui-checkbox">
+                            }
+
+                            if (i == 4 || i == 9 || i == 14)
+                            {
+                                @:<div class="ui-block-d ui-checkbox">
+                                }
+
+
+
+                                if (i == 5 || i == 10 || i == 15)
+                                {
+                                    @:<div class="ui-block-e ui-checkbox">
+                                    }
+
+                                    //sessions that are excluded from the course ie: no classes
+                                    if (!(i == 13 || i == 5 || i == 10 || i == 15))
+                                    {
+
+                                        { newID = "s" + i.ToString(); }
+
+                                        <label for=@newID class="ui-btn ui-corner-all  ui-btn-icon-left ui-checkbox-off" data-icon="checkbox-off">
+                                            @session @newID
+                                            <input name="@newID" id="@newID" data-cacheval="false" type="checkbox">
+                                        </label>
+
+                                        <script type="text/javascript">
+                                               $(@newID).click(function() {
+                                                        if ($(@newID).prop('checked') === true) {
+                                                            alert("Checkbox state Inline = " +
+                                                                $(@newID).prop('checked'));
+                                                        }
+                                                    });
+
+
+                                        </script>
+
+                                    }
+                                @:</div>
+                            }
+        </div>
+    </div>
+
+</div>
+
+@section scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/js/jquery.mobile-1.4.5.min.js"></script>
+    <script>
+
+        //$(function () {
+        //    //https://stackoverflow.com/questions/750486/javascript-closure-inside-loops-simple-practical-example
+        //    for (var i = 1; i < 16; i++) {
+        //        $('#' + i).click(function () {
+        //            alert("Checkbox state = " + $('#' + i).prop('checked'));
+        //        });
+        //    }
+        //}),
+        $(function () {
+
+            $('#s2').click(function () {
+                if ($('#s2').prop('checked') === true) {
+                    alert("Checkbox state = " + $('#s2').prop('checked'));
+                }
+            });
+
+
+            $('#s' + 1).click(function () {
+                alert("Checkbox state = " + $('#s' + 1).prop('checked'));
+
+            });
+
+
+            var funcs = [];
+
+            function arrayCheckboxes(i) {
+                return function () { 's#' + i };
+            }
+
+            for (let i = 1; i < 16; i++) { // let's create 16 functions
+
+                funcs[i] = arrayCheckboxes(i);
+                //funcs[i] = $('#' + i).click(function() { // and store them in funcs
+                //    alert("Checkbox state = " + $('#' + i).prop('checked'));
+                //  });
+            }
+            for (let j = 1; j < 16; j++) {
+                funcs[j](); // and now let's run each one to see
+            }
+        });
+
+
+                                                    //$(function() {
+
+                                                    //    var session = [
+                                                    //        { Name: "Morning", Id: 0 },
+                                                    //        { Name: "Afternoon", Id: 1 },
+                                                    //        { Name: "Evening", Id: 2 }
+                                                    //    ];
+
+                                                    //    $("#jsGrid").jsGrid({
+                                                    //        height: "120%",
+                                                    //        width: "100%",
+
+                                                    //        filtering: true,
+                                                    //        inserting: true,
+                                                    //        editing: true,
+                                                    //        sorting: true,
+                                                    //        paging: true,
+                                                    //        autoload: true,
+
+                                                    //        pageSize: 10,
+                                                    //        pageButtonCount: 5,
+
+                                                    //        deleteConfirm: "Do you really want to delete client?",
+
+                                                    //        controller: {
+                                                    //            loadData: function(filter) {
+                                                    //                return $.ajax({
+                                                    //                    type: "GET",
+                                                    //                    url: "/api/data",
+                                                    //                    data: filter,
+                                                    //                    dataType: "json"
+                                                    //                });
+                                                    //            },
+
+                                                    //            insertItem: function(item) {
+                                                    //                return $.ajax({
+                                                    //                    type: "POST",
+                                                    //                    url: "/api/data",
+                                                    //                    data: item,
+                                                    //                    dataType: "json"
+                                                    //                });
+                                                    //            },
+
+                                                    //            updateItem: function(item) {
+                                                    //                return $.ajax({
+                                                    //                    type: "PUT",
+                                                    //                    url: "/api/data/" + item.ID,
+                                                    //                    data: item,
+                                                    //                    dataType: "json"
+                                                    //                });
+                                                    //            },
+
+                                                    //            deleteItem: function(item) {
+                                                    //                return $.ajax({
+                                                    //                    type: "DELETE",
+                                                    //                    url: "/api/data/" + item.ID,
+                                                    //                    dataType: "json"
+                                                    //                });
+                                                    //            }
+                                                    //        },
+
+                                                    //        fields: [
+                                                    //            { name: "Monday", type: "checkbox" },
+                                                    //            { name: "Tuesday", type: "checkbox", sorting: false },
+                                                    //            { name: "Wednesday", type: "checkbox", sorting: false },
+                                                    //            { name: "Thursday", type: "checkbox", sorting: false },
+                                                    //            { name: "Friday", type: "checkbox", sorting: false }
+                                                    //        ]
+
+
+                                                    //    });
+
+                                                    //});
+    </script>
+}

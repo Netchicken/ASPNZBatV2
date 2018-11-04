@@ -1,0 +1,118 @@
+﻿@model ASPNZBat.Models.SeatBooking
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>SeatBooking</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.SeatDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.SeatDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S1)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S1)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S2)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S2)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S3)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S3)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S4)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S4)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S5)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S5)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S6)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S6)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S7)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S7)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S8)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S8)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S9)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S9)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S10)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S10)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S11)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S11)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S12)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S12)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S13)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S13)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S14)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S14)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.S15)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.S15)
+        </dd>
+
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

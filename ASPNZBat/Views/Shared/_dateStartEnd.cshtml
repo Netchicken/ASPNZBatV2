@@ -1,0 +1,83 @@
+﻿@model ASPNZBat.Models.SeatBookingVM
+@*@await Html.PartialAsync("~/Views/Shared/_dateStartEnd.cshtml")*@
+
+@*<label asp-for="SeatDate" class="control-label h4"> What Week do you want to book From? </label>
+    <input asp-for="SeatDate" class="form-control"/>
+
+    <span asp-validation-for="SeatDateEnd" class="text-danger"></span>
+    <label asp-for="SeatDateEnd" class="control-label h4"> What Week do you want to book To? </label>
+    <input asp-for="SeatDateEnd" class="form-control"/>
+
+    <span asp-validation-for="SeatDateEnd" class="text-danger"></span>*@
+
+
+<div class="form-group ">
+    <div class="input-group date" id="DTStart">
+        <label class="control-label h4"> What Week do you want to book From? </label>
+        @Html.TextBoxFor(model => model.SeatDate, htmlAttributes: new { @class = "form-control DTStart" })
+
+        <span asp-validation-for="SeatDate" class="text-danger"></span>
+    </div>
+</div>
+
+<div class="form-group" id="DTEnd">
+    <label class="control-label h4"> What Week do you want to book To? </label>
+    @Html.TextBoxFor(model => model.SeatDateEnd, htmlAttributes: new { @class = "form-control DTEnd" })
+
+    <span asp-validation-for="SeatDateEnd" class="text-danger  field-validation-valid"
+          data-valmsg-for="End" data-valmsg-replace="true"></span>
+</div>
+
+
+@* https://stackoverflow.com/questions/11122268/updating-partial-view-with-jquery-in-asp-net-mvc-c-sharp *@
+
+<script>
+
+
+    $(document).ready(function () {
+        $(".DTStart").datetimepicker({
+            format: 'DD.MM.YYYY',
+            daysOfWeekDisabled: [0, 6],
+            showClose: true,
+            locale: 'en-au',
+            useCurrent: true
+        });
+    });
+
+
+    $(document).ready(function () {
+
+        //http://eonasdan.github.io/bootstrap-datetimepicker/
+
+
+        $(".DTEnd").datetimepicker({
+            format: 'DD.MM.YYYY',
+            showClose: true,
+            daysOfWeekDisabled: [0, 6],
+            locale: 'en-au'
+            /// useCurrent: true //Important! See issue #1075
+        });
+    });
+
+
+    //holy crap it works
+    $(function () {
+        $('#DTStart').datetimepicker();
+        $('#DTEnd').datetimepicker({
+            useCurrent: false //Important! See issue #1075
+        });
+        $("#DTStart").on("dp.change", function (e) {
+            $('.DTEnd').data("DateTimePicker").minDate(e.date);
+        });
+        $("#DTEnd").on("dp.change", function (e) {
+            $('DTStart').data("DateTimePicker").maxDate(e.date);
+        });
+    });
+
+
+    @* Must run this last so the focus returns to the Title *@
+    $(document).ready(function () {
+        document.getElementById("Title").focus();
+    });
+
+</script>

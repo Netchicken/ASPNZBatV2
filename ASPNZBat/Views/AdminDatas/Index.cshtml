@@ -1,0 +1,133 @@
+﻿@model IEnumerable<ASPNZBat.Models.AdminData>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+
+
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS1L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS2L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS3L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS4L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS5L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS6L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS7L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS8L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS9L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS10L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS11L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS12L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS13L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS14L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS15L)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isVisibleS16L)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS1L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS2L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS3L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS4L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS5L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS6L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS7L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS8L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS9L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS10L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS11L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS12L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS13L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS14L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS15L)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isVisibleS16L)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
