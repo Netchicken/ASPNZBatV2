@@ -8,9 +8,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="ResoursesAndNotes\BackupTable.cshtml" />
     <Content Remove="wwwroot\image\banner1.svg" />
     <Content Remove="wwwroot\image\banner2.svg" />
     <Content Remove="wwwroot\image\banner3.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="BackupTable.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="ResoursesAndNotes\BackupTable.cshtml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +36,10 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="ResoursesAndNotes\BackupTable.cshtml" />
   </ItemGroup>
 
 </Project>

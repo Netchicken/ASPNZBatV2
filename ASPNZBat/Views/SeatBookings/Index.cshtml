@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<ASPNZBat.Models.SeatBooking>
-
 @{
     ViewData["Title"] = "Index";
 }
@@ -20,8 +19,6 @@
 </header>
 <div id="services" class="text-center">
     <div class="container-fluid ">
-
-
 
         <table class="table">
             <thead>
@@ -87,52 +84,51 @@
                         <td>
                             <label class="badge badge-default trigger">@item.SeatDate.Date.ToShortDateString()</label>
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S1)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S2)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S3)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S4)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S5)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S6)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S7)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S8)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S9)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S10)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S11)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S12)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S13)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S14)
                         </td>
-                        <td class="sess">
+                        <td>
                             @Html.DisplayFor(modelItem => item.S15)
                         </td>
-
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
                             <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
@@ -145,17 +141,16 @@
     </div>
 </div>
 @section Scripts {
-
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-    @*//no formatting for checkboxes*@
+    @*//no formatting for checkboxes    $('@fid').css( 'display', 'none');   *@
     @*http://jsfiddle.net/8L7v0pbp/*@
     <script>
         $(document).ready(function () {
-            $('td.sess').each(function () {
-                if (document.getElementById(this).checked = true) {
-                    $(this).css('background', 'rgb(170, 218, 170)');
+            $('td').each(function () {
+                if (document.getElementById(this).checked === true) {
+                    $(this).css('background-color', 'rgb(170, 218, 170)');
                 };
             });
 

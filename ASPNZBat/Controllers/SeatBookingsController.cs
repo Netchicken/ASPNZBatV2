@@ -50,8 +50,8 @@ namespace ASPNZBat.Controllers
             LastMonth = LastMonth.AddMonths(-1);
 
             return View(await _context.SeatBooking
-                .Where(s => s.StudentEmail == _userManager.GetUserId(User) && s.SeatDate > LastMonth)
-             .OrderByDescending(s => s.SeatDate)
+                .Where(s => s.StudentEmail == _userManager.GetUserName(User) && s.SeatDate > LastMonth)
+             .OrderBy(s => s.SeatDate)
               .ToListAsync());
 
 
@@ -93,7 +93,7 @@ namespace ASPNZBat.Controllers
                 return NotFound();
             }
 
-            return View(seatBooking);
+            return View((SeatBooking)seatBooking);
         }
 
         // GET: SeatBookings/Create
@@ -126,24 +126,22 @@ namespace ASPNZBat.Controllers
             //Show data for the next 4 weeks
             ViewData["CheckFullSession"] = _sessions.GetSingleWeekStats(seatBooking.SeatDate);
 
-            //todo make checkfullsession itereate through seatbooking.If seatbooking checked == checkfullSession 5 then cancel out with a message
-
-            //SummaryStatsVM sb = new SummaryStatsVM();
-            //sb = ConvertBoolToIntSession.ConvertToInt(seatBooking);
+            //todo make checkfullsession itereate through seatbooking.If seatbooking checked == checkfullSession 5 then cancel out with a "You have already booked this" message
 
 
-
-
-            //foreach (var session in sb)
-            //{
-
-            //}
 
 
 
             if (ModelState.IsValid)
             {
-                seatBooking.StudentEmail = _userManager.GetUserId(User);
+                //todo get sessions with the same date
+                //  string SeatDateNew = seatBooking.SeatDate.ToLongDateString();
+                //todo delete them if they exist
+                //   var DeleteSeatBooking = await _context.SeatBooking.FindAsync();
+                //  _context.SeatBooking.Remove(DeleteSeatBooking);
+
+
+                seatBooking.StudentEmail = _userManager.GetUserName(User);
 
                 _context.Add(seatBooking);
                 await _context.SaveChangesAsync();
