@@ -68,6 +68,10 @@ namespace ASPNZBat.Business
 
             return client.SendEmailAsync(msg);
         }
+
+
+
+
     }
 }
 

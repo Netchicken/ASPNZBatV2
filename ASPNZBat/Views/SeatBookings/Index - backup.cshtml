@@ -80,55 +80,57 @@
             <tbody>
                 @foreach (var item in Model)
                 {
-
                     <tr>
                         <td>
                             <label class="badge badge-default trigger">@item.SeatDate.Date.ToShortDateString()</label>
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S1)</span>
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                @Html.DisplayFor(modelItem => item.S1)
+                            </div>
+
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S2)</span>
+                            @Html.DisplayFor(modelItem => item.S2)
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S3)</span>
+                            @Html.DisplayFor(modelItem => item.S3)
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S4)</span>
+                            @Html.DisplayFor(modelItem => item.S4)
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S5)</span>
+                            @Html.DisplayFor(modelItem => item.S5)
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S6)</span>
+                            @Html.DisplayFor(modelItem => item.S6)
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S7)</span>
+                            @Html.DisplayFor(modelItem => item.S7)
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S8)</span>
+                            @Html.DisplayFor(modelItem => item.S8)
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S9)</span>
+                            @Html.DisplayFor(modelItem => item.S9)
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S10)</span>
+                            @Html.DisplayFor(modelItem => item.S10)
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S11)</span>
+                            @Html.DisplayFor(modelItem => item.S11)
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S12)</span>
+                            @Html.DisplayFor(modelItem => item.S12)
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S13)</span>
+                            @Html.DisplayFor(modelItem => item.S13)
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S14)</span>
+                            @Html.DisplayFor(modelItem => item.S14)
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S15)</span>
+                            @Html.DisplayFor(modelItem => item.S15)
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
@@ -144,27 +146,19 @@
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
-
-        @*//no formatting for checkboxes    $('@fid').css( 'display', 'none');   *@
-        @*http://jsfiddle.net/8L7v0pbp/*@
-        <script>
-            //https://api.jquery.com/each/
-
-            //https://stackoverflow.com/questions/53255025/getelementbyid-from-a-html-displayfor-checkbox-in-asp-net-core-2/53255444#53255444
-            //<input disabled="disabled" class="check-box" type="checkbox" checked="checked">
-            //<input disabled="disabled" class="check-box" type="checkbox">
-
-            $(document).ready(function () {
-                $(".sessioncheckbox").each(function () {
-                    // if (document.getElementsByClassName(".sessioncheckbox").innerHTML)
-                    // check checked state of checkboxes
-                    if ($(this).find("#checkbox").prop("checked", true)) {
-                        $(".sessioncheckbox").addClass("badge badge-default trigger");
-                    };
-                });
-            });
-        </script>
     }
+    @*//no formatting for checkboxes    $('@fid').css( 'display', 'none');   *@
+    @*http://jsfiddle.net/8L7v0pbp/*@
+    <script>
+        $(document).ready(function () {
+            $('td').each(function () {
+                if (document.getElementById(this).checked === true) {
+                    $(this).css('background-color', 'rgb(170, 218, 170)');
+                };
+            });
+
+    </script>
+
 
 
 }

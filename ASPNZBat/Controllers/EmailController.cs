@@ -33,13 +33,18 @@ namespace ASPNZBat.Controllers
             return _userManager.FindByIdAsync(_userManager.GetUserId(User)); //_userManager.GetUserAsync(User);
         }
 
-        public void TestEmail()
+        public IActionResult TestEmail()
         {
             //  CurrentUserEmail = _userManager.GetUserId(User);  //GetCurrentUserAsync().Result.Email;
             CurrentUserName = _userManager.GetUserName(User); //GetCurrentUserAsync().Result.UserName;
 
             _emailSender.SendEmailAsync(CurrentUserName, "Test", "Test Message");
+
+            return null;
             //   return View();
+
         }
+
+
     }
 }

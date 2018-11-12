@@ -106,18 +106,22 @@ namespace ASPNZBat.Business
                     S8 = s.Count(c => c.S8 == true),
                     S9 = s.Count(c => c.S9 == true),
                     S10 = s.Count(c => c.S10 == true),
-                    S11 = s.Count(c => c.S1 == true),
-                    S12 = s.Count(c => c.S2 == true),
-                    S13 = s.Count(c => c.S3 == true),
-                    S14 = s.Count(c => c.S4 == true),
-                    S15 = s.Count(c => c.S5 == true)
+                    S11 = s.Count(c => c.S11 == true),
+                    S12 = s.Count(c => c.S12 == true),
+                    S13 = s.Count(c => c.S13 == true),
+                    S14 = s.Count(c => c.S14 == true),
+                    S15 = s.Count(c => c.S15 == true)
 
                 }).ToList();
 
 
             return SumStats;
         }
-
+        /// <summary>
+        /// Gets the stats for the week selected
+        /// </summary>
+        /// <param name="WeekSelected"></param>
+        /// <returns></returns>
         public SummaryStatsVM GetSingleWeekStats(DateTime WeekSelected)
         {
 

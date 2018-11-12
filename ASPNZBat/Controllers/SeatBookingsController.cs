@@ -126,17 +126,13 @@ namespace ASPNZBat.Controllers
             //Show data for the next 4 weeks
             ViewData["CheckFullSession"] = _sessions.GetSingleWeekStats(seatBooking.SeatDate);
 
-            //todo make checkfullsession itereate through seatbooking.If seatbooking checked == checkfullSession 5 then cancel out with a "You have already booked this" message
-
-
-
 
 
             if (ModelState.IsValid)
             {
-                //todo get sessions with the same date
+                //todo get session with the same date
                 //  string SeatDateNew = seatBooking.SeatDate.ToLongDateString();
-                //todo delete them if they exist
+                //todo UPDATE them if they exist
                 //   var DeleteSeatBooking = await _context.SeatBooking.FindAsync();
                 //  _context.SeatBooking.Remove(DeleteSeatBooking);
 
