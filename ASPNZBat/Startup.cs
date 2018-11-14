@@ -90,7 +90,9 @@ namespace ASPNZBat
             // using Microsoft.AspNetCore.Identity.UI.Services;
             // using WebPWrecover.Services;
 
-            services.AddTransient<IEmailSender, EmailSender>();
+            // services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IEmailSender, DevEmailSender>();
+            services.AddTransient<IOverdueStudents, OverdueStudents>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
         }
 

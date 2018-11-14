@@ -10,16 +10,23 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNZBat.Controllers
 {
+
     public class EmailController : Controller
     {
         private readonly IEmailSender _emailSender;
+        private readonly IOverdueStudents _overdueStudents;
         private readonly UserManager<IdentityUser> _userManager;
         private string CurrentUserEmail;
         private string CurrentUserName;
 
 
-        public EmailController(IEmailSender emailSender, UserManager<IdentityUser> userManager)
+        public EmailController(
+            IEmailSender emailSender,
+            UserManager<IdentityUser> userManager,
+            IOverdueStudents overdueStudents
+            )
         {
+            _overdueStudents = overdueStudents;
             _emailSender = emailSender;
             _userManager = userManager;
 
@@ -36,11 +43,27 @@ namespace ASPNZBat.Controllers
         public IActionResult TestEmail()
         {
             //  CurrentUserEmail = _userManager.GetUserId(User);  //GetCurrentUserAsync().Result.Email;
-            CurrentUserName = _userManager.GetUserName(User); //GetCurrentUserAsync().Result.UserName;
+            CurrentUserName = _userManager.GetUserName(User);
 
-            _emailSender.SendEmailAsync(CurrentUserName, "Test", "Test Message");
 
-            return null;
+
+            List<string> sender = new List<string>();
+            foreach (string student in _overdueStudents.FindOverDueStudents())
+            {
+                //make sure you only send 1 to a student not heaps
+                if (!sender.Contains(student))
+                {
+                    _emailSender.SendEmailAsync(student, "Update your Sessions", "You no longer have a session booked. Come back and make some.");
+                    sender.Add(student);
+                }
+
+            }
+
+            // _emailSender.SendEmailAsync(CurrentUserName, "Update your Sessions", "You no longer have a session booked. Come back and make some.");
+
+            //empty sender in case it still contains names next time
+            sender.Clear();
+            return Ok("No Data");
             //   return View();
 
         }
