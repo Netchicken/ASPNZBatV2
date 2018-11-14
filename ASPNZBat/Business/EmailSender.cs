@@ -8,16 +8,15 @@ using ASPNZBat.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
-/// <summary>
-/// ~~~~~~ NOT USED GOT BANNED FROM SENDGRID ~~~~~~~
-/// </summary>
+
 namespace ASPNZBat.Business
 {
     //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-2.1&tabs=visual-studio
     //https://app.sendgrid.com/guide/integrate/langs/csharp
 
-    //API key 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
-
+    /// <summary>
+    /// ~~~~~~ NOT USED GOT BANNED FROM SENDGRID ~~~~~~~
+    /// </summary>
 
     //https://dejanstojanovic.net/aspnet/2018/june/sending-email-in-aspnet-core-using-smtpclient-and-dependency-injection/
 
@@ -48,7 +47,7 @@ namespace ASPNZBat.Business
 
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            //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
+
             return Execute(Options.SendGridKey, subject, message, email);
         }
 
