@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <PackageReference Include="Humanizer.core" Version="2.5.1" />
+    <PackageReference Include="Ical.Net" Version="4.1.9" />
     <PackageReference Include="jQWidgets.AspNetCore.Mvc.Bootstrap.TagHelpers" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0-preview3-35497" />

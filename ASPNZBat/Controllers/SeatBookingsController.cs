@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using ASPNZBat.Business;
+using ASPNZBat.Business.ICal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ using ASPNZBat.DTO;
 using ASPNZBat.Migrations;
 using ASPNZBat.Models;
 using ASPNZBat.ViewModels;
+using Ical.Net;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -126,7 +128,8 @@ namespace ASPNZBat.Controllers
             //Show data for the next 4 weeks
             ViewData["CheckFullSession"] = _sessions.GetSingleWeekStats(seatBooking.SeatDate);
 
-
+            CalService myCalService = new CalService();
+            Calendar allevents = myCalService.testBooking(seatBooking);
 
             if (ModelState.IsValid)
             {
