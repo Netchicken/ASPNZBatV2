@@ -15,31 +15,42 @@ using Calendar = Ical.Net.Calendar;
 
 namespace ASPNZBat.Business.ICal
 {
-    public class CalService //: ICalService
+    public class CalService : ICalService
     {
+        //  public SeatBooking seatBooking { get; set; }
+
         Calendar calendar = new Calendar();
+
+
+
         /// <summary>
         /// Set up a calender of events to be submitted to something
         /// </summary>
         /// <param name="booking"></param>
-        public Calendar testBooking(SeatBooking booking)
+        public string testBooking(SeatBooking seatBooking)
         {
             //https://stackoverflow.com/questions/52950884/ical-net-viewing-event-data-from-calendar-in-net-and-c-sharp
 
             //book all the seats
-            GetBookedSeats(booking);
-            return calendar;
+            return GetBookedSeats(seatBooking);
+            //   return calendar;
         }
-
-        private void GetBookedSeats(SeatBooking seats)
+        /// <summary>
+        /// Get the current logged in users seat bookings
+        /// </summary>
+        /// <param name="seats"></param>
+        private string GetBookedSeats(SeatBooking seats)
         {
+            //I hate hardcoding, this should be abstracted out to an admin section
+
+            //arrays of data
             string Description = null;
             string[] days = new[] { " Monday", " Tuesday", " Wednesday", " Thursday", " Friday" };
             string[] Sessions = new[] { "Morning 9am - 11:30am", "Afternoon 12pm = 2:30pm", "Evening 5:30pm - 8:30pm" };
             string[] AllSessionTimeStart = new[] { "9:00:00", "12:00:01", "17:30:00" };
             string[] AllSessionTimeEnd = new[] { "11:30:00", "14:30:01", "20:30:00" };
 
-            //time of session to add in to calender
+            //time of session to add in to calender from string to timespan
             TimeSpan MorningSessStart = TimeSpan.Parse(AllSessionTimeStart[0]);
             TimeSpan MorningSessEnd = TimeSpan.Parse(AllSessionTimeEnd[0]);
             TimeSpan AfternoonSessStart = TimeSpan.Parse(AllSessionTimeStart[1]);
@@ -50,88 +61,96 @@ namespace ASPNZBat.Business.ICal
             DateTime SessionStart = new DateTime();
             DateTime SessionEnd = new DateTime();
             SeatBooking nextDaySeats = null;
-            if (seats.S1)
+
+            //create a calendar event for each booking. Shows details about 
+            if (seats != null && seats.S1)
             {
                 NewEvent(seats, 0, MorningSessStart, MorningSessEnd, days[0], Sessions[0]);
             }
-            if (seats.S2)
+            if (seats != null && seats.S2)
             {
                 NewEvent(seats, 0, AfternoonSessStart, AfternoonSessEnd, days[0], Sessions[1]);
             }
-            if (seats.S3)
+            if (seats != null && seats.S3)
             {
                 NewEvent(seats, 0, EveningSessStart, EveningSessEnd, days[0], Sessions[2]);
             }
-            if (seats.S4)
+            if (seats != null && seats.S4)
             {
 
                 NewEvent(seats, 1, MorningSessStart, MorningSessEnd, days[1], Sessions[0]);
             }
-            if (seats.S5)
+            if (seats != null && seats.S5)
             {
 
                 NewEvent(seats, 1, AfternoonSessStart, AfternoonSessEnd, days[1], Sessions[1]);
             }
-            if (seats.S6)
+            if (seats != null && seats.S6)
             {
 
                 NewEvent(seats, 1, EveningSessStart, EveningSessEnd, days[1], Sessions[2]);
             }
-            if (seats.S7)
+            if (seats != null && seats.S7)
             {
 
                 NewEvent(seats, 2, MorningSessStart, MorningSessEnd, days[2], Sessions[0]);
             }
-            if (seats.S8)
+            if (seats != null && seats.S8)
             {
 
                 NewEvent(seats, 2, AfternoonSessStart, AfternoonSessEnd, days[2], Sessions[1]);
             }
-            if (seats.S9)
+            if (seats != null && seats.S9)
             {
 
                 NewEvent(seats, 2, EveningSessStart, EveningSessEnd, days[2], Sessions[2]);
             }
-            if (seats.S10)
+            if (seats != null && seats.S10)
             {
 
                 NewEvent(seats, 3, MorningSessStart, MorningSessEnd, days[3], Sessions[0]);
             }
-            if (seats.S11)
+            if (seats != null && seats.S11)
             {
 
                 NewEvent(seats, 3, AfternoonSessStart, AfternoonSessEnd, days[3], Sessions[1]);
             }
-            if (seats.S12)
+            if (seats != null && seats.S12)
             {
 
                 NewEvent(seats, 3, EveningSessStart, EveningSessEnd, days[3], Sessions[2]);
             }
-            if (seats.S13)
+            if (seats != null && seats.S13)
             {
 
                 NewEvent(seats, 4, MorningSessStart, MorningSessEnd, days[4], Sessions[0]);
             }
-            if (seats.S14)
+            if (seats != null && seats.S14)
             {
 
                 NewEvent(seats, 4, AfternoonSessStart, AfternoonSessEnd, days[4], Sessions[1]);
             }
-            if (seats.S15)
+            if (seats != null && seats.S15)
             {
 
                 NewEvent(seats, 4, EveningSessStart, EveningSessEnd, days[4], Sessions[2]);
             }
-        }
 
-        private void NewEvent(SeatBooking seats, int DayNext, TimeSpan morningSessStart, TimeSpan morningSessEnd, string day,
-            string session)
+            return OutputEvents(calendar);
+        }
+        /// <summary>
+        /// Generate an event from the Seat number
+        /// </summary>
+
+        private void NewEvent(SeatBooking seats, int DayNext, TimeSpan morningSessStart, TimeSpan morningSessEnd, string day, string session)
         {
 
-            //add the time of the sessions
+            //add the time of the sessions to the date to get DateTime
             DateTime sessionStart = seats.SeatDate.AddDays(DayNext).Add(morningSessStart);
             DateTime sessionEnd = seats.SeatDate.AddDays(DayNext).Add(morningSessEnd);
             string description = day + " " + session;
+
+            //Create a new event with event details
             var vEvent = new CalendarEvent
             {
                 Start = new CalDateTime(sessionStart),
@@ -139,129 +158,24 @@ namespace ASPNZBat.Business.ICal
                 Description = description,
                 Name = "NZBAT at Vision College"
             };
+
             calendar.Events.Add(vEvent);
         }
+        //todo send the calendar events
+        public string OutputEvents(Calendar cal)
+        {
+            var sb = new StringBuilder();
 
+            foreach (var email in cal.Events)
+            {
+                sb.AppendLine("From: " + email.DtStart.ToString() + " To " + email.DtEnd);
+                sb.AppendLine("Desc: " + email.Description.ToString() + " By " + email.Name);
+            }
 
-        /// <summary>
-        ///Generates calendar object using CalendarInviteObject
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns>ResponseMessageResult</returns>
-        //public IHttpActionResult CalendarBookingFileResult(CalendarInviteViewModel model)
-        //{
-        //    var bytes = GetCalendarBookingBytes(model);
-        //    return IcsFileContentResult(model, bytes);
-        //}
+            //  File.WriteAllText(@"C:\Users\Gary.001\Desktop", sb.ToString(), Encoding.UTF8);
 
-        //private IHttpActionResult IcsFileContentResult(CalendarInviteViewModel entity, MemoryStream memory)
-        //{
-        //    var filename = entity.FileName;
-
-
-        //    var message = new HttpResponseMessage(HttpStatusCode.OK)
-        //    {
-        //        Content = new ByteArrayContent(memory.ToArray())
-        //    };
-
-        //    var encoder = Encoding.GetEncoding("us-ascii", new EncoderReplacementFallback(string.Empty), new DecoderExceptionFallback());
-        //    string asciiFileName = encoder.GetString(encoder.GetBytes(filename));
-
-        //    // Set content headers
-        //    message.Content.Headers.ContentLength = memory.Length;
-        //    message.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-        //    message.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
-        //    {
-        //        FileName = asciiFileName
-        //    };
-
-        //    return new System.Web.Http.Results.ResponseMessageResult(message);
-        //}
-
-        /// <summary>
-        /// Creates calendar Objects and events
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns>a MemoryStream</returns>
-        //private MemoryStream GetCalendarBookingBytes(CalendarInviteViewModel model)
-        //{
-
-        //    var iCal = new Calendar();
-
-
-        //    var evt = iCal.Create<CalendarEvent>();
-        //    evt.Summary = model.Title;
-        //    evt.Start = new CalDateTime(model.StartDate);
-        //    evt.End = new CalDateTime(model.EndDate);
-        //    evt.Description = model.Body;
-        //    evt.Location = model.Address;
-
-        //    if (model.StartDate.TimeOfDay.Hours == 0)
-        //    {
-        //        evt.IsAllDay = true;
-        //    }
-
-        //    evt.Uid = new Guid().ToString();
-        //    //evt.Organizer = new Organizer(organizer);
-        //    evt.Alarms.Add(new Alarm
-        //    {
-        //        Duration = new TimeSpan(30, 0, 0),
-        //        Trigger = new Trigger(new TimeSpan(30, 0, 0)),
-        //        Action = AlarmAction.Display,
-        //        Description = "Reminder"
-        //    });
-        //    SerializationContext ctx = new SerializationContext();
-        //    ISerializerFactory factory = new SerializerFactory();
-        //    var serializer = factory.Build(iCal.GetType(), ctx) as IStringSerializer;
-
-        //    var output = serializer.SerializeToString(iCal);
-        //    var bytes = Encoding.UTF8.GetBytes(output);
-
-        //    MemoryStream ms = new MemoryStream(bytes);
-        //    return ms;
-        //}
-
-
-
-        //public MemoryStream GenerateIcsFile()
-        //{
-
-        //    var iCal = new Calendar();
-
-        //    // Create the event, and add it to the iCalendar
-        //    var evt = iCal.Create<CalendarEvent>();
-
-        //    // Set information about the event
-        //    evt.Start = CalDateTime.Today.AddHours(8);
-        //    evt.End = evt.Start.AddHours(18); // This also sets the duration
-        //    evt.Description = "The event description";
-        //    evt.Location = "Event location";
-        //    evt.Summary = "18 hour event summary";
-
-        //    // Set information about the second event
-        //    evt = iCal.Create<CalendarEvent>();
-        //    evt.Start = CalDateTime.Today.AddDays(5);
-        //    evt.End = evt.Start.AddDays(1);
-        //    evt.IsAllDay = true;
-        //    evt.Summary = "All-day event";
-
-
-        //    // Create a serialization context and serializer factory.
-        //    // These will be used to build the serializer for our object.
-        //    SerializationContext ctx = new SerializationContext();
-        //    ISerializerFactory factory = new SerializerFactory();
-        //    // Get a serializer for our object
-        //    var serializer = factory.Build(iCal.GetType(), ctx) as IStringSerializer;
-
-        //    var output = serializer.SerializeToString(iCal);
-        //    var bytes = Encoding.UTF8.GetBytes(output);
-
-
-
-        //}
-
-
-
+            return sb.ToString();
+        }
 
     }
 }

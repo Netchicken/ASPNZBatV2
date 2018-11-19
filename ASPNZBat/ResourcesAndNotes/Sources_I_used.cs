@@ -36,6 +36,12 @@ namespace ASPNZBat
 
         //https://docs.microsoft.com/en-us/aspnet/core/security/authorization/simple?view=aspnetcore-2.1  for authorization
 
+        //https://app.sendgrid.com/guide?from=profile&integrate=true 
+        //sendgrid is MS's recommended way of sending emails. 
+        //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-2.1&tabs=visual-studio
+        //https://app.sendgrid.com/guide/integrate/langs/csharp
 
+        //setting the secret management tool 
+        //  https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-2.1&tabs=visual-studio
     }
 }

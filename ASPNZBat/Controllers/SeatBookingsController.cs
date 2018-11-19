@@ -22,6 +22,7 @@ namespace ASPNZBat.Controllers
 {
     public class SeatBookingsController : Controller
     {
+        private IDBCallsSessionData _dbCallsSessionData;
         private readonly SeatBookingDBContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -32,13 +33,14 @@ namespace ASPNZBat.Controllers
         public SeatBookingsController(
             SeatBookingDBContext context,
            UserManager<IdentityUser> userManager,
-            ISessions Sessions
+            ISessions Sessions,
+            IDBCallsSessionData dbCallsSessionData
             )
         {
             _context = context;
             _userManager = userManager;
             _sessions = Sessions;
-
+            _dbCallsSessionData = dbCallsSessionData;
 
         }
 
@@ -128,8 +130,9 @@ namespace ASPNZBat.Controllers
             //Show data for the next 4 weeks
             ViewData["CheckFullSession"] = _sessions.GetSingleWeekStats(seatBooking.SeatDate);
 
-            CalService myCalService = new CalService();
-            Calendar allevents = myCalService.testBooking(seatBooking);
+            //   CalService myCalService = new CalService();
+            //   myCalService.seatBooking = seatBooking;
+            //Calendar allevents = myCalService.testBooking(seatBooking);
 
             if (ModelState.IsValid)
             {
@@ -139,6 +142,7 @@ namespace ASPNZBat.Controllers
                 //   var DeleteSeatBooking = await _context.SeatBooking.FindAsync();
                 //  _context.SeatBooking.Remove(DeleteSeatBooking);
 
+                _dbCallsSessionData.lastSeatBooking = seatBooking;
 
                 seatBooking.StudentEmail = _userManager.GetUserName(User);
 

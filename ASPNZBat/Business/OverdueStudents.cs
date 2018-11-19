@@ -25,7 +25,7 @@ namespace ASPNZBat.Business
 
 
         /// <summary>
-        /// Get the student emails where they havn't got a current schedule
+        /// Get the student emails where they haven't got a current schedule
         /// </summary>
         /// <returns></returns>
         public IEnumerable<string> FindOverDueStudents()

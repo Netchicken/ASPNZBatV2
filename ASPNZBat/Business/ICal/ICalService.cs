@@ -9,8 +9,11 @@ using System.Web.Http;
 
 namespace ASPNZBat.Business.ICal
 {
+    using Models;
+
     public interface ICalService
     {
+        string testBooking(SeatBooking seatBooking);
         //      IHttpActionResult CalendarBookingFileResult(CalendarInviteViewModel model);
         //MemoryStream GenerateIcsFile();
     }

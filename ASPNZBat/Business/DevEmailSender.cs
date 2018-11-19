@@ -28,7 +28,7 @@ namespace ASPNZBat.Business
     //}
 
 
-    public class DevEmailSender : IEmailSender
+    public class DevEmailSender //: IEmailSender
     {
         public AuthMessageSenderOptions Options { get; }
 

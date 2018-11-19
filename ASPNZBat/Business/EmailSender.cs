@@ -8,20 +8,18 @@ using ASPNZBat.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
+using SendGrid;
+using SendGrid.Helpers.Mail;
 
 namespace ASPNZBat.Business
 {
     //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-2.1&tabs=visual-studio
     //https://app.sendgrid.com/guide/integrate/langs/csharp
 
-    /// <summary>
-    /// ~~~~~~ NOT USED GOT BANNED FROM SENDGRID ~~~~~~~
-    /// </summary>
-
     //https://dejanstojanovic.net/aspnet/2018/june/sending-email-in-aspnet-core-using-smtpclient-and-dependency-injection/
 
 
-    public class EmailSender //: IEmailSender
+    public class EmailSender : IEmailSender
     {
 
         private readonly SeatBookingDBContext _context;
@@ -45,42 +43,40 @@ namespace ASPNZBat.Business
 
         public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
 
+        //This is the public method for sending
         public Task SendEmailAsync(string email, string subject, string message)
         {
 
             return Execute(Options.SendGridKey, subject, message, email);
         }
 
-        public Task Execute(string apiKey, string subject, string message, string email)
+        private Task Execute(string apiKey, string subject, string message, string email)
         {
 
-            //var client = new SendGridClient(apiKey);
-            //var msg = new SendGridMessage()
-            //{
-            //    From = new EmailAddress("Gary.d@visioncollege.ac.nz", "Gary Dix"),
-            //    Subject = subject,
-            //    PlainTextContent = message,
-            //    HtmlContent = message
-            //};
-            //msg.AddTo(new EmailAddress(email));
+            var client = new SendGridClient(apiKey);
+            var msg = new SendGridMessage()
+            {
+                From = new EmailAddress("Gary.d@visioncollege.ac.nz", "Gary Dix"),
+                Subject = subject,
+                PlainTextContent = message,
+                HtmlContent = message
+            };
+            msg.AddTo(new EmailAddress(email));
 
-            //// Disable click tracking.
-            //// See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
-            //msg.TrackingSettings = new TrackingSettings
-            //{
-            //    ClickTracking = new ClickTracking { Enable = false }
-            //};
+            // Disable click tracking.
+            // See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
+            msg.TrackingSettings = new TrackingSettings
+            {
+                ClickTracking = new ClickTracking { Enable = false }
+            };
 
-            return null;
+            return client.SendEmailAsync(msg);
         }
-
-
-
-
-
     }
 
-
+    /// <summary>
+    /// A class to fetch the secure email key. 
+    /// </summary>
 
     public class AuthMessageSenderOptions
     {

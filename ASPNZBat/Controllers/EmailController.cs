@@ -10,9 +10,17 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNZBat.Controllers
 {
+    using Business.ICal;
+    using Data;
+    using DTO;
+    using Ical.Net;
+    using Microsoft.EntityFrameworkCore;
 
     public class EmailController : Controller
     {
+        private ICalService _calService;
+        private IDBCallsSessionData _dbCallsSessionData;
+        private readonly SeatBookingDBContext _context;
         private readonly IEmailSender _emailSender;
         private readonly IOverdueStudents _overdueStudents;
         private readonly UserManager<IdentityUser> _userManager;
@@ -21,21 +29,24 @@ namespace ASPNZBat.Controllers
 
 
         public EmailController(
+            SeatBookingDBContext context,
             IEmailSender emailSender,
             UserManager<IdentityUser> userManager,
-            IOverdueStudents overdueStudents
-            )
+            IOverdueStudents overdueStudents, IDBCallsSessionData dbCallsSessionData, ICalService calService)
         {
+            _context = context;
             _overdueStudents = overdueStudents;
+            _dbCallsSessionData = dbCallsSessionData;
             _emailSender = emailSender;
             _userManager = userManager;
-
+            _calService = calService;
         }
 
         //Gets the current user
         [Authorize]
         private Task<IdentityUser> GetCurrentUserAsync()
-        {   // _userManager.GetUserId(User)
+        {
+            // _userManager.GetUserId(User)
             // var User =  _userManager.GetUserAsync(HttpContext.User);
             return _userManager.FindByIdAsync(_userManager.GetUserId(User)); //_userManager.GetUserAsync(User);
         }
@@ -53,7 +64,9 @@ namespace ASPNZBat.Controllers
                 //make sure you only send 1 to a student not heaps
                 if (!sender.Contains(student))
                 {
-                    _emailSender.SendEmailAsync(student, "Update your Sessions", "You no longer have a session booked. Come back and make some.");
+                    _emailSender.SendEmailAsync(student, "Update your Sessions",
+                        "You no longer have a session booked. Come back and make some.");
+                    //add the user to the dict so it doesn't go again.
                     sender.Add(student);
                 }
 
@@ -61,13 +74,41 @@ namespace ASPNZBat.Controllers
 
             // _emailSender.SendEmailAsync(CurrentUserName, "Update your Sessions", "You no longer have a session booked. Come back and make some.");
 
+            //   I want to see who the emails went to.
+            string StudentNames = "";
+
+            foreach (var student in sender)
+            {
+                StudentNames += student + " ";
+            }
+
             //empty sender in case it still contains names next time
             sender.Clear();
-            return Ok("No Data");
+
+
+
+            return Ok("Emails sent to " + StudentNames);
             //   return View();
 
         }
 
+        public IActionResult TestCalendar()
+        {
 
+            string email = _userManager.GetUserName(User);
+
+            //var seatBooking = _context.SeatBooking
+            //.Where(m => m.StudentEmail == email)
+            ////  .Select(s => s(a => a.id).First())
+            //.OrderByDescending(o => o.ID)
+            //.ToListAsync();
+            //
+            var seatBooking = _dbCallsSessionData.lastSeatBooking;
+
+            string allevents = _calService.testBooking(seatBooking);
+
+
+            return Ok(allevents);
+        }
     }
 }

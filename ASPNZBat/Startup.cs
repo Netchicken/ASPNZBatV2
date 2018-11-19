@@ -19,6 +19,9 @@ using IEmailSender = ASPNZBat.Business.IEmailSender;
 
 namespace ASPNZBat
 {
+    using Business.ICal;
+    using DTO;
+
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -90,10 +93,12 @@ namespace ASPNZBat
             // using Microsoft.AspNetCore.Identity.UI.Services;
             // using WebPWrecover.Services;
 
-            // services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<IEmailSender, DevEmailSender>();
+            services.AddTransient<IEmailSender, EmailSender>();
+            //  services.AddTransient<IEmailSender, DevEmailSender>();
             services.AddTransient<IOverdueStudents, OverdueStudents>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.AddSingleton<IDBCallsSessionData, DBCallsSessionData>();
+            services.AddTransient<ICalService, CalService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
