@@ -10,10 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ASPNZBat.Controllers
 {
+    using System.Runtime.Serialization;
     using Business.ICal;
     using Data;
     using DTO;
     using Ical.Net;
+    using Ical.Net.Serialization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
 
     public class EmailController : Controller
@@ -95,18 +98,31 @@ namespace ASPNZBat.Controllers
         public IActionResult TestCalendar()
         {
 
-            string email = _userManager.GetUserName(User);
+            //get the email
+            CurrentUserName = _userManager.GetUserName(User);
 
-            //var seatBooking = _context.SeatBooking
-            //.Where(m => m.StudentEmail == email)
-            ////  .Select(s => s(a => a.id).First())
-            //.OrderByDescending(o => o.ID)
-            //.ToListAsync();
-            //
+            //https://stackoverflow.com/questions/46985663/use-ical-net-to-send-meeting-invite-for-microsoft-outlook
+            //https://github.com/rianjs/ical.net/wiki
+
+            string allevents = "";
+            //get back all the calander events
+
             var seatBooking = _dbCallsSessionData.lastSeatBooking;
+            //calendar as string to be outputted to screen
+            allevents += _calService.testBooking(seatBooking);
 
-            string allevents = _calService.testBooking(seatBooking);
+            Calendar cal = new Calendar();
+            cal = _dbCallsSessionData.SeatBookingsCalOutputToEmail;
 
+
+            var serializer = new CalendarSerializer();
+            foreach (var evCalEvent in cal.Events)
+            {
+                var serializedCalendar = serializer.SerializeToString(evCalEvent);
+                _emailSender.SendEmailAsync(CurrentUserName, "NZBat Booking", serializedCalendar);
+                //outputted to email and saved to show on screen
+                allevents += serializedCalendar;
+            }
 
             return Ok(allevents);
         }

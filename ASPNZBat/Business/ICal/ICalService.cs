@@ -13,8 +13,7 @@ namespace ASPNZBat.Business.ICal
 
     public interface ICalService
     {
-        string testBooking(SeatBooking seatBooking);
-        //      IHttpActionResult CalendarBookingFileResult(CalendarInviteViewModel model);
-        //MemoryStream GenerateIcsFile();
+        string testBooking(IEnumerable<SeatBooking> seatBooking);
+
     }
 }

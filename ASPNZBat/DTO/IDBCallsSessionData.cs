@@ -2,8 +2,12 @@
 
 namespace ASPNZBat.DTO
 {
+    using System.Collections.Generic;
+    using Ical.Net;
+
     public interface IDBCallsSessionData
     {
-        SeatBooking lastSeatBooking { get; set; }
+        List<SeatBooking> lastSeatBooking { get; set; }
+        Calendar SeatBookingsCalOutputToEmail { get; set; }
     }
 }

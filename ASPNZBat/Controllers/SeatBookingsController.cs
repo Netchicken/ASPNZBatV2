@@ -142,7 +142,8 @@ namespace ASPNZBat.Controllers
                 //   var DeleteSeatBooking = await _context.SeatBooking.FindAsync();
                 //  _context.SeatBooking.Remove(DeleteSeatBooking);
 
-                _dbCallsSessionData.lastSeatBooking = seatBooking;
+                //Save locally for sending to calendar
+                _dbCallsSessionData.lastSeatBooking.Add(seatBooking);
 
                 seatBooking.StudentEmail = _userManager.GetUserName(User);
 

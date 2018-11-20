@@ -15,19 +15,30 @@ using Calendar = Ical.Net.Calendar;
 
 namespace ASPNZBat.Business.ICal
 {
+    using System.Collections;
+    using System.Linq;
+    using DTO;
+    using Migrations;
+
     public class CalService : ICalService
     {
-        //  public SeatBooking seatBooking { get; set; }
 
         Calendar calendar = new Calendar();
 
+        private IDBCallsSessionData _dbCallsSessionData;
+
+        public CalService(IDBCallsSessionData dbCallsSessionData)
+        {
+            _dbCallsSessionData = dbCallsSessionData;
+        }
 
 
         /// <summary>
         /// Set up a calender of events to be submitted to something
         /// </summary>
         /// <param name="booking"></param>
-        public string testBooking(SeatBooking seatBooking)
+        /// <param name="seatBooking">List of Seatbookings</param>
+        public string testBooking(IEnumerable<SeatBooking> seatBooking)
         {
             //https://stackoverflow.com/questions/52950884/ical-net-viewing-event-data-from-calendar-in-net-and-c-sharp
 
@@ -35,11 +46,12 @@ namespace ASPNZBat.Business.ICal
             return GetBookedSeats(seatBooking);
             //   return calendar;
         }
+
         /// <summary>
         /// Get the current logged in users seat bookings
         /// </summary>
-        /// <param name="seats"></param>
-        private string GetBookedSeats(SeatBooking seats)
+        /// <param name="seatBookings">List of Seatbookings</param>
+        private string GetBookedSeats(IEnumerable<SeatBooking> seatBookings)
         {
             //I hate hardcoding, this should be abstracted out to an admin section
 
@@ -62,81 +74,88 @@ namespace ASPNZBat.Business.ICal
             DateTime SessionEnd = new DateTime();
             SeatBooking nextDaySeats = null;
 
-            //create a calendar event for each booking. Shows details about 
-            if (seats != null && seats.S1)
-            {
-                NewEvent(seats, 0, MorningSessStart, MorningSessEnd, days[0], Sessions[0]);
-            }
-            if (seats != null && seats.S2)
-            {
-                NewEvent(seats, 0, AfternoonSessStart, AfternoonSessEnd, days[0], Sessions[1]);
-            }
-            if (seats != null && seats.S3)
-            {
-                NewEvent(seats, 0, EveningSessStart, EveningSessEnd, days[0], Sessions[2]);
-            }
-            if (seats != null && seats.S4)
+            //loop through all the booked sessions and crate a cal event
+            foreach (var seats in seatBookings)
             {
 
-                NewEvent(seats, 1, MorningSessStart, MorningSessEnd, days[1], Sessions[0]);
-            }
-            if (seats != null && seats.S5)
-            {
+                //create a calendar event for each booking. Shows details about 
+                if (seats != null && seats.S1)
+                {
+                    NewEvent(seats, 0, MorningSessStart, MorningSessEnd, days[0], Sessions[0]);
+                }
+                if (seats != null && seats.S2)
+                {
+                    NewEvent(seats, 0, AfternoonSessStart, AfternoonSessEnd, days[0], Sessions[1]);
+                }
+                if (seats != null && seats.S3)
+                {
+                    NewEvent(seats, 0, EveningSessStart, EveningSessEnd, days[0], Sessions[2]);
+                }
+                if (seats != null && seats.S4)
+                {
 
-                NewEvent(seats, 1, AfternoonSessStart, AfternoonSessEnd, days[1], Sessions[1]);
-            }
-            if (seats != null && seats.S6)
-            {
+                    NewEvent(seats, 1, MorningSessStart, MorningSessEnd, days[1], Sessions[0]);
+                }
+                if (seats != null && seats.S5)
+                {
 
-                NewEvent(seats, 1, EveningSessStart, EveningSessEnd, days[1], Sessions[2]);
-            }
-            if (seats != null && seats.S7)
-            {
+                    NewEvent(seats, 1, AfternoonSessStart, AfternoonSessEnd, days[1], Sessions[1]);
+                }
+                if (seats != null && seats.S6)
+                {
 
-                NewEvent(seats, 2, MorningSessStart, MorningSessEnd, days[2], Sessions[0]);
-            }
-            if (seats != null && seats.S8)
-            {
+                    NewEvent(seats, 1, EveningSessStart, EveningSessEnd, days[1], Sessions[2]);
+                }
+                if (seats != null && seats.S7)
+                {
 
-                NewEvent(seats, 2, AfternoonSessStart, AfternoonSessEnd, days[2], Sessions[1]);
-            }
-            if (seats != null && seats.S9)
-            {
+                    NewEvent(seats, 2, MorningSessStart, MorningSessEnd, days[2], Sessions[0]);
+                }
+                if (seats != null && seats.S8)
+                {
 
-                NewEvent(seats, 2, EveningSessStart, EveningSessEnd, days[2], Sessions[2]);
-            }
-            if (seats != null && seats.S10)
-            {
+                    NewEvent(seats, 2, AfternoonSessStart, AfternoonSessEnd, days[2], Sessions[1]);
+                }
+                if (seats != null && seats.S9)
+                {
 
-                NewEvent(seats, 3, MorningSessStart, MorningSessEnd, days[3], Sessions[0]);
-            }
-            if (seats != null && seats.S11)
-            {
+                    NewEvent(seats, 2, EveningSessStart, EveningSessEnd, days[2], Sessions[2]);
+                }
+                if (seats != null && seats.S10)
+                {
 
-                NewEvent(seats, 3, AfternoonSessStart, AfternoonSessEnd, days[3], Sessions[1]);
-            }
-            if (seats != null && seats.S12)
-            {
+                    NewEvent(seats, 3, MorningSessStart, MorningSessEnd, days[3], Sessions[0]);
+                }
+                if (seats != null && seats.S11)
+                {
 
-                NewEvent(seats, 3, EveningSessStart, EveningSessEnd, days[3], Sessions[2]);
-            }
-            if (seats != null && seats.S13)
-            {
+                    NewEvent(seats, 3, AfternoonSessStart, AfternoonSessEnd, days[3], Sessions[1]);
+                }
+                if (seats != null && seats.S12)
+                {
 
-                NewEvent(seats, 4, MorningSessStart, MorningSessEnd, days[4], Sessions[0]);
-            }
-            if (seats != null && seats.S14)
-            {
+                    NewEvent(seats, 3, EveningSessStart, EveningSessEnd, days[3], Sessions[2]);
+                }
+                if (seats != null && seats.S13)
+                {
 
-                NewEvent(seats, 4, AfternoonSessStart, AfternoonSessEnd, days[4], Sessions[1]);
-            }
-            if (seats != null && seats.S15)
-            {
+                    NewEvent(seats, 4, MorningSessStart, MorningSessEnd, days[4], Sessions[0]);
+                }
+                if (seats != null && seats.S14)
+                {
 
-                NewEvent(seats, 4, EveningSessStart, EveningSessEnd, days[4], Sessions[2]);
-            }
+                    NewEvent(seats, 4, AfternoonSessStart, AfternoonSessEnd, days[4], Sessions[1]);
+                }
+                if (seats != null && seats.S15)
+                {
 
+                    NewEvent(seats, 4, EveningSessStart, EveningSessEnd, days[4], Sessions[2]);
+                }
+            }
             return OutputEvents(calendar);
+
+
+
         }
         /// <summary>
         /// Generate an event from the Seat number
@@ -164,18 +183,23 @@ namespace ASPNZBat.Business.ICal
         //todo send the calendar events
         public string OutputEvents(Calendar cal)
         {
+            //send it back to be sent by email
+            _dbCallsSessionData.SeatBookingsCalOutputToEmail = cal;
+
+            //send it back to output on the screen
             var sb = new StringBuilder();
 
             foreach (var email in cal.Events)
             {
-                sb.AppendLine("From: " + email.DtStart.ToString() + " To " + email.DtEnd);
-                sb.AppendLine("Desc: " + email.Description.ToString() + " By " + email.Name);
+                sb.AppendLine("From: " + email.DtStart + " To " + email.DtEnd);
+                sb.AppendLine("Desc: " + email.Description + " By " + email.Name);
             }
 
             //  File.WriteAllText(@"C:\Users\Gary.001\Desktop", sb.ToString(), Encoding.UTF8);
 
             return sb.ToString();
         }
+
 
     }
 }

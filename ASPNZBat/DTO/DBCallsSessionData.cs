@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace ASPNZBat.DTO
 {
+    using Ical.Net;
     using Models;
     //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state?view=aspnetcore-2.1#dependency-injection
     //https://stackoverflow.com/questions/38138100/what-is-the-difference-between-services-addtransient-service-addscoped-and-serv
@@ -14,6 +15,15 @@ namespace ASPNZBat.DTO
     public class DBCallsSessionData : IDBCallsSessionData
     {
 
-        public SeatBooking lastSeatBooking { get; set; }
+        public List<SeatBooking> lastSeatBooking { get; set; }
+        public Calendar SeatBookingsCalOutputToEmail { get; set; }
+
+
+        public DBCallsSessionData()
+        {
+            //need to instantiate the list
+            lastSeatBooking = new List<SeatBooking>();
+
+        }
     }
 }
