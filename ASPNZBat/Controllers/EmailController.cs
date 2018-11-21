@@ -18,6 +18,7 @@ namespace ASPNZBat.Controllers
     using Ical.Net.Serialization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
+    using SendGrid;
 
     public class EmailController : Controller
     {
@@ -54,7 +55,7 @@ namespace ASPNZBat.Controllers
             return _userManager.FindByIdAsync(_userManager.GetUserId(User)); //_userManager.GetUserAsync(User);
         }
 
-        public IActionResult TestEmail()
+        public async Task<IActionResult> TestEmail()
         {
             //  CurrentUserEmail = _userManager.GetUserId(User);  //GetCurrentUserAsync().Result.Email;
             CurrentUserName = _userManager.GetUserName(User);
@@ -67,8 +68,8 @@ namespace ASPNZBat.Controllers
                 //make sure you only send 1 to a student not heaps
                 if (!sender.Contains(student))
                 {
-                    _emailSender.SendEmailAsync(student, "Update your Sessions",
-                        "You no longer have a session booked. Come back and make some.");
+                    await _emailSender.SendEmailAsync(student, "Update your Sessions",
+                             "You no longer have a session booked. Come back and make some.");
                     //add the user to the dict so it doesn't go again.
                     sender.Add(student);
                 }

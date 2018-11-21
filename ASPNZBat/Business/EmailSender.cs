@@ -22,6 +22,7 @@ namespace ASPNZBat.Business
     public class EmailSender : IEmailSender
     {
 
+
         private readonly SeatBookingDBContext _context;
 
         private readonly UserManager<IdentityUser> _userManager;
@@ -46,12 +47,24 @@ namespace ASPNZBat.Business
         //This is the public method for sending
         public Task SendEmailAsync(string email, string subject, string message)
         {
-
             return Execute(Options.SendGridKey, subject, message, email);
         }
 
         private Task Execute(string apiKey, string subject, string message, string email)
         {
+            //https://github.com/sendgrid/sendgrid-csharp#installation
+
+
+
+            //var from = new EmailAddress("test@example.com", "Example User");
+            //subject = "Sending with SendGrid is Fun";
+            //var to = new EmailAddress("intelproof@gmail.com", "Example User");
+            //var plainTextContent = "and easy to do anywhere, even with C#";
+            //var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            //var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            //return client.SendEmailAsync(msg);
+
 
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
@@ -65,10 +78,10 @@ namespace ASPNZBat.Business
 
             // Disable click tracking.
             // See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
-            msg.TrackingSettings = new TrackingSettings
-            {
-                ClickTracking = new ClickTracking { Enable = false }
-            };
+            //msg.TrackingSettings = new TrackingSettings
+            //{
+            //    ClickTracking = new ClickTracking { Enable = false }
+            //};
 
             return client.SendEmailAsync(msg);
         }
