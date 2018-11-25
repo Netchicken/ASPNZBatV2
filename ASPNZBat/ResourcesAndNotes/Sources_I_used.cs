@@ -43,5 +43,9 @@ namespace ASPNZBat
 
         //setting the secret management tool 
         //  https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-2.1&tabs=visual-studio
+
+
+        //UNit Testing
+        //  https://www.dotnetcurry.com/aspnet-core/1414/unit-testing-aspnet-core
     }
 }

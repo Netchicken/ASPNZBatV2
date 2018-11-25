@@ -22,6 +22,7 @@ namespace ASPNZBat.Controllers
 
     public class EmailController : Controller
     {
+
         private ICalService _calService;
         private IDBCallsSessionData _dbCallsSessionData;
         private readonly SeatBookingDBContext _context;
@@ -60,8 +61,6 @@ namespace ASPNZBat.Controllers
             //  CurrentUserEmail = _userManager.GetUserId(User);  //GetCurrentUserAsync().Result.Email;
             CurrentUserName = _userManager.GetUserName(User);
 
-
-
             List<string> sender = new List<string>();
             foreach (string student in _overdueStudents.FindOverDueStudents())
             {
@@ -89,11 +88,8 @@ namespace ASPNZBat.Controllers
             //empty sender in case it still contains names next time
             sender.Clear();
 
-
-
             return Ok("Emails sent to " + StudentNames);
             //   return View();
-
         }
 
         public IActionResult TestCalendar()

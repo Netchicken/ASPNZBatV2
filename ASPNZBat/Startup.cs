@@ -21,6 +21,7 @@ namespace ASPNZBat
 {
     using Business.ICal;
     using DTO;
+    using Microsoft.Extensions.Logging;
 
     public class Startup
     {
@@ -99,6 +100,7 @@ namespace ASPNZBat
             services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddSingleton<IDBCallsSessionData, DBCallsSessionData>();
             services.AddTransient<ICalService, CalService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

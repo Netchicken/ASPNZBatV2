@@ -13,6 +13,8 @@ using SendGrid.Helpers.Mail;
 
 namespace ASPNZBat.Business
 {
+    using Microsoft.Extensions.Logging;
+
     //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-2.1&tabs=visual-studio
     //https://app.sendgrid.com/guide/integrate/langs/csharp
 
@@ -22,7 +24,7 @@ namespace ASPNZBat.Business
     public class EmailSender : IEmailSender
     {
 
-
+        private readonly ILogger _logger;
         private readonly SeatBookingDBContext _context;
 
         private readonly UserManager<IdentityUser> _userManager;
@@ -30,16 +32,18 @@ namespace ASPNZBat.Business
         private readonly SignInManager<IdentityUser> _signInManager;
         //   private Task<IdentityUser> GetCurrentUserAsync() => _userManager.GetUserAsync(User);
 
-
+        //  //     
         public EmailSender(
             IOptions<AuthMessageSenderOptions> optionsAccessor,
             SeatBookingDBContext context,
-            UserManager<IdentityUser> userManager
-        )
+            UserManager<IdentityUser> userManager,
+            ILogger<EmailSender> logger //You have to add in the type that you want logged, basically the name of the class that you are in.
+            )
         {
             Options = optionsAccessor.Value;
             _context = context;
             _userManager = userManager;
+            _logger = logger;
         }
 
         public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
@@ -47,7 +51,14 @@ namespace ASPNZBat.Business
         //This is the public method for sending
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            return Execute(Options.SendGridKey, subject, message, email);
+            var result = Execute(Options.SendGridKey, subject, message, email);
+
+            _logger.LogInformation("Status displayed: {Message}", result.Status);
+            _logger.LogInformation("CompletedSuccessfully displayed: {Message}", result.IsCompletedSuccessfully);
+            _logger.LogInformation("Exception displayed: {Message}", result.Exception);
+
+            return result;
+
         }
 
         private Task Execute(string apiKey, string subject, string message, string email)
