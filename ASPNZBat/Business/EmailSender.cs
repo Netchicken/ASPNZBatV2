@@ -65,34 +65,29 @@ namespace ASPNZBat.Business
         {
             //https://github.com/sendgrid/sendgrid-csharp#installation
 
-
-
+            // ("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
+            //var client = new SendGridClient(apiKey);
             //var from = new EmailAddress("test@example.com", "Example User");
-            //subject = "Sending with SendGrid is Fun";
-            //var to = new EmailAddress("intelproof@gmail.com", "Example User");
+            //var subject = "Sending with SendGrid is Fun";
+            //var to = new EmailAddress("test@example.com", "Example User");
             //var plainTextContent = "and easy to do anywhere, even with C#";
             //var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
             //var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-
-            //return client.SendEmailAsync(msg);
+            //var response = await client.SendEmailAsync(msg);
 
 
             var client = new SendGridClient(apiKey);
-            var msg = new SendGridMessage()
-            {
-                From = new EmailAddress("Gary.d@visioncollege.ac.nz", "Gary Dix"),
-                Subject = subject,
-                PlainTextContent = message,
-                HtmlContent = message
-            };
-            msg.AddTo(new EmailAddress(email));
-
-            // Disable click tracking.
-            // See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
-            //msg.TrackingSettings = new TrackingSettings
+            //var msg = new SendGridMessage()
             //{
-            //    ClickTracking = new ClickTracking { Enable = false }
+            var from = new EmailAddress("Gary.d@visioncollege.ac.nz", "Gary Dix");
+            var to = new EmailAddress(email, email);
+            var Subject = subject;
+            var plainTextContent = message;
+            var htmlContent = message;
             //};
+            //   msg.AddTo(new EmailAddress(email));
+            var msg = MailHelper.CreateSingleEmail(from, to, Subject, plainTextContent, htmlContent);
+
 
             return client.SendEmailAsync(msg);
         }

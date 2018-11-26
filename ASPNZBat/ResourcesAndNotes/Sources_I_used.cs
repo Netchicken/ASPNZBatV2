@@ -47,5 +47,9 @@ namespace ASPNZBat
 
         //UNit Testing
         //  https://www.dotnetcurry.com/aspnet-core/1414/unit-testing-aspnet-core
+
+
+        //excellent sample projects
+        //https://github.com/dodyg/practical-aspnetcore/tree/master/projects
     }
 }

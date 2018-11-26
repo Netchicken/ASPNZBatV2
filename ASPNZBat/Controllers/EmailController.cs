@@ -18,11 +18,12 @@ namespace ASPNZBat.Controllers
     using Ical.Net.Serialization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Logging;
     using SendGrid;
 
     public class EmailController : Controller
     {
-
+        private readonly ILogger _logger;
         private ICalService _calService;
         private IDBCallsSessionData _dbCallsSessionData;
         private readonly SeatBookingDBContext _context;
@@ -37,7 +38,7 @@ namespace ASPNZBat.Controllers
             SeatBookingDBContext context,
             IEmailSender emailSender,
             UserManager<IdentityUser> userManager,
-            IOverdueStudents overdueStudents, IDBCallsSessionData dbCallsSessionData, ICalService calService)
+            IOverdueStudents overdueStudents, IDBCallsSessionData dbCallsSessionData, ICalService calService, ILogger<EmailController> logger)
         {
             _context = context;
             _overdueStudents = overdueStudents;
@@ -45,6 +46,7 @@ namespace ASPNZBat.Controllers
             _emailSender = emailSender;
             _userManager = userManager;
             _calService = calService;
+            _logger = logger;
         }
 
         //Gets the current user
@@ -61,8 +63,9 @@ namespace ASPNZBat.Controllers
             //  CurrentUserEmail = _userManager.GetUserId(User);  //GetCurrentUserAsync().Result.Email;
             CurrentUserName = _userManager.GetUserName(User);
 
+            _logger.LogInformation("TestEmail method username = {name}", CurrentUserName);
             List<string> sender = new List<string>();
-            foreach (string student in _overdueStudents.FindOverDueStudents())
+            foreach (string student in _overdueStudents.FindOverDueStudents(_overdueStudents.StudentsWithCurrentSchedules(), _overdueStudents.AllStudents()))
             {
                 //make sure you only send 1 to a student not heaps
                 if (!sender.Contains(student))
@@ -77,19 +80,32 @@ namespace ASPNZBat.Controllers
 
             // _emailSender.SendEmailAsync(CurrentUserName, "Update your Sessions", "You no longer have a session booked. Come back and make some.");
 
+            return LogEmailsSent(sender);
+        }
+
+        private IActionResult LogEmailsSent(List<string> sender)
+        {
             //   I want to see who the emails went to.
             string StudentNames = "";
 
-            foreach (var student in sender)
+            if (sender.Count == 0) //no emails sent
             {
-                StudentNames += student + " ";
+                _logger.LogInformation("No Emails sent");
+
+                return Ok("No Emails sent");
             }
+            else
+            {
+                foreach (var student in sender)
+                {
+                    StudentNames += student + " ";
+                }
 
-            //empty sender in case it still contains names next time
-            sender.Clear();
-
-            return Ok("Emails sent to " + StudentNames);
-            //   return View();
+                //empty sender in case it still contains names next time
+                sender.Clear();
+                _logger.LogInformation("Emails sent to  {Message}", StudentNames);
+                return Ok("Emails sent to " + StudentNames);
+            }
         }
 
         public IActionResult TestCalendar()
