@@ -58,7 +58,7 @@ namespace ASPNZBat.Controllers
             return _userManager.FindByIdAsync(_userManager.GetUserId(User)); //_userManager.GetUserAsync(User);
         }
 
-        public async Task<IActionResult> TestEmail()
+        public Task<IActionResult> TestEmail()
         {
             //  CurrentUserEmail = _userManager.GetUserId(User);  //GetCurrentUserAsync().Result.Email;
             CurrentUserName = _userManager.GetUserName(User);
@@ -70,17 +70,20 @@ namespace ASPNZBat.Controllers
                 //make sure you only send 1 to a student not heaps
                 if (!sender.Contains(student))
                 {
-                    await _emailSender.SendEmailAsync(student, "Update your Sessions",
-                             "You no longer have a session booked. Come back and make some.");
+                    _emailSender.SendEmailAsync(student, "Update your Sessions",
+                            "You no longer have a session booked. Come back and make some.");
                     //add the user to the dict so it doesn't go again.
                     sender.Add(student);
                 }
 
             }
 
+            var log = LogEmailsSent(sender);
+            return Task.FromResult<IActionResult>(log);
+
             // _emailSender.SendEmailAsync(CurrentUserName, "Update your Sessions", "You no longer have a session booked. Come back and make some.");
 
-            return LogEmailsSent(sender);
+            //  return LogEmailsSent(sender);
         }
 
         private IActionResult LogEmailsSent(List<string> sender)

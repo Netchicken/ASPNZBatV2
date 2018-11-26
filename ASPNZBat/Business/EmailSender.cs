@@ -51,45 +51,35 @@ namespace ASPNZBat.Business
         //This is the public method for sending
         public Task SendEmailAsync(string email, string subject, string message)
         {
-            var result = Execute(Options.SendGridKey, subject, message, email);
-
-            _logger.LogInformation("Status displayed: {Message}", result.Status);
-            _logger.LogInformation("CompletedSuccessfully displayed: {Message}", result.IsCompletedSuccessfully);
-            _logger.LogInformation("Exception displayed: {Message}", result.Exception);
-
-            return result;
+            Execute(Options.SendGridKey, subject, message, email).Wait();
+            return null;
 
         }
 
-        private Task Execute(string apiKey, string subject, string message, string email)
+        private async Task Execute(string apiKey, string subject, string message, string email)
         {
+            //https://app.sendgrid.com/guide/integrate/langs/csharp
             //https://github.com/sendgrid/sendgrid-csharp#installation
 
-            // ("NAME_OF_THE_ENVIRONMENT_VARIABLE_FOR_YOUR_SENDGRID_KEY");
-            //var client = new SendGridClient(apiKey);
-            //var from = new EmailAddress("test@example.com", "Example User");
-            //var subject = "Sending with SendGrid is Fun";
-            //var to = new EmailAddress("test@example.com", "Example User");
-            //var plainTextContent = "and easy to do anywhere, even with C#";
-            //var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
-            //var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            //var response = await client.SendEmailAsync(msg);
-
-
+            _logger.LogInformation("Details: {Message}", email + " " + subject + " " + message);
             var client = new SendGridClient(apiKey);
-            //var msg = new SendGridMessage()
-            //{
             var from = new EmailAddress("Gary.d@visioncollege.ac.nz", "Gary Dix");
-            var to = new EmailAddress(email, email);
-            var Subject = subject;
+            var to = new EmailAddress(email);
             var plainTextContent = message;
             var htmlContent = message;
-            //};
-            //   msg.AddTo(new EmailAddress(email));
-            var msg = MailHelper.CreateSingleEmail(from, to, Subject, plainTextContent, htmlContent);
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+
+            var result = await client.SendEmailAsync(msg);
 
 
-            return client.SendEmailAsync(msg);
+            _logger.LogInformation("Status displayed: {Message}", result.StatusCode);
+            // _logger.LogInformation("Body displayed: {Message}", result.Body.Headers.Allow);
+            //  _logger.LogInformation("Exception displayed: {Message}", result.);
+            //_logger.LogInformation("Isfaulted displayed: {Message}", result.IsFaulted);
+            //_logger.LogInformation("IsCompleted displayed: {Message}", result.IsCompleted);
+
+            //  return null;
+
         }
     }
 
