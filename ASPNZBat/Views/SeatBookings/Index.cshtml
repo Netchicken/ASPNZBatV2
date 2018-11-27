@@ -21,62 +21,7 @@
     <div class="container-fluid ">
 
         <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayName("Session Date")
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S1)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S2)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S3)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S4)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S5)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S6)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S7)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S8)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S9)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S10)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S11)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S12)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S13)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S14)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.S15)
-                    </th>
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.S16)
-                        </th>*@
-                    <th></th>
-                </tr>
-            </thead>
+
             <tbody>
                 @foreach (var item in Model)
                 {
@@ -86,13 +31,50 @@
                             <label class="badge badge-default trigger">@item.SeatDate.Date.ToShortDateString()</label>
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S1)</span>
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S1" type="checkbox" /> @Html.DisplayFor(modelItem => item.S1)
+                                    <label id="S1L" for="S1" class="custom-control-label ui-corner-all alert-heading">
+
+
+                                        @Html.DisplayNameFor(model => model.S1)
+                                    </label>
+
+                                </span>
+                            </div>
+
+
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S2)</span>
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+                                    @Html.DisplayFor(modelItem => item.S2)
+                                    <input id="S2" type="checkbox" />
+                                    <label id="S2L" for="S2" class="custom-control-label ui-corner-all alert-heading">
+
+
+                                        @Html.DisplayNameFor(model => model.S2)
+                                    </label>
+
+                                </span>
+                            </div>
+                            @*<span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S2)</span>*@
                         </td>
                         <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S3)</span>
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S3" type="checkbox" /> @Html.DisplayFor(modelItem => item.S3)
+                                    <label id="S3L" for="S3" class="custom-control-label ui-corner-all alert-heading">
+
+
+                                        @Html.DisplayNameFor(model => model.S3)
+                                    </label>
+
+                                </span>
+                            </div>
+                            @*<span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S3)</span>*@
                         </td>
                         <td>
                             <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S4)</span>
@@ -164,6 +146,57 @@
                 });
             });
         </script>
+
+
+
+
+
+        //Show and hide sessions that are not being used
+        var lblid = "#S1L"; //create a session label for the session
+        var cbxid = "#S1"; //create a checkbox ID
+        var fid = "#f1"; //create a form ID
+
+
+        List<bool> SessionVis = new List
+            <bool>();
+        SessionVis = ViewData["SessionVisible"] as List
+            <bool>;
+
+        for (int i = 1; i < 16; i++)
+        {
+            lblid = "#S" + i + "L";
+            cbxid = "#S" + i;
+            fid = "#f" + i;
+
+            if (SessionVis[i] == false) //true
+            {
+                <script>
+                    $(document).ready(function() {
+                        //Hide the checkbox intially id="S1L"
+                        $('@cbxid').css('display', 'none');
+                        $("label[id= '@lblid']").css('display', 'none');
+                        $('@fid').css( 'display', 'none');
+                    });
+                </script>
+            }
+
+            else //false
+            {
+                <script>
+                    $(document).ready(function() {
+                        //Show the checkbox intially id="S1L"
+                        $('@cbxid').css('display', 'block');
+                        $("label[id= '@lblid']").css('display', 'block');
+                        $('@fid').css( 'display', 'block');
+                    });
+                </script>
+
+            }
+
+        }
+
+
+
     }
 
 

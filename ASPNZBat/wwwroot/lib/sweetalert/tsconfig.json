@@ -10,6 +10,6 @@
     "lib": ["es2015", "es2016", "dom"]
   },
   "include": [
-    "./src/*.ts"
+    "./src/*.ts", "../../../DTO/IDBCallsSessionDataDTO.cs", "../../../DTO/DBCallsSessionDataDTO.cs"
   ]
 }

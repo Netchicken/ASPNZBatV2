@@ -13,6 +13,8 @@ namespace ASPNZBat.Controllers
         public IActionResult Index()
         {
             return View();
+            //var result = DependencyResolver.Current.GetService<SeatBookingsController>();
+            //return RedirectToAction(SeatBookingsController, "Create");
         }
 
         public IActionResult About()

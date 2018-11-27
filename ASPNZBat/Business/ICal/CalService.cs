@@ -22,29 +22,24 @@ namespace ASPNZBat.Business.ICal
 
     public class CalService : ICalService
     {
-
+        //global calendar that newEvent gets added to
         Calendar calendar = new Calendar();
+        private IDBCallsSessionDataDTO _dbCallsSessionData;
 
-        private IDBCallsSessionData _dbCallsSessionData;
-
-        public CalService(IDBCallsSessionData dbCallsSessionData)
+        public CalService(IDBCallsSessionDataDTO dbCallsSessionData)
         {
             _dbCallsSessionData = dbCallsSessionData;
         }
 
-
         /// <summary>
-        /// Set up a calender of events to be submitted to something
+        /// Set up a calender of events to be submitted as a string
         /// </summary>
-        /// <param name="booking"></param>
-        /// <param name="seatBooking">List of Seatbookings</param>
-        public string testBooking(IEnumerable<SeatBooking> seatBooking)
+        public string CalendarBooking(IEnumerable<SeatBooking> seatBooking)
         {
             //https://stackoverflow.com/questions/52950884/ical-net-viewing-event-data-from-calendar-in-net-and-c-sharp
 
             //book all the seats
             return GetBookedSeats(seatBooking);
-            //   return calendar;
         }
 
         /// <summary>
@@ -56,23 +51,21 @@ namespace ASPNZBat.Business.ICal
             //I hate hardcoding, this should be abstracted out to an admin section
 
             //arrays of data
-            string Description = null;
             string[] days = new[] { " Monday", " Tuesday", " Wednesday", " Thursday", " Friday" };
-            string[] Sessions = new[] { "Morning 9am - 11:30am", "Afternoon 12pm = 2:30pm", "Evening 5:30pm - 8:30pm" };
-            string[] AllSessionTimeStart = new[] { "9:00:00", "12:00:01", "17:30:00" };
-            string[] AllSessionTimeEnd = new[] { "11:30:00", "14:30:01", "20:30:00" };
+            string[] sessions = new[] { "Morning 9am - 11:30am", "Afternoon 12pm = 2:30pm", "Evening 5:30pm - 8:30pm" };
+            string[] allSessionTimeStart = new[] { "9:00:00", "12:00:01", "17:30:00" };
+            string[] allSessionTimeEnd = new[] { "11:30:00", "14:30:01", "20:30:00" };
 
             //time of session to add in to calender from string to timespan
-            TimeSpan MorningSessStart = TimeSpan.Parse(AllSessionTimeStart[0]);
-            TimeSpan MorningSessEnd = TimeSpan.Parse(AllSessionTimeEnd[0]);
-            TimeSpan AfternoonSessStart = TimeSpan.Parse(AllSessionTimeStart[1]);
-            TimeSpan AfternoonSessEnd = TimeSpan.Parse(AllSessionTimeEnd[1]);
-            TimeSpan EveningSessStart = TimeSpan.Parse(AllSessionTimeStart[2]);
-            TimeSpan EveningSessEnd = TimeSpan.Parse(AllSessionTimeEnd[2]);
+            TimeSpan morningSessStart = TimeSpan.Parse(allSessionTimeStart[0]);
+            TimeSpan morningSessEnd = TimeSpan.Parse(allSessionTimeEnd[0]);
+            TimeSpan afternoonSessStart = TimeSpan.Parse(allSessionTimeStart[1]);
+            TimeSpan afternoonSessEnd = TimeSpan.Parse(allSessionTimeEnd[1]);
+            TimeSpan eveningSessStart = TimeSpan.Parse(allSessionTimeStart[2]);
+            TimeSpan eveningSessEnd = TimeSpan.Parse(allSessionTimeEnd[2]);
 
-            DateTime SessionStart = new DateTime();
-            DateTime SessionEnd = new DateTime();
-            SeatBooking nextDaySeats = null;
+
+            //  SeatBooking nextDaySeats = null;
 
             //loop through all the booked sessions and crate a cal event
             foreach (var seats in seatBookings)
@@ -81,75 +74,75 @@ namespace ASPNZBat.Business.ICal
                 //create a calendar event for each booking. Shows details about 
                 if (seats != null && seats.S1)
                 {
-                    NewEvent(seats, 0, MorningSessStart, MorningSessEnd, days[0], Sessions[0]);
+                    NewEvent(seats, 0, morningSessStart, morningSessEnd, days[0], sessions[0]);
                 }
                 if (seats != null && seats.S2)
                 {
-                    NewEvent(seats, 0, AfternoonSessStart, AfternoonSessEnd, days[0], Sessions[1]);
+                    NewEvent(seats, 0, afternoonSessStart, afternoonSessEnd, days[0], sessions[1]);
                 }
                 if (seats != null && seats.S3)
                 {
-                    NewEvent(seats, 0, EveningSessStart, EveningSessEnd, days[0], Sessions[2]);
+                    NewEvent(seats, 0, eveningSessStart, eveningSessEnd, days[0], sessions[2]);
                 }
                 if (seats != null && seats.S4)
                 {
 
-                    NewEvent(seats, 1, MorningSessStart, MorningSessEnd, days[1], Sessions[0]);
+                    NewEvent(seats, 1, morningSessStart, morningSessEnd, days[1], sessions[0]);
                 }
                 if (seats != null && seats.S5)
                 {
 
-                    NewEvent(seats, 1, AfternoonSessStart, AfternoonSessEnd, days[1], Sessions[1]);
+                    NewEvent(seats, 1, afternoonSessStart, afternoonSessEnd, days[1], sessions[1]);
                 }
                 if (seats != null && seats.S6)
                 {
 
-                    NewEvent(seats, 1, EveningSessStart, EveningSessEnd, days[1], Sessions[2]);
+                    NewEvent(seats, 1, eveningSessStart, eveningSessEnd, days[1], sessions[2]);
                 }
                 if (seats != null && seats.S7)
                 {
 
-                    NewEvent(seats, 2, MorningSessStart, MorningSessEnd, days[2], Sessions[0]);
+                    NewEvent(seats, 2, morningSessStart, morningSessEnd, days[2], sessions[0]);
                 }
                 if (seats != null && seats.S8)
                 {
 
-                    NewEvent(seats, 2, AfternoonSessStart, AfternoonSessEnd, days[2], Sessions[1]);
+                    NewEvent(seats, 2, afternoonSessStart, afternoonSessEnd, days[2], sessions[1]);
                 }
                 if (seats != null && seats.S9)
                 {
 
-                    NewEvent(seats, 2, EveningSessStart, EveningSessEnd, days[2], Sessions[2]);
+                    NewEvent(seats, 2, eveningSessStart, eveningSessEnd, days[2], sessions[2]);
                 }
                 if (seats != null && seats.S10)
                 {
 
-                    NewEvent(seats, 3, MorningSessStart, MorningSessEnd, days[3], Sessions[0]);
+                    NewEvent(seats, 3, morningSessStart, morningSessEnd, days[3], sessions[0]);
                 }
                 if (seats != null && seats.S11)
                 {
 
-                    NewEvent(seats, 3, AfternoonSessStart, AfternoonSessEnd, days[3], Sessions[1]);
+                    NewEvent(seats, 3, afternoonSessStart, afternoonSessEnd, days[3], sessions[1]);
                 }
                 if (seats != null && seats.S12)
                 {
 
-                    NewEvent(seats, 3, EveningSessStart, EveningSessEnd, days[3], Sessions[2]);
+                    NewEvent(seats, 3, eveningSessStart, eveningSessEnd, days[3], sessions[2]);
                 }
                 if (seats != null && seats.S13)
                 {
 
-                    NewEvent(seats, 4, MorningSessStart, MorningSessEnd, days[4], Sessions[0]);
+                    NewEvent(seats, 4, morningSessStart, morningSessEnd, days[4], sessions[0]);
                 }
                 if (seats != null && seats.S14)
                 {
 
-                    NewEvent(seats, 4, AfternoonSessStart, AfternoonSessEnd, days[4], Sessions[1]);
+                    NewEvent(seats, 4, afternoonSessStart, afternoonSessEnd, days[4], sessions[1]);
                 }
                 if (seats != null && seats.S15)
                 {
 
-                    NewEvent(seats, 4, EveningSessStart, EveningSessEnd, days[4], Sessions[2]);
+                    NewEvent(seats, 4, eveningSessStart, eveningSessEnd, days[4], sessions[2]);
                 }
             }
             return OutputEvents(calendar);
@@ -168,22 +161,28 @@ namespace ASPNZBat.Business.ICal
             DateTime sessionStart = seats.SeatDate.AddDays(DayNext).Add(morningSessStart);
             DateTime sessionEnd = seats.SeatDate.AddDays(DayNext).Add(morningSessEnd);
             string description = day + " " + session;
+            string seatId = seats.ID.ToString();
 
             //Create a new event with event details
             var vEvent = new CalendarEvent
             {
                 Start = new CalDateTime(sessionStart),
                 End = new CalDateTime(sessionEnd),
-                Description = description,
+                Description = seatId + ": " + description,
                 Name = "NZBAT at Vision College"
+
             };
 
-            calendar.Events.Add(vEvent);
+            calendar.Events.Add(vEvent); //adding in the new events
         }
-        //todo send the calendar events
+        /// <summary>
+        ///Generate the outputs
+        /// 
+        /// </summary>
+        /// <returns> Returns a string that goes to the screen</returns>
         public string OutputEvents(Calendar cal)
         {
-            //send it back to be sent by email
+            //send it back to be sent by email 
             _dbCallsSessionData.SeatBookingsCalOutputToEmail = cal;
 
             //send it back to output on the screen
@@ -199,7 +198,23 @@ namespace ASPNZBat.Business.ICal
 
             return sb.ToString();
         }
+        /// <summary>
+        /// Send the data to the Index page for users to check their booking, need to tie it into the Session numbers
+        /// </summary>
+        /// <param name="cal"></param>
+        /// <returns>Returns a list of data to be looped through on the index page</returns>
+        public List<string> OutputEventsToIndex(Calendar cal)
+        {
+            //send it back to output on the screen
+            var sessions = new List<string>();
+            foreach (var email in cal.Events)
+            {
+                sessions.Add(email.Description);
+            }
 
+            _dbCallsSessionData.SeatBookingsOutputToIndex = sessions;
+            return sessions;
+        }
 
     }
 }

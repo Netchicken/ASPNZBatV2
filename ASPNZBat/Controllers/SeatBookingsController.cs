@@ -22,7 +22,9 @@ namespace ASPNZBat.Controllers
 {
     public class SeatBookingsController : Controller
     {
-        private IDBCallsSessionData _dbCallsSessionData;
+        private IGenerateCalendarEventsForControllers _generateCalendarEventsForControllers;
+        private ICalService _calService;
+        private IDBCallsSessionDataDTO _dbCallsSessionData;
         private readonly SeatBookingDBContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -33,30 +35,48 @@ namespace ASPNZBat.Controllers
         public SeatBookingsController(
             SeatBookingDBContext context,
            UserManager<IdentityUser> userManager,
-            ISessions Sessions,
-            IDBCallsSessionData dbCallsSessionData
-            )
+            ISessions sessions,
+            IDBCallsSessionDataDTO dbCallsSessionData,
+            ICalService calService, IGenerateCalendarEventsForControllers generateCalendarEventsForControllers)
         {
             _context = context;
             _userManager = userManager;
-            _sessions = Sessions;
+            _sessions = sessions;
             _dbCallsSessionData = dbCallsSessionData;
-
+            _calService = calService;
+            _generateCalendarEventsForControllers = generateCalendarEventsForControllers;
         }
 
 
 
 
         // GET: SeatBookings
-        public async Task<IActionResult> Index()
+        public ViewResult Index()
         {
+            //get the dat of last month
             DateTime LastMonth = DateTime.Today;
             LastMonth = LastMonth.AddMonths(-1);
 
-            return View(await _context.SeatBooking
+            //return the bookings for that user then
+            var lastMonthbookings = _context.SeatBooking
                 .Where(s => s.StudentEmail == _userManager.GetUserName(User) && s.SeatDate > LastMonth)
-             .OrderBy(s => s.SeatDate)
-              .ToListAsync());
+                .OrderBy(s => s.SeatDate)
+                .ToList();
+            var user = _userManager.GetUserName(User);
+
+            //return back a list of bookings in the 
+            ViewData["BookedSessions"] =
+                _generateCalendarEventsForControllers.GenerateCalendarEventsForSeatBookings(user, lastMonthbookings);
+
+            //Sessions that are visible or not
+            ViewData["SessionVisible"] = _sessions.GetAdminData();
+
+            //await _context.SeatBooking.Where(s => s.StudentEmail == _userManager.GetUserName(User) && s.SeatDate > LastMonth)
+            //    .OrderBy(s => s.SeatDate)
+            //     .ToListAsync()
+
+
+            return View(lastMonthbookings);
 
 
 

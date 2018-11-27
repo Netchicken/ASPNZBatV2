@@ -12,14 +12,17 @@ namespace ASPNZBat.DTO
 
     //How to keep state during a session - can't use static methods Singleton which creates a single instance throughout the application. It creates the instance for the first time and reuses the same object in the all calls. Scoped lifetime services are created once per request within the scope. It is equivalent to Singleton in the current scope.
 
-    public class DBCallsSessionData : IDBCallsSessionData
+
+    // This DTO is pointless. should have just directly linked to class
+    public class DbCallsSessionDataDto : IDBCallsSessionDataDTO
     {
 
         public List<SeatBooking> lastSeatBooking { get; set; }
         public Calendar SeatBookingsCalOutputToEmail { get; set; }
 
+        public List<string> SeatBookingsOutputToIndex { get; set; }
 
-        public DBCallsSessionData()
+        public DbCallsSessionDataDto()
         {
             //need to instantiate the list
             lastSeatBooking = new List<SeatBooking>();

@@ -51,6 +51,7 @@ namespace ASPNZBat.Business
         /// <returns>list of all students ever student emails</returns>
         public List<string> AllStudents()
         {
+            //todo we need to be able to filter students so that we don't return all students ever. Either have the ability to cull them by admin, or by date. 
             return _adminContext.Users.Select(s => s.UserName).Distinct().ToList();
         }
         /// <summary>

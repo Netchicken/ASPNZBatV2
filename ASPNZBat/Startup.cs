@@ -98,8 +98,9 @@ namespace ASPNZBat
             //  services.AddTransient<IEmailSender, DevEmailSender>();
             services.AddTransient<IOverdueStudents, OverdueStudents>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
-            services.AddSingleton<IDBCallsSessionData, DBCallsSessionData>();
+            services.AddSingleton<IDBCallsSessionDataDTO, DbCallsSessionDataDto>();
             services.AddTransient<ICalService, CalService>();
+            services.AddTransient<IGenerateCalendarEventsForControllers, GenerateCalendarEventsForControllers>();
 
         }
 
