@@ -14,6 +14,7 @@
                     <div class="intro-text">
                         <h1 style="color:azure">Welcome to <span class="brand">Vision College</span></h1>
                         <h2>Your Seat bookings</h2>
+                        <h4>Click on a session to edit it, or use the table below</h4>
                     </div>
                 </div>
             </div>
@@ -23,11 +24,7 @@
 <div id="services" class="text-center">
     <div class="container-fluid ">
 
-        <div class="row">
-            <div class="col-md-4 label ">   </div>
-            <div class="col-md-4 label label-info">Click on a session to edit it, or use the table below</div>
-            <div class="col-md-4 label ">   </div>
-        </div>
+        <p></p>
 
         @foreach (var item in (IEnumerable<CalendarEvent>)ViewData["BookedSessions"])
         {
@@ -335,8 +332,8 @@
         var lblid = "#S1L"; //create a session label for the session
         var cbxid = "#S1"; //create a checkbox ID
         var fid = "#f1"; //create a form ID
-        var idtd = "#1td"; //create a form ID
-        var idth = "#1th"; //create a form ID
+        var idtd = "#1td"; //create a cell ID
+        var idth = "#1th"; //create a cell header ID
 
 
         List<bool> SessionVis = new List

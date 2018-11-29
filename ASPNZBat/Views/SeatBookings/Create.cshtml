@@ -101,10 +101,12 @@
         var lblid = "#S1L"; //create a session label for the session
         var cbxid = "#S1"; //create a checkbox ID
         var fid = "#f1"; //create a form ID
+        var idtd = "#1td"; //create a cell ID
+        var sSid = "#sS1"; //create a cell header ID
 
 
         List<bool> SessionVis = new List
-            <bool>();
+    <bool>();
         SessionVis = ViewData["SessionVisible"] as List
             <bool>;
 
@@ -113,6 +115,8 @@
             lblid = "#S" + i + "L";
             cbxid = "#S" + i;
             fid = "#f" + i;
+            idtd = i + "td";
+            sSid = "sS" + i;
 
             if (SessionVis[i] == false) //true
             {
@@ -121,7 +125,9 @@
                             //Hide the checkbox intially id="S1L"
                             $('@cbxid').css('display', 'none');
                             $("label[id= '@lblid']").css('display', 'none');
-                            $('@fid').css( 'display', 'none');
+                            $('@fid').css('display', 'none');
+                            $("td[id= '@idtd']").css('display', 'none');
+                            $("th[id= '@sSid']").css('display', 'none');
                         });
                 </script>
             }
