@@ -37,7 +37,7 @@ namespace ASPNZBat.Business.ICal
 
             var seatBooking = _dbCallsSessionData.lastSeatBooking;
             //calendar as string to be outputted to screen
-            allevents += _calService.CalendarBooking(seatBooking);
+            allevents += _calService.CalendarBooking(seatBooking, false);
 
             Calendar cal = new Calendar();
             cal = _dbCallsSessionData.SeatBookingsCalOutputToEmail;
@@ -54,16 +54,21 @@ namespace ASPNZBat.Business.ICal
 
             return allevents;
         }
-
+        /// <summary>
+        /// Generate the calendar events for the last month
+        /// Probably NOT USED
+        /// </summary>
+        /// <param name="currentUserName"></param>
+        /// <param name="bookingsLastMonth"></param>
+        /// <returns></returns>
         public string GenerateCalendarEventsForSeatBookings(string currentUserName, IEnumerable<SeatBooking> bookingsLastMonth)
         {
-            string allevents = "";
-            //get back all the calander events
-
+            //get back all the calender events for the last month
+            string allevents = null;
             //pass in all the booking events.
             var seatBooking = bookingsLastMonth;
             //calendar as string to be outputted to screen
-            allevents += _calService.CalendarBooking(seatBooking);
+            allevents += _calService.CalendarBooking(seatBooking, true);
 
             Calendar cal = new Calendar();
             cal = _dbCallsSessionData.SeatBookingsCalOutputToEmail;

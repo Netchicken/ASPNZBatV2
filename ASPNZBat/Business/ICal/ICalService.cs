@@ -10,11 +10,13 @@ using System.Web.Http;
 namespace ASPNZBat.Business.ICal
 {
     using Ical.Net;
+    using Ical.Net.CalendarComponents;
     using Models;
 
     public interface ICalService
     {
-        string CalendarBooking(IEnumerable<SeatBooking> seatBooking);
-        List<string> OutputEventsToIndex(Calendar cal);
+        string CalendarBooking(IEnumerable<SeatBooking> seatBooking, bool isEventController);
+        List<CalendarEvent> OutputEventsToIndex(Calendar cal);
+        string GetBookedSeats(IEnumerable<SeatBooking> seatBookings, bool isEventController);
     }
 }

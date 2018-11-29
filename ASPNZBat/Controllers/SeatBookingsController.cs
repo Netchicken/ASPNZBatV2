@@ -24,7 +24,7 @@ namespace ASPNZBat.Controllers
     {
         private IGenerateCalendarEventsForControllers _generateCalendarEventsForControllers;
         private ICalService _calService;
-        private IDBCallsSessionDataDTO _dbCallsSessionData;
+        private IDBCallsSessionDataDTO _dbCallsSessionDataDTO;
         private readonly SeatBookingDBContext _context;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -42,7 +42,7 @@ namespace ASPNZBat.Controllers
             _context = context;
             _userManager = userManager;
             _sessions = sessions;
-            _dbCallsSessionData = dbCallsSessionData;
+            _dbCallsSessionDataDTO = dbCallsSessionData;
             _calService = calService;
             _generateCalendarEventsForControllers = generateCalendarEventsForControllers;
         }
@@ -53,49 +53,35 @@ namespace ASPNZBat.Controllers
         // GET: SeatBookings
         public ViewResult Index()
         {
-            //get the dat of last month
+
+            //get the date of last month
             DateTime LastMonth = DateTime.Today;
+
+            //todo change this to after today, they don't want to know old bookings. - or last week so they can see what they made comment out next line
+
             LastMonth = LastMonth.AddMonths(-1);
 
-            //return the bookings for that user then
+            //return the bookings for that user from that date to today
             var lastMonthbookings = _context.SeatBooking
                 .Where(s => s.StudentEmail == _userManager.GetUserName(User) && s.SeatDate > LastMonth)
-                .OrderBy(s => s.SeatDate)
+                .OrderByDescending(s => s.SeatDate)
                 .ToList();
-            var user = _userManager.GetUserName(User);
 
-            //return back a list of bookings in the 
-            ViewData["BookedSessions"] =
-                _generateCalendarEventsForControllers.GenerateCalendarEventsForSeatBookings(user, lastMonthbookings);
+            //Get the current user
+            //  var user = _userManager.GetUserName(User);
+
+            //runs the method that generates the calender entries, but we don't want the return only the second line below.
+            var IgnoreThisOutput = _calService.GetBookedSeats(lastMonthbookings, true);
+            ViewData["BookedSessions"] = _dbCallsSessionDataDTO.SeatBookingsOutputToIndex;
+
+
+            //     _generateCalendarEventsForControllers.GenerateCalendarEventsForSeatBookings(user, lastMonthbookings);
 
             //Sessions that are visible or not
             ViewData["SessionVisible"] = _sessions.GetAdminData();
 
-            //await _context.SeatBooking.Where(s => s.StudentEmail == _userManager.GetUserName(User) && s.SeatDate > LastMonth)
-            //    .OrderBy(s => s.SeatDate)
-            //     .ToListAsync()
-
 
             return View(lastMonthbookings);
-
-
-
-            //var result = data.Where(d => d.Type == "Deposit")
-            //.GroupBy(groupByClause)
-            //.Select(g => new {
-            //    DateKey = g.Key,
-            //    TotalDepositAmount = g.Sum(d => d.Amount),
-            //    DepositCount = g.Count(),
-            //});
-
-
-
-            //return View(await _context.SeatBooking
-            //    .Where(s => s.StudentEmail == _userManager.GetUserId(User))
-            //   .Select(s => new { s.SeatDate, s.S1, s.S2, s.S3, s.S4, s.S5, s.S6, s.S7, s.S8, s.S9, s.S10, s.S11, s.S12, s.S13, s.S14, s.S15 })
-            //    .OrderByDescending(s => s.SeatDate)
-            //    .ToListAsync());
-
 
 
         }
@@ -163,7 +149,7 @@ namespace ASPNZBat.Controllers
                 //  _context.SeatBooking.Remove(DeleteSeatBooking);
 
                 //Save locally for sending to calendar
-                _dbCallsSessionData.lastSeatBooking.Add(seatBooking);
+                _dbCallsSessionDataDTO.lastSeatBooking.Add(seatBooking);
 
                 seatBooking.StudentEmail = _userManager.GetUserName(User);
 
@@ -183,7 +169,8 @@ namespace ASPNZBat.Controllers
                 return NotFound();
             }
 
-
+            //Sessions that are visible or not
+            ViewData["SessionVisible"] = _sessions.GetAdminData();
 
             var seatBooking = _context.SeatBooking
                 .Where(b => b.ID == id)
@@ -204,9 +191,14 @@ namespace ASPNZBat.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,SeatDate,S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15")] SeatBooking seatBooking)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,SeatDate,S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15, StudentEmail")] SeatBooking seatBooking)
         {
-            if (id != seatBooking.ID)
+            //get the date of last month
+            DateTime LastMonth = DateTime.Today;
+            LastMonth.AddMonths(-1);
+
+            //if the date is older than lastmonth - catches when the date isn't being carried across
+            if (id != seatBooking.ID && seatBooking.SeatDate < LastMonth && seatBooking.StudentEmail != string.Empty)
             {
                 return NotFound();
             }

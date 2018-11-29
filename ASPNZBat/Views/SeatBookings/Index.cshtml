@@ -1,4 +1,7 @@
-﻿@model IEnumerable<ASPNZBat.Models.SeatBooking>
+﻿@using System.Collections
+@using Ical.Net
+@using Ical.Net.CalendarComponents
+@model IEnumerable<ASPNZBat.Models.SeatBooking>
 @{
     ViewData["Title"] = "Index";
 }
@@ -20,8 +23,93 @@
 <div id="services" class="text-center">
     <div class="container-fluid ">
 
-        <table class="table">
+        <div class="row">
+            <div class="col-md-4 label ">   </div>
+            <div class="col-md-4 label label-info">Click on a session to edit it, or use the table below</div>
+            <div class="col-md-4 label ">   </div>
+        </div>
 
+        @foreach (var item in (IEnumerable<CalendarEvent>)ViewData["BookedSessions"])
+        {
+            <div class="form-group col-xs-6 col-md-3 text-left">
+                <a asp-action="Edit" asp-route-id="@item.Summary">
+                    <label class="badge badge-light trigger">
+                        <small>
+                            @item.DtStart.Date.ToShortDateString()  @item.Categories[0] <br>
+
+                            @item.Categories[1] <br>
+                            <small class="text-muted">   Session @Html.DisplayFor(modelItem => item.Class) </small>
+                        </small>
+                    </label>
+                </a>
+            </div>
+        }
+
+
+
+
+
+
+
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("Session Date")
+                    </th>
+                    <th id="1th">
+                        @Html.DisplayNameFor(model => model.S1)
+                    </th>
+                    <th id="2th">
+                        @Html.DisplayNameFor(model => model.S2)
+                    </th>
+                    <th id="3th">
+                        @Html.DisplayNameFor(model => model.S3)
+                    </th>
+                    <th id="4th">
+                        @Html.DisplayNameFor(model => model.S4)
+                    </th>
+                    <th id="5th">
+                        @Html.DisplayNameFor(model => model.S5)
+                    </th>
+                    <th id="6th">
+                        @Html.DisplayNameFor(model => model.S6)
+                    </th>
+                    <th id="7th">
+                        @Html.DisplayNameFor(model => model.S7)
+                    </th>
+                    <th id="8th">
+                        @Html.DisplayNameFor(model => model.S8)
+                    </th>
+                    <th id="9th">
+                        @Html.DisplayNameFor(model => model.S9)
+                    </th>
+                    <th id="10th">
+                        @Html.DisplayNameFor(model => model.S10)
+                    </th>
+                    <th id="11th">
+                        @Html.DisplayNameFor(model => model.S11)
+                    </th>
+                    <th id="12th">
+                        @Html.DisplayNameFor(model => model.S12)
+                    </th>
+                    <th id="13th">
+                        @Html.DisplayNameFor(model => model.S13)
+                    </th>
+                    <th id="14th">
+                        @Html.DisplayNameFor(model => model.S14)
+                    </th>
+                    <th id="15th">
+                        @Html.DisplayNameFor(model => model.S15)
+                    </th>
+                    @*<th>
+                            @Html.DisplayNameFor(model => model.S16)
+                        </th>*@
+                    <th></th>
+                </tr>
+            </thead>
             <tbody>
                 @foreach (var item in Model)
                 {
@@ -30,38 +118,34 @@
                         <td>
                             <label class="badge badge-default trigger">@item.SeatDate.Date.ToShortDateString()</label>
                         </td>
-                        <td>
+
+                        <td id="1td">
                             <div class="checkbox checkbox-info checkbox-circle">
                                 <span class="sessioncheckbox">
 
-                                    <input id="S1" type="checkbox" /> @Html.DisplayFor(modelItem => item.S1)
+                                    <input id="S1" type="checkbox" />
+                                    @Html.DisplayFor(modelItem => item.S1)
                                     <label id="S1L" for="S1" class="custom-control-label ui-corner-all alert-heading">
 
-
-                                        @Html.DisplayNameFor(model => model.S1)
                                     </label>
 
                                 </span>
                             </div>
-
-
+                            @*Html.DisplayNameFor(model => model.S1)*@
+                            @*<span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S1)</span>*@
                         </td>
-                        <td>
+                        <td id="2td">
                             <div class="checkbox checkbox-info checkbox-circle">
                                 <span class="sessioncheckbox">
-                                    @Html.DisplayFor(modelItem => item.S2)
-                                    <input id="S2" type="checkbox" />
+
+                                    <input id="S2" type="checkbox" />   @Html.DisplayFor(modelItem => item.S2)
                                     <label id="S2L" for="S2" class="custom-control-label ui-corner-all alert-heading">
-
-
-                                        @Html.DisplayNameFor(model => model.S2)
                                     </label>
-
                                 </span>
                             </div>
                             @*<span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S2)</span>*@
                         </td>
-                        <td>
+                        <td id="3td">
                             <div class="checkbox checkbox-info checkbox-circle">
                                 <span class="sessioncheckbox">
 
@@ -69,52 +153,148 @@
                                     <label id="S3L" for="S3" class="custom-control-label ui-corner-all alert-heading">
 
 
-                                        @Html.DisplayNameFor(model => model.S3)
+                                        @*@Html.DisplayNameFor(model => model.S3)*@
                                     </label>
 
                                 </span>
                             </div>
                             @*<span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S3)</span>*@
                         </td>
-                        <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S4)</span>
+                        <td id="4td">
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S42" type="checkbox" />  @Html.DisplayFor(modelItem => item.S4)
+                                    <label id="S4L" for="S4" class="custom-control-label ui-corner-all alert-heading">
+                                    </label>
+                                </span>
+                            </div>
+
+                            @*<span class="sessioncheckbox"> @Html.DisplayFor(modelItem => item.S4)</span>*@
                         </td>
-                        <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S5)</span>
+                        <td id="5td">
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S5" type="checkbox" /> @Html.DisplayFor(modelItem => item.S5)
+                                    <label id="S5L" for="S5" class="custom-control-label ui-corner-all alert-heading">
+                                    </label>
+                                </span>
+                            </div>
+                            @*<span class="sessioncheckbox"> @Html.DisplayFor(modelItem => item.S5)</span>*@
                         </td>
-                        <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S6)</span>
+                        <td id="6td">
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S6" type="checkbox" /> @Html.DisplayFor(modelItem => item.S6)
+                                    <label id="S6L" for="S6" class="custom-control-label ui-corner-all alert-heading">
+                                    </label>
+                                </span>
+                            </div>
+                            @*<span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S6)</span>*@
                         </td>
-                        <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S7)</span>
+                        <td id="7td">
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S7" type="checkbox" />  @Html.DisplayFor(modelItem => item.S7)
+                                    <label id="S7L" for="S7" class="custom-control-label ui-corner-all alert-heading">
+                                    </label>
+                                </span>
+                            </div>
+                            @*<span class="sessioncheckbox"> @Html.DisplayFor(modelItem => item.S7)</span>*@
                         </td>
-                        <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S8)</span>
+                        <td id="8td">
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S8" type="checkbox" /> @Html.DisplayFor(modelItem => item.S8)
+                                    <label id="S8L" for="S8" class="custom-control-label ui-corner-all alert-heading">
+                                    </label>
+                                </span>
+                            </div>
+                            @*<span class="sessioncheckbox"> @Html.DisplayFor(modelItem => item.S8)</span>*@
                         </td>
-                        <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S9)</span>
+                        <td id="9td">
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S9" type="checkbox" /> @Html.DisplayFor(modelItem => item.S9)
+                                    <label id="S9L" for="S9" class="custom-control-label ui-corner-all alert-heading">
+                                    </label>
+                                </span>
+                            </div>
+                            @*<span class="sessioncheckbox"> @Html.DisplayFor(modelItem => item.S9)</span>*@
                         </td>
-                        <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S10)</span>
+                        <td id="10td">
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S10" type="checkbox" /> @Html.DisplayFor(modelItem => item.S10)
+                                    <label id="S10L" for="S10" class="custom-control-label ui-corner-all alert-heading">
+                                    </label>
+                                </span>
+                            </div>
+                            @*<span class="sessioncheckbox"> @Html.DisplayFor(modelItem => item.S10)</span>*@
                         </td>
-                        <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S11)</span>
+                        <td id="11td">
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S11" type="checkbox" />  @Html.DisplayFor(modelItem => item.S11)
+                                    <label id="S11L" for="S11" class="custom-control-label ui-corner-all alert-heading">
+                                    </label>
+                                </span>
+                            </div>
+                            @*<span class="sessioncheckbox"> @Html.DisplayFor(modelItem => item.S11)</span>*@
                         </td>
-                        <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S12)</span>
+                        <td id="12td">
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S12" type="checkbox" />  @Html.DisplayFor(modelItem => item.S12)
+                                    <label id="S12L" for="S12" class="custom-control-label ui-corner-all alert-heading">
+                                    </label>
+                                </span>
+                            </div>
+                            @*<span class="sessioncheckbox"> @Html.DisplayFor(modelItem => item.S12)</span>*@
                         </td>
-                        <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S13)</span>
+                        <td id="13td">
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S13" type="checkbox" />  @Html.DisplayFor(modelItem => item.S13)
+                                    <label id="S13L" for="S13" class="custom-control-label ui-corner-all alert-heading">
+                                    </label>
+                                </span>
+                            </div>
+                            @*<span class="sessioncheckbox"> @Html.DisplayFor(modelItem => item.S13)</span>*@
                         </td>
-                        <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S14)</span>
+                        <td id="14td">
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S14" type="checkbox" />  @Html.DisplayFor(modelItem => item.S14)
+                                    <label id="S14L" for="S14" class="custom-control-label ui-corner-all alert-heading">
+                                    </label>
+                                </span>
+                            </div>
+                            @*<span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S14)</span>*@
                         </td>
-                        <td>
-                            <span class="sessioncheckbox">  @Html.DisplayFor(modelItem => item.S15)</span>
+                        <td id="15td">
+                            <div class="checkbox checkbox-info checkbox-circle">
+                                <span class="sessioncheckbox">
+
+                                    <input id="S15" type="checkbox" />    @Html.DisplayFor(modelItem => item.S15)
+                                    <label id="S15L" for="S15" class="custom-control-label ui-corner-all alert-heading">
+                                    </label>
+                                </span>
+                            </div>
+                            @*<span class="sessioncheckbox"> @Html.DisplayFor(modelItem => item.S15)</span>*@
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
                             <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
                         </td>
                     </tr>
@@ -136,15 +316,15 @@
             //<input disabled="disabled" class="check-box" type="checkbox" checked="checked">
             //<input disabled="disabled" class="check-box" type="checkbox">
 
-            $(document).ready(function () {
-                $(".sessioncheckbox").each(function () {
-                    // if (document.getElementsByClassName(".sessioncheckbox").innerHTML)
-                    // check checked state of checkboxes
-                    if ($(this).find("#checkbox").prop("checked", true)) {
-                        $(".sessioncheckbox").addClass("badge badge-default trigger");
-                    };
-                });
-            });
+            //$(document).ready(function () {
+            //    $(".sessioncheckbox").each(function () {
+            //        // if (document.getElementsByClassName(".sessioncheckbox").innerHTML)
+            //        // check checked state of checkboxes
+            //        if ($(this).find("#checkbox").prop("checked", true)) {
+            //            //  $(".sessioncheckbox").addClass("badge badge-default trigger");
+            //        };
+            //    });
+            //});
         </script>
 
 
@@ -155,6 +335,8 @@
         var lblid = "#S1L"; //create a session label for the session
         var cbxid = "#S1"; //create a checkbox ID
         var fid = "#f1"; //create a form ID
+        var idtd = "#1td"; //create a form ID
+        var idth = "#1th"; //create a form ID
 
 
         List<bool> SessionVis = new List
@@ -167,6 +349,9 @@
             lblid = "#S" + i + "L";
             cbxid = "#S" + i;
             fid = "#f" + i;
+            idtd = i + "td";
+            idth = i + "th";
+
 
             if (SessionVis[i] == false) //true
             {
@@ -175,7 +360,9 @@
                         //Hide the checkbox intially id="S1L"
                         $('@cbxid').css('display', 'none');
                         $("label[id= '@lblid']").css('display', 'none');
-                        $('@fid').css( 'display', 'none');
+                        $('@fid').css('display', 'none');
+                        $("td[id= '@idtd']").css('display', 'none');
+                        $("th[id= '@idth']").css('display', 'none');
                     });
                 </script>
             }
@@ -188,7 +375,7 @@
                         $('@cbxid').css('display', 'block');
                         $("label[id= '@lblid']").css('display', 'block');
                         $('@fid').css( 'display', 'block');
-                    });
+                });
                 </script>
 
             }

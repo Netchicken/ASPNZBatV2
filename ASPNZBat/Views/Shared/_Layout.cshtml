@@ -42,16 +42,20 @@
                 </button>
                 <a class="navbar-brand page-scroll" href="#page-top"><img src="~/image/logo.svg" height="45" alt="Atena" data-retina="true"></a>
             </div>
+
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a asp-area="" asp-controller="Email" asp-action="TestEmail">Send Email</a></li>
-                    <li><a asp-area="" asp-controller="Email" asp-action="TestCalendar">Send Cal</a></li>
-                    <li><a asp-area="" asp-controller="SeatBookings" asp-action="Create">Create A Booking</a></li>
-                    <li><a asp-area="" asp-controller="SeatBookings" asp-action="Index">Check Your Bookings</a></li>
-                    <li> <partial name="_LoginPartial" /></li>
+                    <li> <small><a asp-area="" asp-controller="Email" asp-action="TestEmail">Send Email</a> </small></li>
+                    <li><small><a asp-area="" asp-controller="Email" asp-action="TestCalendar">Send Cal</a></small></li>
+                    <li><small><a asp-area="" asp-controller="SeatBookings" asp-action="Create">Create A Booking</a></small></li>
+                    <li><small><a asp-area="" asp-controller="SeatBookings" asp-action="Index">Check Your Bookings</a></small></li>
+                    <li><small> <partial name="_LoginPartial" /></small></li>
                 </ul>
+
             </div>
+
         </div>
     </nav>
     <partial name="_CookieConsentPartial" />
