@@ -1,9 +1,12 @@
 ﻿@using System.Collections
+@using Humanizer
 @using Ical.Net
 @using Ical.Net.CalendarComponents
+@using Ical.Net.DataTypes
 @model IEnumerable<ASPNZBat.Models.SeatBooking>
 @{
     ViewData["Title"] = "Index";
+
 }
 <!-- Header -->
 <header id="header">
@@ -28,19 +31,26 @@
 
         @foreach (var item in (IEnumerable<CalendarEvent>)ViewData["BookedSessions"])
         {
-            <div class="form-group col-xs-6 col-md-3 text-left">
+            <div class="form-group col-xs-6 col-md-2 text-left">
                 <a asp-action="Edit" asp-route-id="@item.Summary">
                     <label class="badge badge-light trigger">
+                        @item.DtStart.Date.Humanize()<br />
                         <small>
-                            @item.DtStart.Date.ToShortDateString()  @item.Categories[0] <br>
+                            @item.DtStart.Date.ToShortDateString() @item.Categories[0] <br>
 
                             @item.Categories[1] <br>
-                            <small class="text-muted">   Session @Html.DisplayFor(modelItem => item.Class) </small>
+                        </small>
+                        <small class="text-muted">
+                            Session @Html.DisplayFor(modelItem => item.Class) @item.Summary
                         </small>
                     </label>
                 </a>
             </div>
+
+
+
         }
+
 
 
 

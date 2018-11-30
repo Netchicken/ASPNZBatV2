@@ -101,13 +101,13 @@
         var lblid = "#S1L"; //create a session label for the session
         var cbxid = "#S1"; //create a checkbox ID
         var fid = "#f1"; //create a form ID
-        var idtd = "#1td"; //create a cell ID
-        var sSid = "#sS1"; //create a cell header ID
+        var idth = "#1th"; //create a cellheader ID id="1th hide the table header"
+        var sSid = "#sS1"; //create a cell  ID id="sS1 hide the table cells"
+        var sessHide = "#sessHide"; //not used
 
-
-        List<bool> SessionVis = new List
-    <bool>();
-        SessionVis = ViewData["SessionVisible"] as List
+        //Cant move to js because of the Razor ViewData
+        List<bool> IsSessionVis = new List<bool>();
+        IsSessionVis = ViewData["SessionVisible"] as List
             <bool>;
 
         for (int i = 1; i < 16; i++)
@@ -115,10 +115,10 @@
             lblid = "#S" + i + "L";
             cbxid = "#S" + i;
             fid = "#f" + i;
-            idtd = i + "td";
+            idth = i + "th";
             sSid = "sS" + i;
 
-            if (SessionVis[i] == false) //true
+            if (IsSessionVis[i] == false) //the bool shows if the session is running or not
             {
                 <script>
                         $(document).ready(function() {
@@ -126,8 +126,8 @@
                             $('@cbxid').css('display', 'none');
                             $("label[id= '@lblid']").css('display', 'none');
                             $('@fid').css('display', 'none');
-                            $("td[id= '@idtd']").css('display', 'none');
-                            $("th[id= '@sSid']").css('display', 'none');
+                            $("th[id= '@idth']").css('display', 'none');
+                            $("td[id= '@sSid']").css('display', 'none');
                         });
                 </script>
             }

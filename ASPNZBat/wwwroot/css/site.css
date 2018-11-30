@@ -12,7 +12,11 @@ SessionGrid {
     color: #fff !important;
 }
 
+/*.sessHide {
+}*/
 
+/*.sess {
+}*/
 
 body {
     padding-top: 50px;
@@ -148,11 +152,11 @@ for details on configuring this project to bundle and minify static web assets. 
 
 .trigger {
     padding: 5px 10px;
-    font-size: 16px;
+    /*font-size: 16px;*/
     font-weight: 600;
     border-radius: 10px;
-    background-color: #eee;
-    color: #212121;
+    /*background-color: #eee;
+    color: #212121;*/
     display: inline-block;
     /*margin: 2px 5px;*/
 }

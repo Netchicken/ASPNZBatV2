@@ -8644,7 +8644,7 @@ a.waves-effect, a.waves-light {
         padding: 10px;
         font-size: 0.9375rem;
         font-weight: 300;
-        color: #000 !important;
+        /*color: #000 !important;*/
     }
 
 @media (max-width: 600px) {

@@ -32,6 +32,7 @@
 </head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
     <nav id="menu" class="navbar navbar-default navbar-fixed-top">
+        <a class="navbar-brand" href="#page-top"><img src="~/image/logo.svg" height="45" alt="Atena" data-retina="true"></a>
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -40,18 +41,32 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand page-scroll" href="#page-top"><img src="~/image/logo.svg" height="45" alt="Atena" data-retina="true"></a>
+
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li> <small><a asp-area="" asp-controller="Email" asp-action="TestEmail">Send Email</a> </small></li>
-                    <li><small><a asp-area="" asp-controller="Email" asp-action="TestCalendar">Send Cal</a></small></li>
-                    <li><small><a asp-area="" asp-controller="SeatBookings" asp-action="Create">Create A Booking</a></small></li>
-                    <li><small><a asp-area="" asp-controller="SeatBookings" asp-action="Index">Check Your Bookings</a></small></li>
-                    <li><small> <partial name="_LoginPartial" /></small></li>
+                    <li class=" dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            What Shall We Do?
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-controller="SeatBookings" asp-action="Create">Create A Booking</a>
+                            <a class="dropdown-item" asp-controller="SeatBookings" asp-action="Index">Check Your Bookings</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-controller="Email" asp-action="TestEmail">Send Email</a>
+                            <a class="dropdown-item" asp-controller="Email" asp-action="TestCalendar">Send Calendar Events</a>
+                        </div>
+                    </li>
+
+
+                    @*<li> <a asp-area="" asp-controller="Email" asp-action="TestEmail">Send Email</a> </li>
+                            <li><a asp-area="" asp-controller="Email" asp-action="TestCalendar">Send Cal</a></li>
+                            <li><a asp-area="" asp-controller="SeatBookings" asp-action="Create">Create A Booking</a></li>
+                        <li><a asp-area="" asp-controller="SeatBookings" asp-action="Index">Check Your Bookings</a></li>*@
+                    <li> <partial name="_LoginPartial" /></li>
                 </ul>
 
             </div>

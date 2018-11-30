@@ -99,7 +99,7 @@ ul, ol {
     }
 
     #menu a.navbar-brand {
-        font-size: 20px;
+        /*font-size: 20px;*/
         color: rgba(255,255,255,0.8);
         font-weight: 500;
         text-transform: uppercase;
@@ -113,23 +113,24 @@ ul, ol {
     #menu.navbar-default .navbar-nav > li > a {
         text-transform: uppercase;
         color: rgba(255,255,255,0.8);
-        font-size: 16px;
+        /*font-size: 12px;*/
         letter-spacing: 1px;
+        /*margin: 0px;*/
     }
 
-        #menu.navbar-default .navbar-nav > li > a:hover {
+/*#menu.navbar-default .navbar-nav > li > a:hover {
             color: #053740;
-        }
+        }*/
 
 .on {
     background-color: #03252b !important;
     padding: 0 !important;
 }
 
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+/*.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
     color: #053740 !important;
     background-color: transparent;
-}
+}*/
 
 .navbar-toggle {
     border-radius: 0;
@@ -141,8 +142,76 @@ ul, ol {
 }
 
     .navbar-default .navbar-toggle:hover > .icon-bar {
-        background-color: #FFF;
+        /*background-color: #FFF;*/
     }
+
+
+
+/* Style the dropdown button to fit inside the topnav */
+.dropdown {
+    /*font-size: 17px;*/
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    /*outline: none;*/
+    color: white;
+    /*padding: 14px 16px;*/
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+}
+
+
+.dropdown-menu {
+    color: white;
+    padding: 14px 16px;
+    background-color: rgba(42,174,211,1) !important;
+    /*font-family: inherit;*/
+    border-radius: 4px;
+    box-shadow: slategrey;
+    /*margin-top: 20px;*/
+    /*width: 300px;*/
+}
+
+.dropdown ul.dropdown-menu:before {
+    content: "";
+    background-color: transparent;
+    border-bottom: 10px solid #fff;
+    border-right: 10px solid transparent;
+    border-left: 10px solid transparent;
+    position: absolute;
+    top: -10px;
+    right: 16px;
+    z-index: 10;
+}
+
+.dropdown ul.dropdown-menu:after {
+    content: "";
+    background-color: transparent;
+    border-bottom: 12px solid #ccc;
+    border-right: 12px solid transparent;
+    border-left: 12px solid transparent;
+    position: absolute;
+    top: -12px;
+    right: 14px;
+    z-index: 9;
+}
+/*Must keep its overwriting mdb.css*/
+.navbar .dropdown-menu a {
+    padding: 10px;
+    font-size: 0.9375rem;
+    font-weight: 300;
+    color: white;
+}
+
+/*end new*/
+
+
+.dropdown-item {
+    color: white;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+}
 
 .btn-default {
     color: #25BAD0;
