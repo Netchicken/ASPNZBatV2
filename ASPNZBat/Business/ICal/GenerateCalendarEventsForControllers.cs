@@ -12,7 +12,7 @@ namespace ASPNZBat.Business.ICal
 
     public class GenerateCalendarEventsForControllers : IGenerateCalendarEventsForControllers
     {
-        private readonly IEmailSender _emailSender;
+        private IEmailSender _emailSender;
         private ICalService _calService;
         private IDBCallsSessionDataDTO _dbCallsSessionData;
         public GenerateCalendarEventsForControllers(IDBCallsSessionDataDTO dbCallsSessionData, ICalService calService, IEmailSender emailSender)

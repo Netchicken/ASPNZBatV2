@@ -148,6 +148,7 @@ namespace ASPNZBat.Business.ICal
 
             string[] descArray = { day, session };
 
+            //todo create a new class to pass all the bookings to so that the variable names actually match the data
             //Create a new event with event details
             var vEvent = new CalendarEvent
             {
@@ -193,7 +194,7 @@ namespace ASPNZBat.Business.ICal
         {
             IOrderedEnumerable<CalendarEvent> orderedCal = cal.Events
                 .OrderByDescending(d => d.DtStart)
-                .ThenBy(s => s.Class);
+                .ThenBy(s => s.Class); //session ID
 
             //send it back to output on the screen
             var sessions = new List<CalendarEvent>();

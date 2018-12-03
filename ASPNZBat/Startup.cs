@@ -22,6 +22,7 @@ namespace ASPNZBat
     using Business.ICal;
     using DTO;
     using Microsoft.Extensions.Logging;
+    using RazorHtmlEmails.RazorClassLib.Services;
 
     public class Startup
     {
@@ -83,6 +84,13 @@ namespace ASPNZBat
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            //https://scottsauber.com/2018/07/07/walkthrough-creating-an-html-email-template-with-razor-and-razor-class-libraries-and-rendering-it-from-a-net-standard-class-library/
+
+            services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
+
+
+
+
             //https://www.dotnettricks.com/learn/aspnetcore/authentication-authentication-aspnet-identity-example
             //   services.AddIdentity<IdentityUser, IdentityRole>()
             //       .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -94,14 +102,16 @@ namespace ASPNZBat
             // using Microsoft.AspNetCore.Identity.UI.Services;
             // using WebPWrecover.Services;
 
-            services.AddTransient<IEmailSender, EmailSender>();
+
             //  services.AddTransient<IEmailSender, DevEmailSender>();
             services.AddTransient<IOverdueStudents, OverdueStudents>();
-            services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddSingleton<IDBCallsSessionDataDTO, DbCallsSessionDataDto>();
             services.AddTransient<ICalService, CalService>();
             services.AddTransient<IGenerateCalendarEventsForControllers, GenerateCalendarEventsForControllers>();
 
+
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

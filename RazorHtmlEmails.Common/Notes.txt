@@ -1,0 +1,5 @@
+﻿This is taken from 
+
+https://scottsauber.com/2018/07/07/walkthrough-creating-an-html-email-template-with-razor-and-razor-class-libraries-and-rendering-it-from-a-net-standard-class-library/
+
+An excellent write up on creating and using html emails on Core

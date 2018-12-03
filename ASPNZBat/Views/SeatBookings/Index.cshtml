@@ -6,7 +6,7 @@
 @model IEnumerable<ASPNZBat.Models.SeatBooking>
 @{
     ViewData["Title"] = "Index";
-
+    string LastID = "";
 }
 <!-- Header -->
 <header id="header">
@@ -34,7 +34,7 @@
             <div class="form-group col-xs-6 col-md-2 text-left">
                 <a asp-action="Edit" asp-route-id="@item.Summary">
                     <label class="badge badge-light trigger">
-                        @item.DtStart.Date.Humanize()<br />
+                        @*@item.DtStart.Date.Humanize()<br />*@
                         <small>
                             @item.DtStart.Date.ToShortDateString() @item.Categories[0] <br>
 
@@ -44,72 +44,71 @@
                             Session @Html.DisplayFor(modelItem => item.Class) @item.Summary
                         </small>
                     </label>
-                </a>
+                </a><br />
+                @item.DtStart.Date.Humanize()
+                @if (LastID != item.Summary)
+                {
+                    @*<div class="clearfix   ">
+                            Boo
+                            <br style="clear: both;" />
+                        </div>*@
+                }
+                @{ LastID = item.Summary; }
             </div>
 
-
-
         }
-
-
-
-
-
-
-
-
 
 
         <table class="table">
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayName("Session Date")
+                        @Html.DisplayName("Session Week beginning")
                     </th>
                     <th id="1th">
-                        @Html.DisplayNameFor(model => model.S1)
+                        @Html.DisplayNameFor(model => model.S1) Mon
                     </th>
                     <th id="2th">
-                        @Html.DisplayNameFor(model => model.S2)
+                        @Html.DisplayNameFor(model => model.S2) Mon
                     </th>
                     <th id="3th">
-                        @Html.DisplayNameFor(model => model.S3)
+                        @Html.DisplayNameFor(model => model.S3) Mon
                     </th>
                     <th id="4th">
-                        @Html.DisplayNameFor(model => model.S4)
+                        @Html.DisplayNameFor(model => model.S4) Tues
                     </th>
                     <th id="5th">
-                        @Html.DisplayNameFor(model => model.S5)
+                        @Html.DisplayNameFor(model => model.S5) Tues
                     </th>
                     <th id="6th">
-                        @Html.DisplayNameFor(model => model.S6)
+                        @Html.DisplayNameFor(model => model.S6) Tues
                     </th>
                     <th id="7th">
-                        @Html.DisplayNameFor(model => model.S7)
+                        @Html.DisplayNameFor(model => model.S7) Wed
                     </th>
                     <th id="8th">
-                        @Html.DisplayNameFor(model => model.S8)
+                        @Html.DisplayNameFor(model => model.S8) Wed
                     </th>
                     <th id="9th">
-                        @Html.DisplayNameFor(model => model.S9)
+                        @Html.DisplayNameFor(model => model.S9) Wed
                     </th>
                     <th id="10th">
-                        @Html.DisplayNameFor(model => model.S10)
+                        @Html.DisplayNameFor(model => model.S10) Thur
                     </th>
                     <th id="11th">
-                        @Html.DisplayNameFor(model => model.S11)
+                        @Html.DisplayNameFor(model => model.S11) Thur
                     </th>
                     <th id="12th">
-                        @Html.DisplayNameFor(model => model.S12)
+                        @Html.DisplayNameFor(model => model.S12) Thur
                     </th>
                     <th id="13th">
-                        @Html.DisplayNameFor(model => model.S13)
+                        @Html.DisplayNameFor(model => model.S13) Fri
                     </th>
                     <th id="14th">
-                        @Html.DisplayNameFor(model => model.S14)
+                        @Html.DisplayNameFor(model => model.S14) Fri
                     </th>
                     <th id="15th">
-                        @Html.DisplayNameFor(model => model.S15)
+                        @Html.DisplayNameFor(model => model.S15) Fri
                     </th>
                     @*<th>
                             @Html.DisplayNameFor(model => model.S16)
@@ -123,7 +122,10 @@
 
                     <tr>
                         <td>
-                            <label class="badge badge-default trigger">@item.SeatDate.Date.ToShortDateString()</label>
+                            <label class="badge badge-default trigger">
+                                @item.SeatDate.Date.ToShortDateString()<br />
+                                @item.SeatDate.Date.Humanize()
+                            </label>
                         </td>
 
                         <td id="1td">
@@ -133,7 +135,7 @@
                                     <input id="S1" type="checkbox" />
                                     @Html.DisplayFor(modelItem => item.S1)
                                     <label id="S1L" for="S1" class="custom-control-label ui-corner-all alert-heading">
-
+                                        Morn
                                     </label>
 
                                 </span>
@@ -147,6 +149,7 @@
 
                                     <input id="S2" type="checkbox" />   @Html.DisplayFor(modelItem => item.S2)
                                     <label id="S2L" for="S2" class="custom-control-label ui-corner-all alert-heading">
+                                        Aft
                                     </label>
                                 </span>
                             </div>
@@ -158,7 +161,7 @@
 
                                     <input id="S3" type="checkbox" /> @Html.DisplayFor(modelItem => item.S3)
                                     <label id="S3L" for="S3" class="custom-control-label ui-corner-all alert-heading">
-
+                                        Eve
 
                                         @*@Html.DisplayNameFor(model => model.S3)*@
                                     </label>
@@ -173,6 +176,7 @@
 
                                     <input id="S42" type="checkbox" />  @Html.DisplayFor(modelItem => item.S4)
                                     <label id="S4L" for="S4" class="custom-control-label ui-corner-all alert-heading">
+                                        Morn
                                     </label>
                                 </span>
                             </div>
@@ -185,6 +189,7 @@
 
                                     <input id="S5" type="checkbox" /> @Html.DisplayFor(modelItem => item.S5)
                                     <label id="S5L" for="S5" class="custom-control-label ui-corner-all alert-heading">
+                                        Aft
                                     </label>
                                 </span>
                             </div>
@@ -196,6 +201,7 @@
 
                                     <input id="S6" type="checkbox" /> @Html.DisplayFor(modelItem => item.S6)
                                     <label id="S6L" for="S6" class="custom-control-label ui-corner-all alert-heading">
+                                        Eve
                                     </label>
                                 </span>
                             </div>
@@ -207,6 +213,7 @@
 
                                     <input id="S7" type="checkbox" />  @Html.DisplayFor(modelItem => item.S7)
                                     <label id="S7L" for="S7" class="custom-control-label ui-corner-all alert-heading">
+                                        Morn
                                     </label>
                                 </span>
                             </div>
@@ -218,6 +225,7 @@
 
                                     <input id="S8" type="checkbox" /> @Html.DisplayFor(modelItem => item.S8)
                                     <label id="S8L" for="S8" class="custom-control-label ui-corner-all alert-heading">
+                                        Aft
                                     </label>
                                 </span>
                             </div>
@@ -229,6 +237,7 @@
 
                                     <input id="S9" type="checkbox" /> @Html.DisplayFor(modelItem => item.S9)
                                     <label id="S9L" for="S9" class="custom-control-label ui-corner-all alert-heading">
+                                        Eve
                                     </label>
                                 </span>
                             </div>
@@ -240,6 +249,7 @@
 
                                     <input id="S10" type="checkbox" /> @Html.DisplayFor(modelItem => item.S10)
                                     <label id="S10L" for="S10" class="custom-control-label ui-corner-all alert-heading">
+                                        Morn
                                     </label>
                                 </span>
                             </div>
@@ -251,6 +261,7 @@
 
                                     <input id="S11" type="checkbox" />  @Html.DisplayFor(modelItem => item.S11)
                                     <label id="S11L" for="S11" class="custom-control-label ui-corner-all alert-heading">
+                                        Aft
                                     </label>
                                 </span>
                             </div>
@@ -262,6 +273,7 @@
 
                                     <input id="S12" type="checkbox" />  @Html.DisplayFor(modelItem => item.S12)
                                     <label id="S12L" for="S12" class="custom-control-label ui-corner-all alert-heading">
+                                        Eve
                                     </label>
                                 </span>
                             </div>
@@ -273,6 +285,7 @@
 
                                     <input id="S13" type="checkbox" />  @Html.DisplayFor(modelItem => item.S13)
                                     <label id="S13L" for="S13" class="custom-control-label ui-corner-all alert-heading">
+                                        Morn
                                     </label>
                                 </span>
                             </div>
@@ -284,6 +297,7 @@
 
                                     <input id="S14" type="checkbox" />  @Html.DisplayFor(modelItem => item.S14)
                                     <label id="S14L" for="S14" class="custom-control-label ui-corner-all alert-heading">
+                                        Aft
                                     </label>
                                 </span>
                             </div>
@@ -295,6 +309,7 @@
 
                                     <input id="S15" type="checkbox" />    @Html.DisplayFor(modelItem => item.S15)
                                     <label id="S15L" for="S15" class="custom-control-label ui-corner-all alert-heading">
+                                        Eve
                                     </label>
                                 </span>
                             </div>
