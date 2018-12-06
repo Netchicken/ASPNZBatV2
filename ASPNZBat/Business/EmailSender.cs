@@ -4,12 +4,16 @@ using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System.Threading.Tasks;
-using RazorHtmlEmails;
+//using RazorHtmlEmails;
 using Microsoft.AspNetCore.Html;
 using Microsoft.Extensions.Logging;
 
 namespace ASPNZBat.Business
 {
+    using System;
+    //using RazorHtmlEmails.Common;
+    //using RazorHtmlEmails.RazorClassLib.Services;
+
 
 
     //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-2.1&tabs=visual-studio
@@ -18,27 +22,24 @@ namespace ASPNZBat.Business
     //https://dejanstojanovic.net/aspnet/2018/june/sending-email-in-aspnet-core-using-smtpclient-and-dependency-injection/
 
     public class EmailSender : IEmailSender
+
     {
+        //private readonly IRegisterAccountService _registerAccountService;
         private readonly ILogger _logger;
-        //private readonly SeatBookingDBContext _context;
+        //private readonly IRazorViewToStringRenderer _razorViewToStringRenderer;
 
-        //private readonly UserManager<IdentityUser> _userManager;
-
-        //private readonly SignInManager<IdentityUser> _signInManager;
-        //   private Task<IdentityUser> GetCurrentUserAsync() => _userManager.GetUserAsync(User);
-
-        //  //
         public EmailSender(
             IOptions<AuthMessageSenderOptions> optionsAccessor,
-            //SeatBookingDBContext context,
-            //UserManager<IdentityUser> userManager,
+
             ILogger<EmailSender> logger //You have to add in the type that you want logged, basically the name of the class that you are in.
+                                        //IRazorViewToStringRenderer razorViewToStringRenderer,
+                                        //IRegisterAccountService registerAccountService
             )
         {
             Options = optionsAccessor.Value;
-            //_context = context;
-            //_userManager = userManager;
             _logger = logger;
+            //_razorViewToStringRenderer = razorViewToStringRenderer;
+            //_registerAccountService = registerAccountService;
         }
 
         public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
@@ -54,15 +55,15 @@ namespace ASPNZBat.Business
             //https://app.sendgrid.com/guide/integrate/langs/csharp
             //https://github.com/sendgrid/sendgrid-csharp#installation
 
-
-
+            var Title = ("<h1>Vision College</h1><h3>The New Zealand Business Administration Course </h3>");
+            //    string body = await _registerAccountService.GetEmailHTMLBody();
 
             _logger.LogInformation("Details: {Message}", email + " " + subject + " " + message);
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("Gary.d@visioncollege.ac.nz", "Gary Dix");
             var to = new EmailAddress(email);
             var plainTextContent = message;
-            var htmlContent = message;
+            var htmlContent = Title + message;
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
 
             var result = await client.SendEmailAsync(msg);

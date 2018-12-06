@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace ASPNZBat.Models
 {
-    public class SeatBooking
+    using System.Collections;
+
+    public class SeatBooking : IEnumerable
     {
         public int ID { get; set; }
         public Students StudentID { get; set; }
@@ -31,5 +33,9 @@ namespace ASPNZBat.Models
         public bool S14 { get; set; }
         public bool S15 { get; set; }
         // public bool S16 { get; set; }
+        public IEnumerator GetEnumerator()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

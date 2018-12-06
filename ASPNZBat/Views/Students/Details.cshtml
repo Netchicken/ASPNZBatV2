@@ -4,7 +4,21 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<header id="header">
+    <div class="intro ">
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="intro-text">
+                        <h1 style="color:azure">Welcome to <span class="brand">Vision College</span></h1>
+                        <h2>Edit Your First and Last Name</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
 
 <div>
     <h4>Students</h4>
@@ -15,6 +29,12 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
         </dd>
     </dl>
 </div>

@@ -12,16 +12,21 @@ using Microsoft.Extensions.Logging;
 
 namespace ASPNZBat.Areas.Identity.Pages.Account
 {
+    using Data;
+    using Microsoft.EntityFrameworkCore;
+    using Models;
+
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        private readonly SeatBookingDBContext _context;
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, SeatBookingDBContext context)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
         }
 
         [BindProperty]
@@ -47,7 +52,7 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
-
+        //sets up the login screen
         public async Task OnGetAsync(string returnUrl = null)
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
@@ -65,6 +70,7 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
+        //doesn't seem to be working at all The page has an OnPostAsync handler method, which runs on POST requests (when a user posts the form).
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
@@ -77,7 +83,17 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    return LocalRedirect(returnUrl);
+                    //check if there is a Name in the Students table
+                    Students student = _context.Students
+                        .FirstOrDefault(m => m.Email == Input.Email);
+                    //if there is carry on
+                    if (student.Name != null)
+                    {
+                        return RedirectToPage(returnUrl);
+                    }
+                    //otherwsie redirect to Set the student name
+                    return RedirectToAction("Create", "StudentsController");
+
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -98,5 +114,7 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
+
     }
 }

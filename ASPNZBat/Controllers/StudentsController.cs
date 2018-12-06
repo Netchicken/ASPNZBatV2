@@ -10,13 +10,16 @@ using ASPNZBat.Models;
 
 namespace ASPNZBat.Controllers
 {
+    using Microsoft.AspNetCore.Identity;
+
     public class StudentsController : Controller
     {
         private readonly SeatBookingDBContext _context;
-
-        public StudentsController(SeatBookingDBContext context)
+        private readonly UserManager<IdentityUser> _userManager;
+        public StudentsController(SeatBookingDBContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Students
@@ -58,6 +61,7 @@ namespace ASPNZBat.Controllers
         {
             if (ModelState.IsValid)
             {
+                students.Email = _userManager.GetUserName(User);
                 _context.Add(students);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,7 +90,7 @@ namespace ASPNZBat.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("ID,Name")] Students students)
+        public async Task<IActionResult> Edit(string id, [Bind("ID,Name,Email")] Students students)
         {
             if (id != students.ID)
             {

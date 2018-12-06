@@ -22,7 +22,8 @@ namespace ASPNZBat
     using Business.ICal;
     using DTO;
     using Microsoft.Extensions.Logging;
-    using RazorHtmlEmails.RazorClassLib.Services;
+    //using RazorHtmlEmails.Common;
+    //using RazorHtmlEmails.RazorClassLib.Services;
 
     public class Startup
     {
@@ -63,9 +64,7 @@ namespace ASPNZBat
 
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
-
                 googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-
                 googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
             });
 
@@ -86,7 +85,8 @@ namespace ASPNZBat
 
             //https://scottsauber.com/2018/07/07/walkthrough-creating-an-html-email-template-with-razor-and-razor-class-libraries-and-rendering-it-from-a-net-standard-class-library/
 
-            services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
+            //services.AddScoped<IRegisterAccountService, RegisterAccountService>();
+            //services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
 
 
 
@@ -112,6 +112,11 @@ namespace ASPNZBat
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
+
+            services.AddSingleton<IStudentNameDTO, StudentNameDTO>();
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

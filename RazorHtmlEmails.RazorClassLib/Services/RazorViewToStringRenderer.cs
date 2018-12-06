@@ -34,6 +34,9 @@ namespace RazorHtmlEmails.RazorClassLib.Services
             _tempDataProvider = tempDataProvider;
             _serviceProvider = serviceProvider;
         }
+        //https://gist.github.com/zckkte/66b04a18519284ebe25e83391cc9913b original?
+        //https://github.com/aspnet/Mvc/issues/7535
+
 
         public async Task<string> RenderViewToStringAsync<TModel>(string viewName, TModel model)
         {
@@ -42,19 +45,15 @@ namespace RazorHtmlEmails.RazorClassLib.Services
 
             using (var output = new StringWriter())
             {
-                var viewContext = new ViewContext(
-                    actionContext,
-                    view,
-                    new ViewDataDictionary<TModel>(
+                var viewContext = new ViewContext(actionContext, view, new ViewDataDictionary<TModel>(
                         metadataProvider: new EmptyModelMetadataProvider(),
                         modelState: new ModelStateDictionary())
-                    {
-                        Model = model
-                    },
+                {
+                    Model = model
+                },
                     new TempDataDictionary(
                         actionContext.HttpContext,
-                        _tempDataProvider),
-                    output,
+                        _tempDataProvider), output,
                     new HtmlHelperOptions());
 
                 await view.RenderAsync(viewContext);
@@ -71,7 +70,7 @@ namespace RazorHtmlEmails.RazorClassLib.Services
                 return getViewResult.View;
             }
 
-            var findViewResult = _viewEngine.FindView(actionContext, viewName, isMainPage: true);
+            var findViewResult = _viewEngine.FindView(actionContext, viewName, isMainPage: false);
             if (findViewResult.Success)
             {
                 return findViewResult.View;

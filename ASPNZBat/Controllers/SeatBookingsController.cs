@@ -22,6 +22,7 @@ namespace ASPNZBat.Controllers
 {
     public class SeatBookingsController : Controller
     {
+        private IStudentNameDTO _studentNameDTO;
         private IGenerateCalendarEventsForControllers _generateCalendarEventsForControllers;
         private ICalService _calService;
         private IDBCallsSessionDataDTO _dbCallsSessionDataDTO;
@@ -37,7 +38,7 @@ namespace ASPNZBat.Controllers
            UserManager<IdentityUser> userManager,
             ISessions sessions,
             IDBCallsSessionDataDTO dbCallsSessionData,
-            ICalService calService, IGenerateCalendarEventsForControllers generateCalendarEventsForControllers)
+            ICalService calService, IGenerateCalendarEventsForControllers generateCalendarEventsForControllers, IStudentNameDTO studentNameDTO)
         {
             _context = context;
             _userManager = userManager;
@@ -45,6 +46,7 @@ namespace ASPNZBat.Controllers
             _dbCallsSessionDataDTO = dbCallsSessionData;
             _calService = calService;
             _generateCalendarEventsForControllers = generateCalendarEventsForControllers;
+            _studentNameDTO = studentNameDTO;
         }
 
 
@@ -81,7 +83,34 @@ namespace ASPNZBat.Controllers
             ViewData["SessionVisible"] = _sessions.GetAdminData();
 
 
+
             return View(lastMonthbookings);
+
+
+        }
+
+
+        private void AddUserToStudentTable()
+        {
+            //check if there is a Name in the Students table
+
+            string StudentEmail = _userManager.GetUserName(User);
+            string StudentName = _studentNameDTO.StudentGoogleNameLogin;
+
+            var student = _context.Students.FirstOrDefault(m => m.Email == StudentEmail);
+
+
+
+            //No match lets add it in
+            if (string.IsNullOrEmpty(student?.Email) && !string.IsNullOrEmpty(StudentName))
+            {
+                Students myStudent = new Students();
+                myStudent.Name = StudentName;
+                myStudent.Email = _userManager.GetUserName(User);
+                _context.Add(myStudent);
+                _context.SaveChangesAsync();
+
+            }
 
 
         }
@@ -106,6 +135,19 @@ namespace ASPNZBat.Controllers
             return View((SeatBooking)seatBooking);
         }
 
+        [Authorize]
+        // GET: SeatBookings/SessionDetails
+        public IActionResult SessionDetails()
+        {
+
+            var seatBooking = _context.SeatBooking
+
+               .OrderByDescending(s => s.SeatDate);
+
+            return View(seatBooking);
+        }
+
+
         // GET: SeatBookings/Create
 
         public IActionResult Create()
@@ -120,6 +162,7 @@ namespace ASPNZBat.Controllers
             //Sessions that are visible or not
             ViewData["SessionVisible"] = _sessions.GetAdminData();
 
+            AddUserToStudentTable();
 
             return View();
         }

@@ -1,0 +1,25 @@
+﻿@using System.Collections
+@using Humanizer
+@using Ical.Net.CalendarComponents
+@model IEnumerable<ASPNZBat.Models.SeatBooking>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>title</h2>
+
+@foreach (var item in Model)
+{
+
+
+    <div class="form-group col-xs-6 col-md-2 text-left">
+        <label class="badge badge-light trigger">
+            @item.SeatDate
+            <br/>
+            @item.StudentEmail
+        </label>
+    </div>
+
+}

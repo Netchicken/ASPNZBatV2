@@ -70,8 +70,8 @@ namespace ASPNZBat.Controllers
                 //make sure you only send 1 to a student not heaps
                 if (!sender.Contains(student))
                 {
-                    _emailSender.SendEmailAsync(student, "Update your Sessions",
-                            "You no longer have a session booked. Come back and make some.");
+                    _emailSender.SendEmailAsync(student, "Vision College BAT Course ",
+                            "Update your Sessions. You only have one session booked. Come back and make some.");
                     //add the user to the dict so it doesn't go again.
                     sender.Add(student);
                 }

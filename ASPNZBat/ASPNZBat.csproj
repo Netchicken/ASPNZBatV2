@@ -29,9 +29,9 @@
     <PackageReference Include="Ical.Net" Version="4.1.9" />
     <PackageReference Include="jQWidgets.AspNetCore.Mvc.Bootstrap.TagHelpers" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0-preview3-35497" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="2.0.0-preview1-final" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.0-preview3-35497" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
+    <!--<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Design" Version="1.1.6" />-->
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" PrivateAssets="All" />
     <PackageReference Include="Sendgrid" Version="9.10.0" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
   </ItemGroup>
@@ -44,14 +44,18 @@
     <None Include="ResourcesAndNotes\BackupTable.cshtml" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\RazorHtmlEmails.Common\RazorHtmlEmails.Common.csproj" />
-  </ItemGroup>
+
 
   <ItemGroup>
     <Content Update="Views\SeatBookings\Index - backup.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NETCore.App" Version="2.1.6" />
   </ItemGroup>
 
 </Project>
