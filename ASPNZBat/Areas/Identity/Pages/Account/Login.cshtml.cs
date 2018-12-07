@@ -12,21 +12,21 @@ using Microsoft.Extensions.Logging;
 
 namespace ASPNZBat.Areas.Identity.Pages.Account
 {
-    using Data;
-    using Microsoft.EntityFrameworkCore;
-    using Models;
+    using Business;
 
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private readonly SeatBookingDBContext _context;
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, SeatBookingDBContext context)
+        private readonly IAddUserToStudentTable _addUserToStudentTable;
+
+
+        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger, IAddUserToStudentTable addUserToStudentTable)
         {
             _signInManager = signInManager;
             _logger = logger;
-            _context = context;
+            _addUserToStudentTable = addUserToStudentTable;
         }
 
         [BindProperty]
@@ -52,6 +52,7 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
             [Display(Name = "Remember me?")]
             public bool RememberMe { get; set; }
         }
+
         //sets up the login screen
         public async Task OnGetAsync(string returnUrl = null)
         {
@@ -83,17 +84,16 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    //check if there is a Name in the Students table
-                    Students student = _context.Students
-                        .FirstOrDefault(m => m.Email == Input.Email);
-                    //if there is carry on
-                    if (student.Name != null)
-                    {
-                        return RedirectToPage(returnUrl);
-                    }
-                    //otherwsie redirect to Set the student name
-                    return RedirectToAction("Create", "StudentsController");
 
+                    //open the add your name page
+                    var isAddedToDb = _addUserToStudentTable.AddUserToStudent(Input.Email);
+                    if (!isAddedToDb)
+                    {
+                        return RedirectToAction("Create", "StudentsController");
+                    }
+
+
+                    return LocalRedirect(returnUrl);
                 }
                 if (result.RequiresTwoFactor)
                 {
@@ -114,7 +114,5 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
-
-
     }
 }

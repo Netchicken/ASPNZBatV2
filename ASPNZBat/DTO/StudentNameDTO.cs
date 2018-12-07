@@ -7,6 +7,9 @@ namespace ASPNZBat.DTO
 {
     public class StudentNameDTO : IStudentNameDTO
     {
-        public string StudentGoogleNameLogin { get; set; }
+        public string StudentGoogleNameLogin { get; set; } = string.Empty;
+
+        public bool IsExternal { get; set; } = false;
+
     }
 }

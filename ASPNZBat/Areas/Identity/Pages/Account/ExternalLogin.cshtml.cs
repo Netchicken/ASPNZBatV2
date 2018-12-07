@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace ASPNZBat.Areas.Identity.Pages.Account
 {
+    using Business;
     using Data;
     using DTO;
     using Models;
@@ -19,6 +20,7 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
+        private readonly IAddUserToStudentTable _addUserToStudentTable;
         private IStudentNameDTO _studentNameDTO;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
@@ -30,13 +32,14 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
             UserManager<IdentityUser> userManager,
             ILogger<ExternalLoginModel> logger,
             SeatBookingDBContext context,
-            IStudentNameDTO studentNameDTO)
+            IStudentNameDTO studentNameDTO, IAddUserToStudentTable addUserToStudentTable)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
             _context = context;
             _studentNameDTO = studentNameDTO;
+            _addUserToStudentTable = addUserToStudentTable;
         }
 
         [BindProperty]
@@ -91,10 +94,21 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider with {email}.", info.Principal.Identity.Name, info.LoginProvider, info.Principal.Identity.AuthenticationType);
 
 
+                if (info.Principal.Identity.Name != null)
+                {
+                    _studentNameDTO.IsExternal = true;
+                    _studentNameDTO.StudentGoogleNameLogin = info.Principal.Identity.Name;
 
-                _studentNameDTO.StudentGoogleNameLogin = info.Principal.Identity.Name;
+                    string Email = info.Principal.FindFirstValue(ClaimTypes.Email);
 
+                    _addUserToStudentTable.AddUserToStudent(Email);
 
+                }
+                else
+                {
+                    _studentNameDTO.IsExternal = false;
+                    _studentNameDTO.StudentGoogleNameLogin = string.Empty;
+                }
 
                 return LocalRedirect(returnUrl);
             }

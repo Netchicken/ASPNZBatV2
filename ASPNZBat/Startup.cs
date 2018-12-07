@@ -114,8 +114,28 @@ namespace ASPNZBat
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             services.AddSingleton<IStudentNameDTO, StudentNameDTO>();
+            services.AddTransient<IAddUserToStudentTable, AddUserToStudentTable>();
 
 
+            //Change the password requirements of the login system
+            //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-2.1&tabs=visual-studio%2Caspnetcore2x
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 2;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredUniqueChars = 0;
+
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = true;
+
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
 
         }
 
@@ -166,7 +186,7 @@ namespace ASPNZBat
             //===============================================
             //hard code in some rolls
 
-            //loop throught them and send them to the db
+            //loop through them and send them to the db
             foreach (var roleName in roleNames)
             {
                 //check if the role exists
