@@ -14,8 +14,6 @@
 
     public class AddUserToStudentTable : IAddUserToStudentTable
     {
-
-        private IStudentNameDTO _studentNameDTO;
         private readonly SeatBookingDBContext _context;
         private readonly UserManager<IdentityUser> _userManager;
 
@@ -24,43 +22,40 @@
         {
             _context = context;
             _userManager = userManager;
-
         }
-
-        public bool AddUserToStudent(string Email)
+        /// <summary>
+        /// Add users to the local DB NOTE this is mostly for Google, as it doesn't use the Register, it just logs in.
+        /// </summary>
+        /// <param name="Email">there will always be an email from the login</param>
+        /// <param name="Name">There will only be a name if they login with Google. </param>
+        /// <returns></returns>
+        public void AddUserToStudentDB(string Email, string Name)
         {
             //check if there is a Name in the Students table
-            string StudentEmail = Email; // _userManager.GetUserName(_userManager.GetUserName(User));
-            string StudentName = string.Empty;
+            string studentEmail = Email; // _userManager.GetUserName(_userManager.GetUserName(User));
+            string studentName = Name;
 
-            if (_studentNameDTO.IsExternal == true)
-            {
-                StudentName = _studentNameDTO.StudentGoogleNameLogin;
-            }
-            var student = _context.Students.FirstOrDefault(m => m.Email == StudentEmail);
+            //Check if they in the DB
+            var student = _context.Students.FirstOrDefault(m => m.Email == studentEmail);
 
-            //No match lets add it in if we have the Student name from Google
-            if (string.IsNullOrEmpty(student?.Email) && !string.IsNullOrEmpty(StudentName))
+            //No entry 
+            if (student == null)
             {
-                Students myStudent = new Students();
-                myStudent.Name = StudentName;
-                myStudent.Email = StudentEmail; //_userManager.GetUserName(_seatBookingsController.User);
+                //No match lets add it in if we have the Student name from Google
+
+                Students myStudent = new Students
+                {
+                    Name = studentName,
+                    Email = studentEmail
+                };
                 _context.Add(myStudent);
                 _context.SaveChangesAsync();
-
-                return true;
             }
-
-
-            //todo otherwise we have to open the student create window and insert the username.
-
-            return false;
-
-
-
         }
+
     }
 }
+
 
 //namespace ASPNZBat.Controllers
 //{

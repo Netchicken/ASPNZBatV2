@@ -113,7 +113,7 @@ namespace ASPNZBat
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
-            services.AddSingleton<IStudentNameDTO, StudentNameDTO>();
+            services.AddTransient<IStudentNameDTO, StudentNameDTO>();
             services.AddTransient<IAddUserToStudentTable, AddUserToStudentTable>();
 
 

@@ -151,7 +151,7 @@ namespace ASPNZBat.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,SeatDate,S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15")] SeatBooking seatBooking)
+        public async Task<IActionResult> Create([Bind("ID,SeatDate,S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15, ")] SeatBooking seatBooking)
         {
 
             //Show data for the next 4 weeks
@@ -169,10 +169,20 @@ namespace ASPNZBat.Controllers
                 //   var DeleteSeatBooking = await _context.SeatBooking.FindAsync();
                 //  _context.SeatBooking.Remove(DeleteSeatBooking);
 
+
                 //Save locally for sending to calendar
                 _dbCallsSessionDataDTO.lastSeatBooking.Add(seatBooking);
 
+                //get the user email
                 seatBooking.StudentEmail = _userManager.GetUserName(User);
+
+                //get the user name
+                var name = _context.Students.Where(s => s.Email == seatBooking.StudentEmail).Select(s => s.Name).FirstOrDefault();
+
+                //add to the booking
+                seatBooking.Name = name.ToString();
+
+
 
                 _context.Add(seatBooking);
                 await _context.SaveChangesAsync();
@@ -212,7 +222,7 @@ namespace ASPNZBat.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,SeatDate,S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15, StudentEmail")] SeatBooking seatBooking)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,SeatDate,S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15, StudentEmail, Name")] SeatBooking seatBooking)
         {
             //get the date of last month
             DateTime LastMonth = DateTime.Today;
@@ -228,6 +238,10 @@ namespace ASPNZBat.Controllers
             {
                 try
                 {
+                    Students name = (Students)_context.Students.Where(s => s.Email == seatBooking.StudentEmail);
+
+                    seatBooking.Name = name.Name;
+
                     _context.Update(seatBooking);
                     await _context.SaveChangesAsync();
                 }

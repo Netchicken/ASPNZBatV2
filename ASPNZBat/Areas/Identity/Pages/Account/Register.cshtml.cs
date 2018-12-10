@@ -5,13 +5,15 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
 namespace ASPNZBat.Areas.Identity.Pages.Account
 {
+    using Business;
+    using IEmailSender = Microsoft.AspNetCore.Identity.UI.Services.IEmailSender;
+
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
@@ -19,17 +21,19 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IAddUserToStudentTable _addUserToStudentTable;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, IAddUserToStudentTable addUserToStudentTable)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _addUserToStudentTable = addUserToStudentTable;
         }
 
         [BindProperty]
@@ -45,6 +49,10 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
+            [Display(Name = "First Name and Last Name")]
+            public string Name { get; set; }
+
+            [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -52,7 +60,7 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
 
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "Sorry, the password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -67,10 +75,16 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+
+                //added to admin DB
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    //add the email and the name to to local db
+                    _addUserToStudentTable.AddUserToStudentDB(Input.Email, Input.Name);
+
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(

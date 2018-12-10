@@ -7,6 +7,7 @@
     public interface IAddUserToStudentTable
     {
 
-        bool AddUserToStudent(string Email);
+
+        void AddUserToStudentDB(string Email, string Name);
     }
 }

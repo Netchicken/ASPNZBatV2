@@ -1,0 +1,52 @@
+﻿@model string[]
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Timetable</h2>
+
+
+@foreach (var item in Model)
+{
+    if (item != string.Empty)
+    {
+
+
+
+
+        <div class="form-group col-xs-6 col-md-2 text-left">
+            @*<a asp-action="Edit" asp-route-id="@item.">*@
+            <label class="badge badge-light trigger">
+                @{ List<string> names = new List<string>(); }
+
+                @names = @item.Split('*');
+
+                @foreach (var name in names)
+                {
+                    @name
+                    </br>
+
+
+                }
+
+                @*@item.DtStart.Date.Humanize()<br />*@
+                <small>
+                    @*@item.DtStart.Date.ToShortDateString() @item.Categories[0] <br>
+
+                        @item.Categories[1] <br>*@
+                </small>
+                <small class="text-muted">
+                    @*     Session @Html.DisplayFor(modelItem => item.Class) @item.Summary*@
+                </small>
+            </label>
+            @*</a>*@
+            <br />
+
+
+        </div>
+    }
+}
+
+

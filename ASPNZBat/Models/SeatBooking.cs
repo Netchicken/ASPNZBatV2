@@ -8,11 +8,12 @@ namespace ASPNZBat.Models
 {
     using System.Collections;
 
-    public class SeatBooking : IEnumerable
+    public class SeatBooking
     {
         public int ID { get; set; }
         public Students StudentID { get; set; }
         public string StudentEmail { get; set; }
+        public string Name { get; set; }
         public DateTime SeatDate { get; set; }
         public DateTime SeatDateEnd { get; set; }
 
@@ -33,9 +34,9 @@ namespace ASPNZBat.Models
         public bool S14 { get; set; }
         public bool S15 { get; set; }
         // public bool S16 { get; set; }
-        public IEnumerator GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
+        //public IEnumerator GetEnumerator()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

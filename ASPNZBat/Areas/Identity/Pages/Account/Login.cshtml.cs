@@ -45,6 +45,7 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
             [EmailAddress]
             public string Email { get; set; }
 
+
             [Required]
             [DataType(DataType.Password)]
             public string Password { get; set; }
@@ -85,12 +86,9 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User logged in.");
 
-                    //open the add your name page
-                    var isAddedToDb = _addUserToStudentTable.AddUserToStudent(Input.Email);
-                    if (!isAddedToDb)
-                    {
-                        return RedirectToAction("Create", "StudentsController");
-                    }
+                    //open the add your name page when there is no name so they have to add in their name
+                    _addUserToStudentTable.AddUserToStudentDB(Input.Email, "");
+
 
 
                     return LocalRedirect(returnUrl);

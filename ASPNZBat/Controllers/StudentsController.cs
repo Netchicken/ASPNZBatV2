@@ -25,7 +25,45 @@ namespace ASPNZBat.Controllers
         // GET: Students
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Students.ToListAsync());
+            //get all entries from today
+            DateTime today = DateTime.Today;
+            //IEnumerable<SeatBooking> _allBookingsFromToday = _context.SeatBooking
+            //    .Where(s => s.StudentEmail == _userManager.GetUserName(User) && s.SeatDate > today)
+            //    .OrderByDescending(s => s.SeatDate)
+            //    .ToList();
+            ////get all the student details
+            //List<Students> students = new List<Students>();
+            //students.AddRange(_context.Students);
+
+            //add the Name from student details to the student sessions add to new class
+            //    List<SessionStudentVM> sessionStudent = new List<SessionStudentVM>();
+
+            //foreach (var session in _allBookingsFromToday)
+            //{
+            //    foreach (var student in students)
+            //    {
+            //        if (student.Email == session.StudentEmail)
+            //        {
+            //            sessionStudent.Add(
+
+
+
+            //                    );  
+
+            //                );
+
+
+            //        }
+
+
+            //    }
+
+
+
+            //}
+
+
+            return View(_context.Students);
         }
 
         // GET: Students/Details/5
@@ -153,5 +191,42 @@ namespace ASPNZBat.Controllers
         {
             return _context.Students.Any(e => e.ID == id);
         }
+
+
+
+        // GET: Students
+        public ViewResult Timetable()
+        {
+            //get all entries from today
+            DateTime today = DateTime.Today;
+            IEnumerable<SeatBooking> _allBookingsFromToday = _context.SeatBooking
+                .Where(s => s.SeatDate > today)
+                .OrderByDescending(s => s.SeatDate)
+                .ToList();
+
+            string[] StudentsInSessions = new string[15];
+
+            foreach (var session in _allBookingsFromToday)
+            {
+                bool[] sess = new bool[16] { false, session.S1, session.S2, session.S3, session.S4, session.S5, session.S6, session.S7, session.S8, session.S9, session.S10, session.S11, session.S12, session.S13, session.S14, session.S15 };
+
+                for (int i = 1; i < 16; i++)
+                {
+
+                    if (sess[i] == true)
+                    {
+                        StudentsInSessions[i] += session.Name + " *";
+                    }
+                }
+            }
+
+
+            return View(StudentsInSessions);
+        }
+
+
+
+
+
     }
 }

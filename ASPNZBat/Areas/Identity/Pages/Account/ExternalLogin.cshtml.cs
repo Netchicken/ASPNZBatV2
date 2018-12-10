@@ -21,7 +21,6 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
     public class ExternalLoginModel : PageModel
     {
         private readonly IAddUserToStudentTable _addUserToStudentTable;
-        private IStudentNameDTO _studentNameDTO;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<ExternalLoginModel> _logger;
@@ -32,13 +31,13 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
             UserManager<IdentityUser> userManager,
             ILogger<ExternalLoginModel> logger,
             SeatBookingDBContext context,
-            IStudentNameDTO studentNameDTO, IAddUserToStudentTable addUserToStudentTable)
+            IAddUserToStudentTable addUserToStudentTable)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _logger = logger;
             _context = context;
-            _studentNameDTO = studentNameDTO;
+
             _addUserToStudentTable = addUserToStudentTable;
         }
 
@@ -93,22 +92,10 @@ namespace ASPNZBat.Areas.Identity.Pages.Account
             {
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider with {email}.", info.Principal.Identity.Name, info.LoginProvider, info.Principal.Identity.AuthenticationType);
 
+                string Email = info.Principal.FindFirstValue(ClaimTypes.Email);
+                string Name = info.Principal.Identity.Name;
 
-                if (info.Principal.Identity.Name != null)
-                {
-                    _studentNameDTO.IsExternal = true;
-                    _studentNameDTO.StudentGoogleNameLogin = info.Principal.Identity.Name;
-
-                    string Email = info.Principal.FindFirstValue(ClaimTypes.Email);
-
-                    _addUserToStudentTable.AddUserToStudent(Email);
-
-                }
-                else
-                {
-                    _studentNameDTO.IsExternal = false;
-                    _studentNameDTO.StudentGoogleNameLogin = string.Empty;
-                }
+                _addUserToStudentTable.AddUserToStudentDB(Email, Name);
 
                 return LocalRedirect(returnUrl);
             }
