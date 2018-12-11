@@ -58,7 +58,7 @@ namespace ASPNZBat.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(adminData);
+                _context.Update(adminData);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -68,16 +68,17 @@ namespace ASPNZBat.Controllers
         // GET: AdminDatas/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
 
-            var adminData = await _context.AdminData.FindAsync(id);
-            if (adminData == null)
-            {
-                return NotFound();
-            }
+            //   var adminData = await _context.AdminData.FindAsync(id);
+            var adminData = _context.AdminData.FirstOrDefault();
+            //if (adminData == null)
+            //{
+            //    return NotFound();
+            //}
             return View(adminData);
         }
 
@@ -97,6 +98,10 @@ namespace ASPNZBat.Controllers
             {
                 try
                 {
+                    //get the existing ID so we don't make a new row
+                    var rowid = _context.AdminData.Select(a => a.Id).FirstOrDefault();
+                    adminData.Id = rowid;
+
                     _context.Update(adminData);
                     await _context.SaveChangesAsync();
                 }
@@ -125,7 +130,7 @@ namespace ASPNZBat.Controllers
             }
 
             var adminData = await _context.AdminData
-                .FirstOrDefaultAsync(m => m.Id == id);
+               .FirstOrDefaultAsync(m => m.Id == id);
             if (adminData == null)
             {
                 return NotFound();

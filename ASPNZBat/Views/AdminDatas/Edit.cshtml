@@ -1,48 +1,44 @@
 ﻿@model ASPNZBat.Models.AdminData
-
 @{
     ViewData["Title"] = "Edit";
+    bool S1Checked = Model.isVisibleS1L;
 }
-
 <h2>Show or Hide Sessions</h2>
-
-<form asp-action="Edit">
-    <div class="container-fluid  ">
-        <div class="row ">
-            <div class="col-md-2 col-xs-2  col-md-offset-1">
-                <label class="badge badge-default trigger">Monday</label>
-            </div>
-            <div class="col-md-2 col-xs-2 ">
-                <label class="badge badge-default trigger">Tuesday</label>
-            </div>
-            <div class="col-md-2 col-xs-2 ">
-                <label class="badge badge-default trigger">Wednesday</label>
-            </div>
-            <div class="col-md-2 col-xs-2 ">
-                <label class="badge badge-default trigger">Thursday</label>
-            </div>
-            <div class="col-md-2 col-xs-2 ">
-                <label class="badge badge-default trigger">Friday</label>
-            </div>
+<div class="container-fluid  ">
+    <div class="row ">
+        <div class="col-md-2 col-xs-2  col-md-offset-1">
+            <label class="badge badge-default trigger">Monday</label>
         </div>
+        <div class="col-md-2 col-xs-2 ">
+            <label class="badge badge-default trigger">Tuesday</label>
+        </div>
+        <div class="col-md-2 col-xs-2 ">
+            <label class="badge badge-default trigger">Wednesday</label>
+        </div>
+        <div class="col-md-2 col-xs-2 ">
+            <label class="badge badge-default trigger">Thursday</label>
+        </div>
+        <div class="col-md-2 col-xs-2 ">
+            <label class="badge badge-default trigger">Friday</label>
+        </div>
+    </div>
 
+    <form asp-action="Edit">
         <div class="container-fluid  ui-btn ui-corner-all col-md-offset-1 trigger">
             <div class="row ">
                 <label class="">Morning 9am - 11:30am</label>
             </div>
-
             <div class="row">
                 <div class="col-md-2 col-md-offset-1 col-xs-2 ">
                     <div class="form-group">
                         <div class="checkbox custom-control custom-checkbox ">
                             <label id="S1L">
-                                <input id="S1" class="custom-control-input" asp-for="isVisibleS1L" type="checkbox" /> S1
+                                <input id="S1" asp-for="isVisibleS1L" /> S1
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2 col-xs-2 ">
-
                     <div class="form-group">
                         <div class="checkbox">
                             <label id="S4L">
@@ -51,22 +47,17 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-md-2 col-xs-2 ">
-
                     <div class="form-group">
                         <div class="checkbox">
                             <label id="S7L">
-
                                 <input id="S7" asp-for="isVisibleS7L" /> S7
                             </label>
                         </div>
                     </div>
                 </div>
 
-
                 <div class="col-md-2 col-xs-2 ">
-
                     <div class="form-group">
                         <div class="checkbox">
                             <label id="S10L">
@@ -76,7 +67,6 @@
                     </div>
                 </div>
                 <div class="col-md-2 col-xs-2 ">
-
                     <div class="form-group">
                         <div class="checkbox">
                             <label id="S13L">
@@ -86,13 +76,11 @@
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="container-fluid ui-btn ui-corner-all col-md-offset-1 trigger">
             <div class="row">
                 <label class=""> Afternoon 12pm - 2:30pm</label>
             </div>
-
             @*Row 2*@
             <div class="row">
                 <div class="col-md-2 col-md-offset-1 col-xs-2 ">
@@ -167,7 +155,6 @@
                     </div>
                 </div>
                 <div class="col-md-2 col-xs-2 ">
-
                     <div class="form-group">
                         <div class="checkbox">
                             <label id="S9L">
@@ -196,15 +183,14 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Save" class="btn btn-default" />
-    </div>
-</form>
+        @*</div>*@
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+        @*}*@
+    </form>
 
-
-
-@*<form asp-action="Edit">
+    <form asp-action="Edit">
         <div class="row">
             <div class="col-md-6">
 
@@ -213,7 +199,7 @@
                 <div class="form-group">
                     <div class="checkbox">
                         <label>
-                            <input asp-for="isVisibleS1L" /> @Html.DisplayNameFor(model => model.isVisibleS1L)
+                            <input asp-for="isVisibleS1L" /> S1
                         </label>
                     </div>
                 </div>
@@ -340,11 +326,9 @@
                 </div>
             </div>
         </div>
-    </form>*@
+    </form>
 
-
-
-<div>
-    <a asp-action="Index">Back to List</a>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 </div>
-

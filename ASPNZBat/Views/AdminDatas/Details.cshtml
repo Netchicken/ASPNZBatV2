@@ -1,114 +1,128 @@
 ﻿@model ASPNZBat.Models.AdminData
-
 @{
     ViewData["Title"] = "Details";
 }
+<header id="header">
+    <div class="intro ">
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="intro-text">
+                        <h1 style="color:azure">Welcome to <span class="brand">Vision College</span></h1>
+                        <h2>Student Booking Details</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Services Section -->
+<div id="services">
+    <div class="container-fluid ">
+        <p></p>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                S1
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS1L)
+            </dd>
+            <dt>
+                S2
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS2L)
+            </dd>
+            <dt>
+                S3
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS3L)
+            </dd>
+            <dt>
+                S4
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS4L)
+            </dd>
+            <dt>
+                S5
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS5L)
+            </dd>
+            <dt>
+                S6
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS6L)
+            </dd>
+            <dt>
+                S7
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS7L)
+            </dd>
+            <dt>
+                S8
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS8L)
+            </dd>
+            <dt>
+                S9
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS9L)
+            </dd>
+            <dt>
+                S10
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS10L)
+            </dd>
+            <dt>
+                S11
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS11L)
+            </dd>
+            <dt>
+                S12
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS12L)
+            </dd>
+            <dt>
+                S13
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS13L)
+            </dd>
+            <dt>
+                S14
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS14L)
+            </dd>
+            <dt>
+                S15
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS15L)
+            </dd>
+            <dt>
+                S16
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.isVisibleS16L)
+            </dd>
 
-<h2>Details</h2>
-
-<div>
-    <h4>AdminData</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS1L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS1L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS2L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS2L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS3L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS3L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS4L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS4L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS5L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS5L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS6L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS6L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS7L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS7L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS8L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS8L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS9L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS9L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS10L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS10L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS11L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS11L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS12L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS12L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS13L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS13L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS14L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS14L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS15L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS15L)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.isVisibleS16L)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.isVisibleS16L)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+        </dl>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
 </div>
