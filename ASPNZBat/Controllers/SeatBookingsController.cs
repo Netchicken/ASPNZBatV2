@@ -114,6 +114,7 @@ namespace ASPNZBat.Controllers
         }
 
         [Authorize]
+
         // GET: SeatBookings/SessionDetails
         public IActionResult SessionDetails()
         {

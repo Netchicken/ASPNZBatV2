@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace ASPNZBat.DTO
 {
+    using Business;
     using Ical.Net;
     using Ical.Net.CalendarComponents;
     using Models;
@@ -22,6 +23,8 @@ namespace ASPNZBat.DTO
         public Calendar SeatBookingsCalOutputToEmail { get; set; }
 
         public List<CalendarEvent> SeatBookingsOutputToIndex { get; set; }
+
+        public SortedDictionary<DateTime, List<string>> SessionAndNames { get; set; }
 
         public DbCallsSessionDataDto()
         {

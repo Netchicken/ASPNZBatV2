@@ -18,6 +18,7 @@ namespace ASPNZBat.Business.ICal
         private Calendar calendar = new Calendar();
         private readonly SeatBookingDBContext _context;
         private IDBCallsSessionDataDTO _dbCallsSessionDataDTO;
+        private List<TimetableBooking> alltimetableBookings = new List<TimetableBooking>();
 
         public CalService(IDBCallsSessionDataDTO dbCallsSessionDataDTO, SeatBookingDBContext context)
         {
@@ -37,27 +38,46 @@ namespace ASPNZBat.Business.ICal
         }
 
         /// <summary>
+        /// Generate the session details for the new event
+        /// </summary>
+        /// <param name="sessions"></param>
+        /// <param name="morningSessStart"></param>
+        /// <param name="morningSessEnd"></param>
+        /// <param name="afternoonSessStart"></param>
+        /// <param name="afternoonSessEnd"></param>
+        /// <param name="eveningSessStart"></param>
+        /// <param name="eveningSessEnd"></param>
+        /// <returns></returns>
+        public static string[] SessionDetails(out string[] sessions, out TimeSpan morningSessStart, out TimeSpan morningSessEnd,
+            out TimeSpan afternoonSessStart, out TimeSpan afternoonSessEnd, out TimeSpan eveningSessStart,
+            out TimeSpan eveningSessEnd)
+        {
+            //I hate hardcoding, this should be abstracted out to an admin section
+
+            //arrays of data
+            string[] days = new[] { " Monday", " Tuesday", " Wednesday", " Thursday", " Friday" };
+            sessions = new[] { "Morning 9am - 11:30am", "Afternoon 12pm - 2:30pm", "Evening 5:30pm - 8:30pm" };
+            string[] allSessionTimeStart = new[] { "9:00:00", "12:00:01", "17:30:00" };
+            string[] allSessionTimeEnd = new[] { "11:30:00", "14:30:01", "20:30:00" };
+
+            //time of session to add in to calender from string to timespan
+            morningSessStart = TimeSpan.Parse(allSessionTimeStart[0]);
+            morningSessEnd = TimeSpan.Parse(allSessionTimeEnd[0]);
+            afternoonSessStart = TimeSpan.Parse(allSessionTimeStart[1]);
+            afternoonSessEnd = TimeSpan.Parse(allSessionTimeEnd[1]);
+            eveningSessStart = TimeSpan.Parse(allSessionTimeStart[2]);
+            eveningSessEnd = TimeSpan.Parse(allSessionTimeEnd[2]);
+            return days;
+        }
+
+        /// <summary>
         /// Get the current logged in users seat bookings
         /// </summary>
         /// <param name="seatBookings">List of Seatbookings</param>
         /// <param name="isEventController">is it coming from the event controller</param>
         public string GetBookedSeats(IEnumerable<SeatBooking> seatBookings, bool isEventController)
         {
-            //I hate hardcoding, this should be abstracted out to an admin section
-
-            //arrays of data
-            string[] days = new[] { " Monday", " Tuesday", " Wednesday", " Thursday", " Friday" };
-            string[] sessions = new[] { "Morning 9am - 11:30am", "Afternoon 12pm - 2:30pm", "Evening 5:30pm - 8:30pm" };
-            string[] allSessionTimeStart = new[] { "9:00:00", "12:00:01", "17:30:00" };
-            string[] allSessionTimeEnd = new[] { "11:30:00", "14:30:01", "20:30:00" };
-
-            //time of session to add in to calender from string to timespan
-            TimeSpan morningSessStart = TimeSpan.Parse(allSessionTimeStart[0]);
-            TimeSpan morningSessEnd = TimeSpan.Parse(allSessionTimeEnd[0]);
-            TimeSpan afternoonSessStart = TimeSpan.Parse(allSessionTimeStart[1]);
-            TimeSpan afternoonSessEnd = TimeSpan.Parse(allSessionTimeEnd[1]);
-            TimeSpan eveningSessStart = TimeSpan.Parse(allSessionTimeStart[2]);
-            TimeSpan eveningSessEnd = TimeSpan.Parse(allSessionTimeEnd[2]);
+            var days = SessionDetails(out var sessions, out var morningSessStart, out var morningSessEnd, out var afternoonSessStart, out var afternoonSessEnd, out var eveningSessStart, out var eveningSessEnd);
 
             //loop through all the booked sessions and create a cal event
             foreach (var seats in seatBookings)
@@ -124,15 +144,17 @@ namespace ASPNZBat.Business.ICal
                     NewEvent(seats, 15, 4, eveningSessStart, eveningSessEnd, days[4], sessions[2]);
                 }
             }
-            //if wer are outputting to the Events controller 
+            //if we are outputting to the Events controller 
             if (isEventController)
             {
                 _dbCallsSessionDataDTO.SeatBookingsOutputToIndex = OutputEventsToIndex(calendar);
                 return null;
             }
             //  otherwise we are outputting to the calender
+            _dbCallsSessionDataDTO.SessionAndNames = timetableBookingsToStudentController(alltimetableBookings);
             return OutputEvents(calendar);
         }
+
 
         /// <summary>
         /// Generate an event from the Seat number
@@ -148,6 +170,7 @@ namespace ASPNZBat.Business.ICal
 
             string[] descArray = { day, session };
 
+
             //todo create a new class to pass all the bookings to so that the variable names actually match the data
             //Create a new event with event details
             var vEvent = new CalendarEvent
@@ -162,6 +185,17 @@ namespace ASPNZBat.Business.ICal
             };
 
             calendar.Events.Add(vEvent); //adding in the new events
+
+            //create a list of timetable bookings
+            var Timetable = new TimetableBooking
+            {
+                StudentEmail = seats.StudentEmail,
+                StudentName = seats.Name,
+                SeatDate = sessionStart,
+                SessionName = seatId
+            };
+
+            alltimetableBookings.Add(Timetable);
         }
 
         /// <summary>
@@ -206,6 +240,35 @@ namespace ASPNZBat.Business.ICal
             return orderedCal.ToList();
         }
 
+        public SortedDictionary<DateTime, List<string>> timetableBookingsToStudentController(List<TimetableBooking> timetableBookings)
+        {
+            //Key date session S1
+            //Value Name Email
 
+
+            SortedDictionary<DateTime, List<string>> SessionAndNames = new SortedDictionary<DateTime, List<string>>();
+
+            foreach (var item in timetableBookings)
+            {
+                DateTime key = item.SeatDate;
+                string value = item.StudentName + " - " + item.StudentEmail + " - " + item.SessionName;
+
+                if (!SessionAndNames.ContainsKey(key))
+                {
+                    SessionAndNames.Add(key,
+                         new List<string>
+                         {
+                             value
+                             });
+                }
+                else
+                {
+                    SessionAndNames[key].Add(value);
+                }
+            }
+
+            return SessionAndNames;
+
+        }
     }
 }

@@ -1,52 +1,59 @@
-﻿@model string[]
+﻿@using Humanizer
+@using Microsoft.AspNetCore.Html
+@model SortedDictionary<DateTime, List<string>>
 
 @{
-    ViewBag.Title = "title";
-    Layout = "_Layout";
+    ViewData["Title"] = "Student Timetable";
+
 }
 
-<h2>Timetable</h2>
-
-
-@foreach (var item in Model)
-{
-    if (item != string.Empty)
-    {
-
-
-
-
-        <div class="form-group col-xs-6 col-md-2 text-left">
-            @*<a asp-action="Edit" asp-route-id="@item.">*@
-            <label class="badge badge-light trigger">
-                @{ List<string> names = new List<string>(); }
-
-                @names = @item.Split('*');
-
-                @foreach (var name in names)
-                {
-                    @name
-                    </br>
-
-
-                }
-
-                @*@item.DtStart.Date.Humanize()<br />*@
-                <small>
-                    @*@item.DtStart.Date.ToShortDateString() @item.Categories[0] <br>
-
-                        @item.Categories[1] <br>*@
-                </small>
-                <small class="text-muted">
-                    @*     Session @Html.DisplayFor(modelItem => item.Class) @item.Summary*@
-                </small>
-            </label>
-            @*</a>*@
-            <br />
-
-
+<!-- Header -->
+<header id="header">
+    <div class="intro ">
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="intro-text">
+                        <h1 style="color:azure">Welcome to <span class="brand">Vision College</span></h1>
+                        <h2>Student Booking Details</h2>
+                    </div>
+                </div>
+            </div>
         </div>
-    }
-}
+    </div>
+</header>
+<!-- Services Section -->
+<div id="services" class="text-center">
+    <div class="container-fluid ">
+        <p></p>
+        @foreach (var item in Model)
+        {
+            int StudentCounter = 0;
+            string SessionID = null, Name, Email;
+            string[] Details;
 
+            <div class="form-group col-xs-6 col-md-4 text-left">
+                <label class="Timetablelabel badge badge-light trigger " style="min-width: 300px;">
+                    <h5> @item.Key.Humanize() @item.Key.ToShortDateString()</h5>
 
+                    @for (int i = 0; i < item.Value.Count; i++)
+                    {
+                        { StudentCounter = StudentCounter + 1; }
+                        {
+                            Details = item.Value[i].Split('-');
+                            Name = Details[0].Trim();
+                            Email = Details[1].Trim();
+                            SessionID = Details[2].Trim();
+                        }
+                        <div align="left">   @Name &nbsp; &nbsp; &nbsp; <span class="pull-right"> <small>@Email </small></span></div>
+                    }
+                    <hr style="width: 100%; color: rgb(226, 90, 61); height: 1px; background-color: rgb(226, 90, 61)" />
+                    <div align="left"> Student @StudentCounter  &nbsp; &nbsp; &nbsp; <span class="pull-right"> Session  @SessionID </span> </div>
+                </label>
+                <br />
+
+            </div>
+        }
+
+    </div>
+</div>

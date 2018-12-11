@@ -43,11 +43,26 @@
                 </button>
 
             </div>
-
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
+                <!-- Collect the nav links, forms, and other content for toggling -->
+
+
                 <ul class="nav navbar-nav navbar-right">
+
+                    <li class=" dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" asp-controller="Students" asp-action="Timetable">View the Timetable</a>
+                            <a class="dropdown-item" asp-controller="Students" asp-action="Index">Student Details</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" asp-controller="Email" asp-action="TestEmail">Send Email</a>
+                            <a class="dropdown-item" asp-controller="Email" asp-action="TestCalendar">Send Calendar Events</a>
+                        </div>
+                    </li>
                     <li class=" dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             What Shall We Do?
@@ -61,11 +76,6 @@
                         </div>
                     </li>
 
-
-                    @*<li> <a asp-area="" asp-controller="Email" asp-action="TestEmail">Send Email</a> </li>
-                            <li><a asp-area="" asp-controller="Email" asp-action="TestCalendar">Send Cal</a></li>
-                            <li><a asp-area="" asp-controller="SeatBookings" asp-action="Create">Create A Booking</a></li>
-                        <li><a asp-area="" asp-controller="SeatBookings" asp-action="Index">Check Your Bookings</a></li>*@
                     <li> <partial name="_LoginPartial" /></li>
                 </ul>
 
