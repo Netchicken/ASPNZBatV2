@@ -39,6 +39,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

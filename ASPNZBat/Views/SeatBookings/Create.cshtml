@@ -65,10 +65,14 @@
             </div>
         </div>
         <p></p>
+
+
+
         @await Html.PartialAsync("~/Views/Shared/_BookingTable.cshtml")
     </form>
 </div>
-<p>Full Session = <span id="full" style="color: Red">@ViewData["maxseats"]</span> Nearly Full = <span id="nearlyfull" style="color: Yellow">@ViewData["nearlyFullSeats"]</span>  Plenty of seats = <span id="empty" style="color: Green">@ViewData["plentySeats"]</span> </p>
+
+
 @await Html.PartialAsync("~/Views/Shared/_Stats.cshtml")
 
 @section Scripts {
@@ -124,40 +128,68 @@
             if (IsSessionVis[i] == false) //the bool shows if the session is running or not
             {
                 <script>
-                        $(document).ready(function() {
-                            //Hide the checkbox intially id="S1L"
-                            $('@cbxid').css('display', 'none');
-                            $("label[id= '@lblid']").css('display', 'none');
-                            $('@fid').css('display', 'none');
-                            $("th[id= '@idth']").css('display', 'none');
-                            $("td[id= '@sSid']").css('display', 'none');
-                        });
+                    $(document).ready(function() {
+                        //Hide the checkbox intially id="S1L"
+                        $('@cbxid').css('display', 'none');
+                        $("label[id= '@lblid']").css('display', 'none');
+                        $('@fid').css('display', 'none');
+                        $("th[id= '@idth']").css('display', 'none');
+                        $("td[id= '@sSid']").css('display', 'none');
+                    });
                 </script>
             }
 
             else //false
             {
                 <script>
-                        $(document).ready(function() {
-                            //Show the checkbox intially id="S1L"
-                            $('@cbxid').css('display', 'block');
-                            $("label[id= '@lblid']").css('display', 'block');
-                            $('@fid').css( 'display', 'block');
-                        });
+                    $(document).ready(function() {
+                        //Show the checkbox intially id="S1L"
+                        $('@cbxid').css('display', 'block');
+                        $("label[id= '@lblid']").css('display', 'block');
+                        $('@fid').css('display', 'block');
+                    });
                 </script>
 
             }
 
         }
+
+        <script>
+            $(document).ready(function () {
+
+                var maxseats = @ViewData["maxseats"]; //max bookings for a session - disables checkbox above that number
+                var threeqseats = @ViewData["nearlyFullSeats"]; //$(".nearlyfull").val(); //some middle range number set at 3 quarters but wherever you like
+                var oneqseats = @ViewData["plentySeats"]; // $(".empty").val(); //empty or lower level number not use?
+                //alert(maxseats);
+                //alert(threeqseats);
+                //alert(oneqseats);
+
+                $('td.sess').each(function () {
+                    var students = parseInt($(this).html());
+                    var statID = $(this).attr("id"); //get the ID   <td id="sS1"
+                    var sessID = statID.substring(1); //strip out the extra s to ge the session ID
+                    //  alert(statID); // just a test
+                    if (students < threeqseats) {
+                        $(this).css('background', 'rgb(170, 218, 170)');
+
+                    } else if (students >= maxseats) {
+                        $(this).css('background', 'rgb(239, 135, 135)');
+                        //document.getElementById(sessID).enabled = false;
+                        //document.getElementById(s1L).innerHTML = "Test";
+
+                    } else if (students <= maxseats && students >= threeqseats) {
+                        $(this).css('background', 'rgb(233, 233, 45)');
+                    }
+
+                });
+            });
+        </script>
+
+        <script src="~/js/Create.js"></script>
     }
+}
 
-
-
-
-
-    <script src="~/js/Create.js"></script>
-
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 }

@@ -2,36 +2,30 @@
 // http://jsfiddle.net/8L7v0pbp/
 //LOOK  AT _STATS IN SHARED TO SEE THE TABLE *@
 
-var maxseats = $("#full").val(); //max bookings for a session - disables checkbox above that number
-var threeqseats = $("#nearlyfull").val(); //some middle range number set at 3 quarters but wherever you like
-var oneqseats = $("#empty").val(); //empty or lower level number not use?
+
+
 
 $(document).ready(function () {
     $('td.sess').each(function () {
-        var diff = parseInt($(this).html());
+        var students = parseInt($(this).html());
         var statID = $(this).attr("id"); //get the ID   <td id="sS1"
         var sessID = statID.substring(1); //strip out the extra s to ge the session ID
 
         //  alert(statID); // just a test
 
-        if (diff < threeqseats) {
+        if (students < threeqseats) {
             $(this).css('background', 'rgb(170, 218, 170)');
 
-        } else if (diff > maxseats) {
+        } else if (students > maxseats) {
             $(this).css('background', 'rgb(239, 135, 135)');
             //document.getElementById(sessID).enabled = false;
             //document.getElementById(s1L).innerHTML = "Test";
 
-        } else if (diff <= maxseats && diff >= threeqseats) {
+        } else if (students <= maxseats && students >= threeqseats) {
             $(this).css('background', 'rgb(233, 233, 45)');
         }
 
     });
-
-
-
-
-
 });
 
 //RADIO BUTTON SELECTION

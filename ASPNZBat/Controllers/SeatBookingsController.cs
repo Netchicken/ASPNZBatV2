@@ -78,17 +78,11 @@ namespace ASPNZBat.Controllers
             var IgnoreThisOutput = _calService.GetBookedSeats(lastMonthbookings, true);
             ViewData["BookedSessions"] = _dbCallsSessionDataDTO.SeatBookingsOutputToIndex;
 
-
             //     _generateCalendarEventsForControllers.GenerateCalendarEventsForSeatBookings(user, lastMonthbookings);
 
             //Sessions that are visible or not
             ViewData["SessionVisible"] = _sessions.GetAdminData();
-
-
-
             return View(lastMonthbookings);
-
-
         }
 
 
@@ -114,24 +108,18 @@ namespace ASPNZBat.Controllers
         }
 
         [Authorize]
-
         // GET: SeatBookings/SessionDetails
         public IActionResult SessionDetails()
         {
-
             var seatBooking = _context.SeatBooking
-
-               .OrderByDescending(s => s.SeatDate);
-
+                .OrderByDescending(s => s.SeatDate);
             return View(seatBooking);
         }
 
 
         // GET: SeatBookings/Create
-
         public IActionResult Create()
         {
-
             //Show the next 4 weeks
             ViewData["ThisWeek"] = _sessions.GetNextFourWeeks();
 
@@ -142,14 +130,10 @@ namespace ASPNZBat.Controllers
             ViewData["SessionVisible"] = _sessions.GetAdminData();
 
             //  _addUserToStudentTable.AddUserToStudentTable();
-
-
             var settings = _context.SiteSettings.FirstOrDefault();
             ViewData["maxseats"] = settings.maxSeats;
             ViewData["nearlyFullSeats"] = settings.nearlyFullSeats;
             ViewData["plentySeats"] = settings.plentySeats;
-
-
 
             return View();
         }
@@ -162,13 +146,8 @@ namespace ASPNZBat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ID,SeatDate,S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15, ")] SeatBooking seatBooking)
         {
-
             //Show data for the next 4 weeks
             ViewData["CheckFullSession"] = _sessions.GetSingleWeekStats(seatBooking.SeatDate);
-
-            //   CalService myCalService = new CalService();
-            //   myCalService.seatBooking = seatBooking;
-            //Calendar allevents = myCalService.testBooking(seatBooking);
 
             if (ModelState.IsValid)
             {
@@ -191,13 +170,37 @@ namespace ASPNZBat.Controllers
                 //add to the booking
                 seatBooking.Name = name.ToString();
 
-
-
                 _context.Add(seatBooking);
                 await _context.SaveChangesAsync();
+
+                //delete out old session booking to keep db small
+                await DeleteOldSessionBookings();
+
                 return RedirectToAction(nameof(Index));
             }
             return View(seatBooking);
+        }
+        /// <summary>
+        /// Delete out sessions over a month old. To keep the DB small (its only sqlite) 
+        /// </summary>
+        /// <returns></returns>
+        public async Task DeleteOldSessionBookings()
+        {
+            //delete out old bookings get the date of last month
+            DateTime LastMonth = DateTime.Today;
+
+            LastMonth = LastMonth.AddMonths(-1);
+            //get all records from over a month old. We could delete ALL old sessions, not just users.
+            var deleteSeatBooking = _context.SeatBooking
+                .Where(s => s.StudentEmail == _userManager.GetUserName(User) && s.SeatDate < LastMonth)
+                .ToList();
+            //delete them
+            if (deleteSeatBooking.Count > 0)
+            {
+                foreach (var booking in deleteSeatBooking) _context.SeatBooking.Remove(booking);
+                await _context.SaveChangesAsync();
+            }
+
         }
 
         // GET: SeatBookings/Edit/5
