@@ -68,6 +68,7 @@
         @await Html.PartialAsync("~/Views/Shared/_BookingTable.cshtml")
     </form>
 </div>
+<p>Full Session = <span id="full" style="color: Red">@ViewData["maxseats"]</span> Nearly Full = <span id="nearlyfull" style="color: Yellow">@ViewData["nearlyFullSeats"]</span>  Plenty of seats = <span id="empty" style="color: Green">@ViewData["plentySeats"]</span> </p>
 @await Html.PartialAsync("~/Views/Shared/_Stats.cshtml")
 
 @section Scripts {
@@ -149,6 +150,10 @@
 
         }
     }
+
+
+
+
 
     <script src="~/js/Create.js"></script>
 

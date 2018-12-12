@@ -6,15 +6,15 @@ namespace ASPNZBat.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "Email",
-                table: "Students",
-                nullable: true);
+            //migrationBuilder.AddColumn<string>(
+            //    name: "Email",
+            //    table: "Students",
+            //    nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "Name",
-                table: "SeatBooking",
-                nullable: true);
+            //    migrationBuilder.AddColumn<string>(
+            //        name: "Name",
+            //        table: "SeatBooking",
+            //        nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

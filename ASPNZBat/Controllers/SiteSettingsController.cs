@@ -10,22 +10,22 @@ using ASPNZBat.Models;
 
 namespace ASPNZBat.Controllers
 {
-    public class AdminDatasController : Controller
+    public class SiteSettingsController : Controller
     {
         private readonly SeatBookingDBContext _context;
 
-        public AdminDatasController(SeatBookingDBContext context)
+        public SiteSettingsController(SeatBookingDBContext context)
         {
             _context = context;
         }
 
-        // GET: AdminDatas
+        // GET: SiteSettings
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AdminData.ToListAsync());
+            return View(await _context.SiteSettings.ToListAsync());
         }
 
-        // GET: AdminDatas/Details/5
+        // GET: SiteSettings/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null)
@@ -33,63 +33,62 @@ namespace ASPNZBat.Controllers
                 return NotFound();
             }
 
-            var adminData = await _context.AdminData
+            var siteSettings = await _context.SiteSettings
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (adminData == null)
+            if (siteSettings == null)
             {
                 return NotFound();
             }
 
-            return View(adminData);
+            return View(siteSettings);
         }
 
-        // GET: AdminDatas/Create
+        // GET: SiteSettings/Create
         public IActionResult Create()
         {
             return RedirectToAction("Edit");
         }
 
-        // POST: AdminDatas/Create
+        // POST: SiteSettings/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,isVisibleS1L,isVisibleS2L,isVisibleS3L,isVisibleS4L,isVisibleS5L,isVisibleS6L,isVisibleS7L,isVisibleS8L,isVisibleS9L,isVisibleS10L,isVisibleS11L,isVisibleS12L,isVisibleS13L,isVisibleS14L,isVisibleS15L,isVisibleS16L")] AdminData adminData)
+        public async Task<IActionResult> Create([Bind("Id,maxSeats,nearlyFullSeats,plentySeats")] SiteSettings siteSettings)
         {
             //if (ModelState.IsValid)
             //{
-            //    _context.Update(adminData);
+            //    _context.Add(siteSettings);
             //    await _context.SaveChangesAsync();
             //    return RedirectToAction(nameof(Index));
             //}
             return RedirectToAction("Edit");
         }
 
-        // GET: AdminDatas/Edit/5
+        // GET: SiteSettings/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             //if (id == null)
             //{
             //    return NotFound();
             //}
-
-            //   var adminData = await _context.AdminData.FindAsync(id);
-            var adminData = _context.AdminData.FirstOrDefault();
-            //if (adminData == null)
+            var siteSettings = _context.SiteSettings.FirstOrDefault();
+            //var siteSettings = await _context.SiteSettings.FindAsync(id);
+            //if (siteSettings == null)
             //{
             //    return NotFound();
             //}
-            return View(adminData);
+            return View(siteSettings);
         }
 
-        // POST: AdminDatas/Edit/5
+        // POST: SiteSettings/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,isVisibleS1L,isVisibleS2L,isVisibleS3L,isVisibleS4L,isVisibleS5L,isVisibleS6L,isVisibleS7L,isVisibleS8L,isVisibleS9L,isVisibleS10L,isVisibleS11L,isVisibleS12L,isVisibleS13L,isVisibleS14L,isVisibleS15L,isVisibleS16L")] AdminData adminData)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,maxSeats,nearlyFullSeats,plentySeats")] SiteSettings siteSettings)
         {
-            if (id != adminData.Id)
+            if (id != siteSettings.Id)
             {
                 return NotFound();
             }
@@ -98,16 +97,17 @@ namespace ASPNZBat.Controllers
             {
                 try
                 {
-                    //get the existing ID so we don't make a new row
-                    var rowid = _context.AdminData.Select(a => a.Id).FirstOrDefault();
-                    adminData.Id = rowid;
 
-                    _context.Update(adminData);
+                    //get the existing ID so we don't make a new row
+                    var rowid = _context.SiteSettings.Select(a => a.Id).FirstOrDefault();
+                    siteSettings.Id = rowid;
+
+                    _context.Update(siteSettings);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AdminDataExists(adminData.Id))
+                    if (!SiteSettingsExists(siteSettings.Id))
                     {
                         return NotFound();
                     }
@@ -116,47 +116,47 @@ namespace ASPNZBat.Controllers
                         throw;
                     }
                 }
-
                 return RedirectToAction("Create", "SeatBookings");
-                //   return RedirectToAction(nameof(Index));
             }
-            return View(adminData);
+            return View(siteSettings);
         }
 
-        // GET: AdminDatas/Delete/5
+        // GET: SiteSettings/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
-            //if (id == null)
-            //{
-            return RedirectToAction("Edit");
-            //}
 
-            // var adminData = await _context.AdminData
-            //    .FirstOrDefaultAsync(m => m.Id == id);
-            //if (adminData == null)
+            return RedirectToAction("Edit");
+            //if (id == null)
             //{
             //    return NotFound();
             //}
 
-            //return View(adminData);
+            //var siteSettings = await _context.SiteSettings
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            //if (siteSettings == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return View(siteSettings);
         }
 
-        // POST: AdminDatas/Delete/5
+        // POST: SiteSettings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
 
             return RedirectToAction("Edit");
-            //var adminData = await _context.AdminData.FindAsync(id);
-            //_context.AdminData.Remove(adminData);
+            //var siteSettings = await _context.SiteSettings.FindAsync(id);
+            //_context.SiteSettings.Remove(siteSettings);
             //await _context.SaveChangesAsync();
             //return RedirectToAction(nameof(Index));
         }
 
-        private bool AdminDataExists(string id)
+        private bool SiteSettingsExists(string id)
         {
-            return _context.AdminData.Any(e => e.Id == id);
+            return _context.SiteSettings.Any(e => e.Id == id);
         }
     }
 }

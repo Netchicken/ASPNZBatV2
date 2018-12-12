@@ -2,9 +2,9 @@
 // http://jsfiddle.net/8L7v0pbp/
 //LOOK  AT _STATS IN SHARED TO SEE THE TABLE *@
 
-var maxseats = 5; //max bookings for a session - disables checkbox above that number
-var threeqseats = 4; //some middle range number set at 3 quarters but wherever you like
-var oneqseats = 2; //empty or lower level number not use?
+var maxseats = $("#full").val(); //max bookings for a session - disables checkbox above that number
+var threeqseats = $("#nearlyfull").val(); //some middle range number set at 3 quarters but wherever you like
+var oneqseats = $("#empty").val(); //empty or lower level number not use?
 
 $(document).ready(function () {
     $('td.sess').each(function () {

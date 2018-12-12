@@ -1,0 +1,56 @@
+﻿@model ASPNZBat.Models.SiteSettings
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<!-- Header -->
+<header id="header">
+    <div class="intro ">
+        <div class="overlay">
+            <div class="container">
+                <div class="row">
+                    <div class="intro-text">
+                        <h1 style="color: azure">Welcome to <span class="brand">Vision College</span></h1>
+                        <h2>Change The Site Settings</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- Services Section -->
+<div id="services" class="text-center">
+    <div class="container-fluid ">
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="maxSeats" class="control-label">How many seats for a Full Session? - Red</label>
+                        <input asp-for="maxSeats" class="form-control" />
+                        <span asp-validation-for="maxSeats" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="nearlyFullSeats" class="control-label">How many seats make the class nearly Full? - Yellow</label>
+                        <input asp-for="nearlyFullSeats" class="form-control" />
+                        <span asp-validation-for="nearlyFullSeats" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="plentySeats" class="control-label">How many seats are there that show its empty - Green</label>
+                        <input asp-for="plentySeats" class="form-control" />
+                        <span asp-validation-for="plentySeats" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+    </div>
+</div>

@@ -143,6 +143,14 @@ namespace ASPNZBat.Controllers
 
             //  _addUserToStudentTable.AddUserToStudentTable();
 
+
+            var settings = _context.SiteSettings.FirstOrDefault();
+            ViewData["maxseats"] = settings.maxSeats;
+            ViewData["nearlyFullSeats"] = settings.nearlyFullSeats;
+            ViewData["plentySeats"] = settings.plentySeats;
+
+
+
             return View();
         }
 

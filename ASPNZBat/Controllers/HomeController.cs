@@ -12,7 +12,7 @@ namespace ASPNZBat.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return RedirectToAction("Create", "SeatBookings");
             //var result = DependencyResolver.Current.GetService<SeatBookingsController>();
             //return RedirectToAction(SeatBookingsController, "Create");
         }
@@ -21,19 +21,19 @@ namespace ASPNZBat.Controllers
         {
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            return RedirectToAction("Create", "SeatBookings");
         }
 
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
 
-            return View();
+            return RedirectToAction("Create", "SeatBookings");
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            return RedirectToAction("Create", "SeatBookings");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -9,6 +9,7 @@ namespace ASPNZBat.Data
 {
     public class SeatBookingDBContext : DbContext
     {
+
         public DbSet<SeatBooking> SeatBooking { get; set; }
         public DbSet<Students> Students { get; set; }
         public DbSet<AdminData> AdminData { get; set; }

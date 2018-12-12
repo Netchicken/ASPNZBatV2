@@ -163,8 +163,7 @@ namespace ASPNZBat
             {
                 routes.MapRoute(
                     name: "default",
-                    //  template: "{controller=Home}/{action=Index}/{id?}"
-                    template: "{controller=SeatBookings}/{action=Create}/{id?}"
+                   template: "{controller=SeatBookings}/{action=Create}/{id?}"
                      );
 
             });
