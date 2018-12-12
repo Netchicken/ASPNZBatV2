@@ -222,7 +222,7 @@ namespace ASPNZBat
             }
             //add a role of admin to Sarah change admin to other roles
             await UserManager.AddToRoleAsync(user, "Admin");
-            //end adding using roles, you can loop through all membersand assign if you want
+            //end adding using roles, you can loop through all members and assign if you want
         }
 
     }

@@ -30,8 +30,8 @@
             </div>
             <div class="row">
                 <div class="col-md-2 col-md-offset-1 col-xs-2 ">
-                    <div class="form-group">
-                        <div class="checkbox custom-control custom-checkbox ">
+                    <div id="f1" class="form-group">
+                        <div class="checkbox">
                             <label id="S1L">
                                 <input id="S1" asp-for="isVisibleS1L" /> S1
                             </label>
@@ -190,145 +190,145 @@
         @*}*@
     </form>
 
-    <form asp-action="Edit">
-        <div class="row">
-            <div class="col-md-6">
+    @*<form asp-action="Edit">
+            <div class="row">
+                <div class="col-md-6">
 
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="Id" />
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="isVisibleS1L" /> S1
-                        </label>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="isVisibleS1L" /> S1
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="isVisibleS2L" /> @Html.DisplayNameFor(model => model.isVisibleS2L)
-                        </label>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="isVisibleS2L" /> @Html.DisplayNameFor(model => model.isVisibleS2L)
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="isVisibleS3L" /> @Html.DisplayNameFor(model => model.isVisibleS3L)
-                        </label>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="isVisibleS3L" /> @Html.DisplayNameFor(model => model.isVisibleS3L)
+                            </label>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="isVisibleS4L" /> @Html.DisplayNameFor(model => model.isVisibleS4L)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="isVisibleS5L" /> @Html.DisplayNameFor(model => model.isVisibleS5L)
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6">
-
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="isVisibleS6L" /> @Html.DisplayNameFor(model => model.isVisibleS6L)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="isVisibleS7L" /> @Html.DisplayNameFor(model => model.isVisibleS7L)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="isVisibleS8L" /> @Html.DisplayNameFor(model => model.isVisibleS8L)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="isVisibleS9L" /> @Html.DisplayNameFor(model => model.isVisibleS9L)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="isVisibleS10L" /> @Html.DisplayNameFor(model => model.isVisibleS10L)
-                        </label>
-                    </div>
-                </div>
-
-
-                <div class="row">
-                    <div class="col-md-6">
-
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input asp-for="isVisibleS11L" /> @Html.DisplayNameFor(model => model.isVisibleS11L)
-                                </label>
-                            </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="isVisibleS4L" /> @Html.DisplayNameFor(model => model.isVisibleS4L)
+                            </label>
                         </div>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input asp-for="isVisibleS12L" /> @Html.DisplayNameFor(model => model.isVisibleS12L)
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input asp-for="isVisibleS13L" /> @Html.DisplayNameFor(model => model.isVisibleS13L)
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input asp-for="isVisibleS14L" /> @Html.DisplayNameFor(model => model.isVisibleS14L)
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input asp-for="isVisibleS15L" /> @Html.DisplayNameFor(model => model.isVisibleS15L)
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                    <input asp-for="isVisibleS16L" /> @Html.DisplayNameFor(model => model.isVisibleS16L)
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="isVisibleS5L" /> @Html.DisplayNameFor(model => model.isVisibleS5L)
+                            </label>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+            <div class="row">
+                <div class="col-md-6">
 
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="isVisibleS6L" /> @Html.DisplayNameFor(model => model.isVisibleS6L)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="isVisibleS7L" /> @Html.DisplayNameFor(model => model.isVisibleS7L)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="isVisibleS8L" /> @Html.DisplayNameFor(model => model.isVisibleS8L)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="isVisibleS9L" /> @Html.DisplayNameFor(model => model.isVisibleS9L)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="isVisibleS10L" /> @Html.DisplayNameFor(model => model.isVisibleS10L)
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="isVisibleS11L" /> @Html.DisplayNameFor(model => model.isVisibleS11L)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="isVisibleS12L" /> @Html.DisplayNameFor(model => model.isVisibleS12L)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="isVisibleS13L" /> @Html.DisplayNameFor(model => model.isVisibleS13L)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="isVisibleS14L" /> @Html.DisplayNameFor(model => model.isVisibleS14L)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="isVisibleS15L" /> @Html.DisplayNameFor(model => model.isVisibleS15L)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="isVisibleS16L" /> @Html.DisplayNameFor(model => model.isVisibleS16L)
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>*@
 </div>

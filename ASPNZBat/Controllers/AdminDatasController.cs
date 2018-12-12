@@ -56,12 +56,12 @@ namespace ASPNZBat.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,isVisibleS1L,isVisibleS2L,isVisibleS3L,isVisibleS4L,isVisibleS5L,isVisibleS6L,isVisibleS7L,isVisibleS8L,isVisibleS9L,isVisibleS10L,isVisibleS11L,isVisibleS12L,isVisibleS13L,isVisibleS14L,isVisibleS15L,isVisibleS16L")] AdminData adminData)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Update(adminData);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            //if (ModelState.IsValid)
+            //{
+            //    _context.Update(adminData);
+            //    await _context.SaveChangesAsync();
+            //    return RedirectToAction(nameof(Index));
+            //}
             return View(adminData);
         }
 
@@ -116,7 +116,9 @@ namespace ASPNZBat.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction("Create", "SeatBookings");
+                //   return RedirectToAction(nameof(Index));
             }
             return View(adminData);
         }
@@ -124,19 +126,19 @@ namespace ASPNZBat.Controllers
         // GET: AdminDatas/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            //if (id == null)
+            //{
+            return NotFound();
+            //}
 
-            var adminData = await _context.AdminData
-               .FirstOrDefaultAsync(m => m.Id == id);
-            if (adminData == null)
-            {
-                return NotFound();
-            }
+            // var adminData = await _context.AdminData
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            //if (adminData == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return View(adminData);
+            //return View(adminData);
         }
 
         // POST: AdminDatas/Delete/5

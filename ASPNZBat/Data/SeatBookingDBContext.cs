@@ -13,6 +13,7 @@ namespace ASPNZBat.Data
         public DbSet<Students> Students { get; set; }
         public DbSet<AdminData> AdminData { get; set; }
 
+        public DbSet<SiteSettings> SiteSettings { get; set; }
         public SeatBookingDBContext(DbContextOptions<SeatBookingDBContext> options)
             : base(options)
         {
