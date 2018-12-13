@@ -144,19 +144,13 @@ namespace ASPNZBat.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,SeatDate,S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15, ")] SeatBooking seatBooking)
+        public async Task<IActionResult> Create([Bind("ID,SeatDate,S1,S2,S3,S4,S5,S6,S7,S8,S9,S10,S11,S12,S13,S14,S15 ")] SeatBooking seatBooking)
         {
             //Show data for the next 4 weeks
             ViewData["CheckFullSession"] = _sessions.GetSingleWeekStats(seatBooking.SeatDate);
 
             if (ModelState.IsValid)
             {
-                //todo get session with the same date
-                //  string SeatDateNew = seatBooking.SeatDate.ToLongDateString();
-                //todo UPDATE them if they exist
-                //   var DeleteSeatBooking = await _context.SeatBooking.FindAsync();
-                //  _context.SeatBooking.Remove(DeleteSeatBooking);
-
 
                 //Save locally for sending to calendar
                 _dbCallsSessionDataDTO.lastSeatBooking.Add(seatBooking);
@@ -170,7 +164,23 @@ namespace ASPNZBat.Controllers
                 //add to the booking
                 seatBooking.Name = name.ToString();
 
-                _context.Add(seatBooking);
+                // get session with the same date and same email
+                //todo UPDATE them if they exist
+                var matchSeatBooking = _context.SeatBooking.FirstOrDefault(s => s.SeatDate == seatBooking.SeatDate && s.StudentEmail == _userManager.GetUserName(User));
+
+                if (matchSeatBooking != null)
+                {
+                    //just need the id of the saved entry
+                    seatBooking.ID = matchSeatBooking.ID;
+                    matchSeatBooking.ID = 100; //need to get rid of the other id throws an error
+
+                    _context.Update(seatBooking);
+                }
+                else
+                {
+                    _context.Add(seatBooking);
+                }
+
                 await _context.SaveChangesAsync();
 
                 //delete out old session booking to keep db small
@@ -191,8 +201,12 @@ namespace ASPNZBat.Controllers
 
             LastMonth = LastMonth.AddMonths(-1);
             //get all records from over a month old. We could delete ALL old sessions, not just users.
+            // var deleteSeatBooking = _context.SeatBooking
+            //     .Where(s => s.StudentEmail == _userManager.GetUserName(User) && s.SeatDate < LastMonth)
+            //     .ToList();
+
             var deleteSeatBooking = _context.SeatBooking
-                .Where(s => s.StudentEmail == _userManager.GetUserName(User) && s.SeatDate < LastMonth)
+                .Where(s => s.SeatDate < LastMonth)
                 .ToList();
             //delete them
             if (deleteSeatBooking.Count > 0)

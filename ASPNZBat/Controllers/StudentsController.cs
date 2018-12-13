@@ -173,9 +173,12 @@ namespace ASPNZBat.Controllers
             {
                 return NotFound();
             }
-
+            //get the selected student
             var students = await _context.Students
                 .FirstOrDefaultAsync(m => m.ID == id);
+
+
+
             if (students == null)
             {
                 return NotFound();
@@ -190,7 +193,24 @@ namespace ASPNZBat.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var students = await _context.Students.FindAsync(id);
+
+            //get their identity object from that student
+            var StudentUser = _userManager.FindByEmailAsync(students.Email);
+
+            //delete that student from the Identity ASP users account
+            var deleteFromIdentity = await _userManager.DeleteAsync(await StudentUser);
             _context.Students.Remove(students);
+
+            //delete the entries in the seatbooking
+            var AllSeatBooking = _context.SeatBooking
+                .Where(s => s.StudentEmail == students.Email).ToList();
+
+            //loop through the bookings and delete them
+            foreach (var Booking in AllSeatBooking)
+            {
+                _context.SeatBooking.Remove(Booking);
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
