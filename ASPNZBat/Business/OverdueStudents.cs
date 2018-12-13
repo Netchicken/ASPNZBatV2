@@ -16,8 +16,8 @@ namespace ASPNZBat.Business
 
         public OverdueStudents(
             SeatBookingDBContext context,
-            UserManager<IdentityUser> userManager
-, ApplicationDbContext adminContext)
+            UserManager<IdentityUser> userManager,
+            ApplicationDbContext adminContext)
         {
             _context = context;
             _userManager = userManager;

@@ -165,7 +165,7 @@ namespace ASPNZBat.Controllers
                 seatBooking.Name = name.ToString();
 
                 // get session with the same date and same email
-                //todo UPDATE them if they exist
+                // UPDATE them if they exist
                 var matchSeatBooking = _context.SeatBooking.FirstOrDefault(s => s.SeatDate == seatBooking.SeatDate && s.StudentEmail == _userManager.GetUserName(User));
 
                 if (matchSeatBooking != null)
@@ -173,11 +173,11 @@ namespace ASPNZBat.Controllers
                     //just need the id of the saved entry
                     seatBooking.ID = matchSeatBooking.ID;
                     matchSeatBooking.ID = 100; //need to get rid of the other id throws an error
-
+                    //update the existing record
                     _context.Update(seatBooking);
                 }
                 else
-                {
+                {//create a new record
                     _context.Add(seatBooking);
                 }
 

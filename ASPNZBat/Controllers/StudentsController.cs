@@ -241,39 +241,3 @@ namespace ASPNZBat.Controllers
     }
 }
 
-//.GroupBy(g => new { g.SeatDate })
-//.Select(a => new TimetableVM()
-//{
-//    SeatDate = a.Key.SeatDate,
-//    S1 = a.Count(s => s.S2),
-//    // Name = (s => s.Name),
-//    S2 = a.Count(s => s.S2),
-//    S3 = a.Count(s => s.S3),
-//    S4 = a.Count(s => s.S4),
-//    S5 = a.Count(s => s.S5),
-//    S6 = a.Count(s => s.S6),
-//    S7 = a.Count(s => s.S7),
-//    S8 = a.Count(s => s.S8),
-//    S9 = a.Count(s => s.S9),
-//    S10 = a.Count(s => s.S10),
-//    S11 = a.Count(s => s.S11),
-//    S12 = a.Count(s => s.S12),
-//    S13 = a.Count(s => s.S13),
-//    S14 = a.Count(s => s.S14),
-//    S15 = a.Count(s => s.S15)
-//}).ToList();
-//string[] StudentsInSessions = new string[15];.ToList()
-
-//foreach (var session in _allBookingsFromToday)
-//{
-//    bool[] sess = new bool[16] { false, session.S1, session.S2, session.S3, session.S4, session.S5, session.S6, session.S7, session.S8, session.S9, session.S10, session.S11, session.S12, session.S13, session.S14, session.S15 };
-
-//    for (int i = 1; i < 16; i++)
-//    {
-
-//        if (sess[i] == true)
-//        {
-//            StudentsInSessions[i] += session.Name + "</br>";
-//        }
-//    }
-//}
