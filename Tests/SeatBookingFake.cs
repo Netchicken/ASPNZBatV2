@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
+using ASPNZBat;
 namespace Tests
 {
     using ASPNZBat.Models;
 
-    class SeatBookingFake
+    class SeatBookingFake : ISeatBookingFake
     { // //https://code-maze.com/unit-testing-aspnetcore-web-api/
         private readonly List<SeatBooking> _seatBooking;
 

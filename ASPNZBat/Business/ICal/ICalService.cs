@@ -18,5 +18,6 @@ namespace ASPNZBat.Business.ICal
         string CalendarBooking(IEnumerable<SeatBooking> seatBooking, bool isEventController);
         List<CalendarEvent> OutputEventsToIndex(Calendar cal);
         string GetBookedSeats(IEnumerable<SeatBooking> seatBookings, bool isEventController);
+        Calendar CalOutput();
     }
 }

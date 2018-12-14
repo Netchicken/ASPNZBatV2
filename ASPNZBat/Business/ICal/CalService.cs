@@ -15,7 +15,7 @@ namespace ASPNZBat.Business.ICal
     public class CalService : ICalService
     {
         //global calendar that newEvent gets added to
-        private Calendar calendar = new Calendar();
+        private Calendar calendar = new Calendar(); //this is not nice deal with it.
         private readonly SeatBookingDBContext _context;
         private IDBCallsSessionDataDTO _dbCallsSessionDataDTO;
         private List<TimetableBooking> alltimetableBookings = new List<TimetableBooking>();
@@ -152,10 +152,17 @@ namespace ASPNZBat.Business.ICal
             }
             //  otherwise we are outputting to the calender
             _dbCallsSessionDataDTO.SessionAndNames = timetableBookingsToStudentController(alltimetableBookings);
+
+            // CalOutput(calendar); //for Unit test
             return OutputEvents(calendar);
         }
 
 
+        public Calendar CalOutput()
+        {
+            //just getting a calendar for the Unit Test
+            return calendar;
+        }
         /// <summary>
         /// Generate an event from the Seat number
         /// </summary>
