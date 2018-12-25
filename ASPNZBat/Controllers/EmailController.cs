@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace ASPNZBat.Controllers
 {
+    using System;
     using Business.ICal;
     using Data;
     using DTO;
+    using Humanizer;
     using Microsoft.Extensions.Logging;
 
     public class EmailController : Controller
@@ -17,7 +19,7 @@ namespace ASPNZBat.Controllers
         private IGenerateCalendarEventsForControllers _generateCalendarEventsForControllers;
         private readonly ILogger _logger;
         private ICalService _calService;
-        private IDBCallsSessionDataDTO _dbCallsSessionData;
+        private IDBCallsSessionDataDTO _dbCallsSessionDataDTO;
         private readonly SeatBookingDBContext _context;
         private readonly IEmailSender _emailSender;
         private readonly IOverdueStudents _overdueStudents;
@@ -30,14 +32,14 @@ namespace ASPNZBat.Controllers
             IEmailSender emailSender,
             UserManager<IdentityUser> userManager,
             IOverdueStudents overdueStudents,
-            IDBCallsSessionDataDTO dbCallsSessionData,
+            IDBCallsSessionDataDTO dbCallsSessionDataDTO,
             ICalService calService,
             ILogger<EmailController> logger,
             IGenerateCalendarEventsForControllers generateCalendarEventsForControllers)
         {
             _context = context;
             _overdueStudents = overdueStudents;
-            _dbCallsSessionData = dbCallsSessionData;
+            _dbCallsSessionDataDTO = dbCallsSessionDataDTO;
             _emailSender = emailSender;
             _userManager = userManager;
             _calService = calService;
@@ -123,5 +125,35 @@ namespace ASPNZBat.Controllers
 
             return Ok(allevents);
         }
+
+
+        /// <summary>
+        /// Pass in the details fo the timetable and send it out via email.
+        /// </summary>
+        /// <param name="Timetable"></param>
+        /// <returns></returns>
+        public IActionResult TimeTableEmails(string date)
+        {
+            DateTime clickdate = Convert.ToDateTime(date);
+            var item = _dbCallsSessionDataDTO.TimeTable[clickdate];
+            string SessionID = null, Name, Email;
+            string[] Details;
+
+            //    DateTime date = Convert.ToDateTime(item[0]);
+
+            item.Humanize();
+            // item.ToShortDateString();
+            //Details = item('-');
+            //Name = Details[0].Trim();
+            //Email = Details[1].Trim();
+            //SessionID = Details[2].Trim();
+
+
+
+            return Ok();
+        }
+
+
+
     }
 }

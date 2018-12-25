@@ -14,5 +14,6 @@ namespace ASPNZBat.DTO
         Calendar SeatBookingsCalOutputToEmail { get; set; }
         List<CalendarEvent> SeatBookingsOutputToIndex { get; set; }
         SortedDictionary<DateTime, List<string>> SessionAndNames { get; set; }
+        SortedDictionary<DateTime, List<string>> TimeTable { get; set; }
     }
 }

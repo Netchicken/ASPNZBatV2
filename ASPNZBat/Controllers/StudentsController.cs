@@ -235,7 +235,8 @@ namespace ASPNZBat.Controllers
             var IgnoreThisOutput = _calService.GetBookedSeats(_allBookingsFromYesterday, false);
             var result = _dbCallsSessionDataDTO.SessionAndNames;
 
-
+            //todo pass the result to the emailcontroller / TimeTableEmails so that it can be used when a person clicks on the email.
+            _dbCallsSessionDataDTO.TimeTable = result;
             return View(result);
         }
     }

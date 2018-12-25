@@ -26,6 +26,8 @@ namespace ASPNZBat.DTO
 
         public SortedDictionary<DateTime, List<string>> SessionAndNames { get; set; }
 
+        public SortedDictionary<DateTime, List<string>> TimeTable { get; set; }
+
         public DbCallsSessionDataDto()
         {
             //need to instantiate the list

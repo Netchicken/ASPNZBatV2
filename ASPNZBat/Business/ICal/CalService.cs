@@ -20,10 +20,17 @@ namespace ASPNZBat.Business.ICal
         private IDBCallsSessionDataDTO _dbCallsSessionDataDTO;
         private List<TimetableBooking> alltimetableBookings = new List<TimetableBooking>();
 
+        //unless its a dependency then just new it up.
+        //  DbCallsSessionDataDto _dbCallsSessionDataDTO = new DbCallsSessionDataDto();
+
         public CalService(IDBCallsSessionDataDTO dbCallsSessionDataDTO, SeatBookingDBContext context)
         {
             _dbCallsSessionDataDTO = dbCallsSessionDataDTO;
             _context = context;
+        }
+
+        public CalService()
+        {
         }
 
         /// <summary>

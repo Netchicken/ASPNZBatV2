@@ -1,4 +1,5 @@
-﻿@using Humanizer
+﻿@using System.Globalization
+@using Humanizer
 @using Microsoft.AspNetCore.Html
 @model SortedDictionary<DateTime, List<string>>
 
@@ -33,23 +34,36 @@
             string[] Details;
 
             <div class="form-group col-xs-6 col-md-4 text-left">
-                <label class="Timetablelabel badge badge-light trigger " style="min-width: 300px;">
-                    <h5> @item.Key.Humanize() @item.Key.ToShortDateString()</h5>
 
-                    @for (int i = 0; i < item.Value.Count; i++)
-                    {
-                        { StudentCounter = StudentCounter + 1; }
+                @{
+                    //https://localhost:44378/Email/TimeTableEmails/12%2F17%2F2018%2012%3A00%3A01
+                    string timetableKey = item.Key.ToString(CultureInfo.CurrentCulture);
+                    timetableKey = timetableKey.Replace("%2F", "-");//date seperator
+                    timetableKey = timetableKey.Replace("%3A", ":");//date seperator
+                    timetableKey = timetableKey.Replace("%", " ");//space seperator
+                }
+
+                <a asp-action="TimeTableEmails" asp-controller="Email" asp-route-id="@timetableKey">
+                    <label class="Timetablelabel badge badge-light trigger " style="min-width: 300px;">
+                        <h5> @item.Key.Humanize() @item.Key.ToShortDateString()</h5>
+
+                        @for (int i = 0; i < item.Value.Count; i++)
                         {
-                            Details = item.Value[i].Split('-');
-                            Name = Details[0].Trim();
-                            Email = Details[1].Trim();
-                            SessionID = Details[2].Trim();
+                            {
+                                StudentCounter = StudentCounter + 1;
+                            }
+                            {
+                                Details = item.Value[i].Split('-');
+                                Name = Details[0].Trim();
+                                Email = Details[1].Trim();
+                                SessionID = Details[2].Trim();
+                            }
+                            <div align="left"> @Name &nbsp; &nbsp; &nbsp; <span class="pull-right"> <small>@Email </small></span></div>
                         }
-                        <div align="left">   @Name &nbsp; &nbsp; &nbsp; <span class="pull-right"> <small>@Email </small></span></div>
-                    }
-                    <hr style="width: 100%; color: rgb(226, 90, 61); height: 1px; background-color: rgb(226, 90, 61)" />
-                    <div align="left">@StudentCounter Students &nbsp; &nbsp; &nbsp; <span class="pull-right"> Session  @SessionID </span> </div>
-                </label>
+                        <hr style="width: 100%; color: rgb(226, 90, 61); height: 1px; background-color: rgb(226, 90, 61)" />
+                        <div align="left">@StudentCounter Students &nbsp; &nbsp; &nbsp; <span class="pull-right"> Session @SessionID </span> </div>
+                    </label>
+                </a>
             </div>
         }
     </div>

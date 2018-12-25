@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ASPNZBat;
+
 namespace Tests
 {
     using ASPNZBat.Models;
@@ -34,7 +35,7 @@ namespace Tests
                 S15 = true,
                 StudentEmail = "aaa@aaa.com",
                 Name = "Aaa Aaa",
-                SeatDate = DateTime.Parse("2018-12-10 00:00:00")
+                SeatDate = new DateTime(2018, 12, 10)
             },
             new SeatBooking()
             {
@@ -56,7 +57,7 @@ namespace Tests
                 S15 = true,
                 StudentEmail = "bbb@bbb.com",
                 Name = "Bbb Bbb",
-                SeatDate = DateTime.Parse("2018-17-10 00:00:00")
+                SeatDate =new DateTime(2018, 12, 17)
             },
             new SeatBooking()
             {
@@ -78,7 +79,7 @@ namespace Tests
                 S15 = true,
                 StudentEmail = "ccc@ccc.com",
                 Name = "Ccc Ccc",
-                SeatDate = DateTime.Parse("2018-24-10 00:00:00")
+                SeatDate =  new DateTime(2018, 12, 24)
             },
             new SeatBooking()
             {
@@ -100,7 +101,7 @@ namespace Tests
                 S15 = true,
                 StudentEmail = "ccc@ccc.com",
                 Name = "Ccc Ccc",
-                SeatDate = DateTime.Parse("2018-31-10 00:00:00")
+                SeatDate = new DateTime(2018, 12, 31)
             }
         };
         }
