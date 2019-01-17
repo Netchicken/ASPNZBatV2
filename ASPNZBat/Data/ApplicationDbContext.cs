@@ -12,5 +12,12 @@ namespace ASPNZBat.Data
             : base(options)
         {
         }
+
+
+        //removed when controllers were created as it throws an error
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source = BatAdmin.db");
+        }
     }
 }

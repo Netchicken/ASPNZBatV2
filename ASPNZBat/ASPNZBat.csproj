@@ -8,10 +8,49 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\image\icons-png\**" />
+    <Compile Remove="wwwroot\image\icons-svg\**" />
+    <Compile Remove="wwwroot\image\lightbox\**" />
+    <Compile Remove="wwwroot\image\overlays\**" />
+    <Compile Remove="wwwroot\image\svg\**" />
+    <Compile Remove="wwwroot\lib\bootstrap-sweetalert\test\**" />
+    <Compile Remove="wwwroot\lib\qtip2\**" />
+    <Compile Remove="wwwroot\lib\sweetalert\**" />
+    <Content Remove="wwwroot\image\icons-png\**" />
+    <Content Remove="wwwroot\image\icons-svg\**" />
+    <Content Remove="wwwroot\image\lightbox\**" />
+    <Content Remove="wwwroot\image\overlays\**" />
+    <Content Remove="wwwroot\image\svg\**" />
+    <Content Remove="wwwroot\lib\bootstrap-sweetalert\test\**" />
+    <Content Remove="wwwroot\lib\qtip2\**" />
+    <Content Remove="wwwroot\lib\sweetalert\**" />
+    <EmbeddedResource Remove="wwwroot\image\icons-png\**" />
+    <EmbeddedResource Remove="wwwroot\image\icons-svg\**" />
+    <EmbeddedResource Remove="wwwroot\image\lightbox\**" />
+    <EmbeddedResource Remove="wwwroot\image\overlays\**" />
+    <EmbeddedResource Remove="wwwroot\image\svg\**" />
+    <EmbeddedResource Remove="wwwroot\lib\bootstrap-sweetalert\test\**" />
+    <EmbeddedResource Remove="wwwroot\lib\qtip2\**" />
+    <EmbeddedResource Remove="wwwroot\lib\sweetalert\**" />
+    <None Remove="wwwroot\image\icons-png\**" />
+    <None Remove="wwwroot\image\icons-svg\**" />
+    <None Remove="wwwroot\image\lightbox\**" />
+    <None Remove="wwwroot\image\overlays\**" />
+    <None Remove="wwwroot\image\svg\**" />
+    <None Remove="wwwroot\lib\bootstrap-sweetalert\test\**" />
+    <None Remove="wwwroot\lib\qtip2\**" />
+    <None Remove="wwwroot\lib\sweetalert\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="ResourcesAndNotes\BackupTable.cshtml" />
+    <Content Remove="wwwroot\image\ajax-loader.gif" />
     <Content Remove="wwwroot\image\banner1.svg" />
     <Content Remove="wwwroot\image\banner2.svg" />
     <Content Remove="wwwroot\image\banner3.svg" />
+    <Content Remove="wwwroot\lib\bootstrap-sweetalert\assets\bootstrap-sweetalert.png" />
+    <Content Remove="wwwroot\lib\bootstrap-sweetalert\assets\docs.css" />
+    <Content Remove="wwwroot\lib\bootstrap-sweetalert\assets\thumbs-up.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +79,7 @@
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Services\" />
+    <Folder Include="wwwroot\lib\bootstrap-sweetalert\assets\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -61,12 +61,12 @@ namespace ASPNZBat
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
-            services.AddAuthentication().AddGoogle(googleOptions =>
-            {
-                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            });
+            //todo Commented this out to check for google auth uncomment it
+            //services.AddAuthentication().AddGoogle(googleOptions =>
+            //{
+            //    googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+            //    googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            //});
 
             services.AddTransient<ISessions, Sessions>();
 
@@ -74,11 +74,14 @@ namespace ASPNZBat
             //    options.UseSqlServer(
             //        Configuration.GetConnectionString("BatAdmin")));
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("BatAdmin")));
+            // services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("BatAdmin")));
 
-            services.AddDbContext<SeatBookingDBContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("Seating")));
+            //temp as db won't connect
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source= BatAdmin.db"));
+
+            services.AddDbContext<SeatBookingDBContext>(options => options.UseSqlite("Data Source= Seating.db"));
+
+            // services.AddDbContext<SeatBookingDBContext>(options => options.UseSqlite(Configuration.GetConnectionString("Seating")));
 
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -137,6 +140,23 @@ namespace ASPNZBat
                 options.User.RequireUniqueEmail = true;
             });
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                // Cookie settings
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.SlidingExpiration = true;
+            });
+
+
+
+
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -157,7 +177,7 @@ namespace ASPNZBat
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseAuthentication();
+            app.UseAuthentication(); //for Identity
 
             app.UseMvc(routes =>
             {

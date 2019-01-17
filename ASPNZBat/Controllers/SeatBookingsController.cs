@@ -259,12 +259,12 @@ namespace ASPNZBat.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            //only run if there is an email address
+            if (ModelState.IsValid && !string.IsNullOrEmpty(seatBooking.StudentEmail))
             {
                 try
                 {
-                    Students name = (Students)_context.Students.Where(s => s.Email == seatBooking.StudentEmail);
+                    Students name = _context.Students.FirstOrDefault(s => s.Email == seatBooking.StudentEmail);
 
                     seatBooking.Name = name.Name;
 
