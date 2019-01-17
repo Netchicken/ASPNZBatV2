@@ -92,11 +92,4 @@
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
   </ItemGroup>
-
-
-
-  <ItemGroup>
-    <PackageReference Update="Microsoft.NETCore.App" Version="2.1.6" />
-  </ItemGroup>
-
 </Project>
