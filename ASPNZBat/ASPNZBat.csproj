@@ -85,7 +85,9 @@
     <None Include="ResourcesAndNotes\BackupTable.cshtml" />
   </ItemGroup>
 
-
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NETCore.App" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Update="Views\SeatBookings\Index - backup.cshtml">
