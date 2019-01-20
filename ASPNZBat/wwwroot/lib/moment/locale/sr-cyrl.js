@@ -2,13 +2,7 @@
 //! locale : Serbian Cyrillic [sr-cyrl]
 //! author : Milan Janačković<milanjanackovic@gmail.com> : https://github.com/milan-j
 
-;(function (global, factory) {
-   typeof exports === 'object' && typeof module !== 'undefined'
-       && typeof require === 'function' ? factory(require('../moment')) :
-   typeof define === 'function' && define.amd ? define(['../moment'], factory) :
-   factory(global.moment)
-}(this, (function (moment) { 'use strict';
-
+import moment from '../moment';
 
 var translator = {
     words: { //Different grammatical cases
@@ -33,7 +27,7 @@ var translator = {
     }
 };
 
-var srCyrl = moment.defineLocale('sr-cyrl', {
+export default moment.defineLocale('sr-cyrl', {
     months: 'јануар_фебруар_март_април_мај_јун_јул_август_септембар_октобар_новембар_децембар'.split('_'),
     monthsShort: 'јан._феб._мар._апр._мај_јун_јул_авг._сеп._окт._нов._дец.'.split('_'),
     monthsParseExact: true,
@@ -104,7 +98,3 @@ var srCyrl = moment.defineLocale('sr-cyrl', {
         doy : 7  // The week that contains Jan 1st is the first week of the year.
     }
 });
-
-return srCyrl;
-
-})));

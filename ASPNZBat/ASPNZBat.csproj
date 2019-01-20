@@ -7,13 +7,16 @@
     <TypeScriptToolsVersion>3.0</TypeScriptToolsVersion>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="wwwroot\image\icons-png\**" />
     <Compile Remove="wwwroot\image\icons-svg\**" />
     <Compile Remove="wwwroot\image\lightbox\**" />
     <Compile Remove="wwwroot\image\overlays\**" />
     <Compile Remove="wwwroot\image\svg\**" />
-    <Compile Remove="wwwroot\lib\bootstrap-sweetalert\test\**" />
     <Compile Remove="wwwroot\lib\qtip2\**" />
     <Compile Remove="wwwroot\lib\sweetalert\**" />
     <Content Remove="wwwroot\image\icons-png\**" />
@@ -21,7 +24,6 @@
     <Content Remove="wwwroot\image\lightbox\**" />
     <Content Remove="wwwroot\image\overlays\**" />
     <Content Remove="wwwroot\image\svg\**" />
-    <Content Remove="wwwroot\lib\bootstrap-sweetalert\test\**" />
     <Content Remove="wwwroot\lib\qtip2\**" />
     <Content Remove="wwwroot\lib\sweetalert\**" />
     <EmbeddedResource Remove="wwwroot\image\icons-png\**" />
@@ -29,7 +31,6 @@
     <EmbeddedResource Remove="wwwroot\image\lightbox\**" />
     <EmbeddedResource Remove="wwwroot\image\overlays\**" />
     <EmbeddedResource Remove="wwwroot\image\svg\**" />
-    <EmbeddedResource Remove="wwwroot\lib\bootstrap-sweetalert\test\**" />
     <EmbeddedResource Remove="wwwroot\lib\qtip2\**" />
     <EmbeddedResource Remove="wwwroot\lib\sweetalert\**" />
     <None Remove="wwwroot\image\icons-png\**" />
@@ -37,7 +38,6 @@
     <None Remove="wwwroot\image\lightbox\**" />
     <None Remove="wwwroot\image\overlays\**" />
     <None Remove="wwwroot\image\svg\**" />
-    <None Remove="wwwroot\lib\bootstrap-sweetalert\test\**" />
     <None Remove="wwwroot\lib\qtip2\**" />
     <None Remove="wwwroot\lib\sweetalert\**" />
   </ItemGroup>
@@ -48,9 +48,6 @@
     <Content Remove="wwwroot\image\banner1.svg" />
     <Content Remove="wwwroot\image\banner2.svg" />
     <Content Remove="wwwroot\image\banner3.svg" />
-    <Content Remove="wwwroot\lib\bootstrap-sweetalert\assets\bootstrap-sweetalert.png" />
-    <Content Remove="wwwroot\lib\bootstrap-sweetalert\assets\docs.css" />
-    <Content Remove="wwwroot\lib\bootstrap-sweetalert\assets\thumbs-up.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,13 +69,13 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.6" PrivateAssets="All" />
     <PackageReference Include="Sendgrid" Version="9.10.0" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.5.2" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Services\" />
-    <Folder Include="wwwroot\lib\bootstrap-sweetalert\assets\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -93,5 +90,14 @@
     <Content Update="Views\SeatBookings\Index - backup.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="BatAdmin.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Seating.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
