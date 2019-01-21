@@ -31,7 +31,7 @@ namespace ASPNZBat.Controllers
         }
 
         // GET: Students
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             //get all entries from today
             //  DateTime today = DateTime.Today;

@@ -54,7 +54,7 @@ namespace ASPNZBat.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,isVisibleS1L,isVisibleS2L,isVisibleS3L,isVisibleS4L,isVisibleS5L,isVisibleS6L,isVisibleS7L,isVisibleS8L,isVisibleS9L,isVisibleS10L,isVisibleS11L,isVisibleS12L,isVisibleS13L,isVisibleS14L,isVisibleS15L,isVisibleS16L")] AdminData adminData)
+        public IActionResult Create([Bind("Id,isVisibleS1L,isVisibleS2L,isVisibleS3L,isVisibleS4L,isVisibleS5L,isVisibleS6L,isVisibleS7L,isVisibleS8L,isVisibleS9L,isVisibleS10L,isVisibleS11L,isVisibleS12L,isVisibleS13L,isVisibleS14L,isVisibleS15L,isVisibleS16L")] AdminData adminData)
         {
             //if (ModelState.IsValid)
             //{
@@ -66,7 +66,7 @@ namespace ASPNZBat.Controllers
         }
 
         // GET: AdminDatas/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
             //if (id == null)
             //{
@@ -124,7 +124,7 @@ namespace ASPNZBat.Controllers
         }
 
         // GET: AdminDatas/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public IActionResult Delete(string id)
         {
             //if (id == null)
             //{
@@ -144,7 +144,7 @@ namespace ASPNZBat.Controllers
         // POST: AdminDatas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public IActionResult DeleteConfirmed(string id)
         {
 
             return RedirectToAction("Edit");

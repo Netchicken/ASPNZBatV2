@@ -24,7 +24,7 @@ namespace ASPNZBat.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IOverdueStudents _overdueStudents;
         private readonly UserManager<IdentityUser> _userManager;
-        private string CurrentUserEmail;
+        //private string CurrentUserEmail;
         private string CurrentUserName;
 
         public EmailController(
@@ -136,8 +136,8 @@ namespace ASPNZBat.Controllers
         {
             DateTime clickdate = Convert.ToDateTime(date);
             var item = _dbCallsSessionDataDTO.TimeTable[clickdate];
-            string SessionID = null, Name, Email;
-            string[] Details;
+            //string SessionID = null, Name, Email;
+            //string[] Details;
 
             //    DateTime date = Convert.ToDateTime(item[0]);
 

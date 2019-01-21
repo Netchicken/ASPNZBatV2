@@ -18,7 +18,7 @@ namespace ASPNZBat.Business
         private readonly SeatBookingDBContext _context;
 
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        //private readonly SignInManager<IdentityUser> _signInManager;
         //   private Task<IdentityUser> GetCurrentUserAsync() => _userManager.GetUserAsync(User);
 
         public Sessions(

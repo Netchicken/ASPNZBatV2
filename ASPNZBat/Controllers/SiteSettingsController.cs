@@ -54,7 +54,7 @@ namespace ASPNZBat.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,maxSeats,nearlyFullSeats,plentySeats")] SiteSettings siteSettings)
+        public IActionResult Create([Bind("Id,maxSeats,nearlyFullSeats,plentySeats")] SiteSettings siteSettings)
         {
             //if (ModelState.IsValid)
             //{
@@ -66,7 +66,7 @@ namespace ASPNZBat.Controllers
         }
 
         // GET: SiteSettings/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
             //if (id == null)
             //{
@@ -122,7 +122,7 @@ namespace ASPNZBat.Controllers
         }
 
         // GET: SiteSettings/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public IActionResult Delete(string id)
         {
 
             return RedirectToAction("Edit");
@@ -144,7 +144,7 @@ namespace ASPNZBat.Controllers
         // POST: SiteSettings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public IActionResult DeleteConfirmed(string id)
         {
 
             return RedirectToAction("Edit");

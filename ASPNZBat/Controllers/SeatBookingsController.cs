@@ -28,7 +28,7 @@ namespace ASPNZBat.Controllers
         private IDBCallsSessionDataDTO _dbCallsSessionDataDTO;
         private readonly SeatBookingDBContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        //private readonly SignInManager<IdentityUser> _signInManager;
         //  private readonly AddUserToStudentTable _addUserToStudentTable;
         public ISessions _sessions { get; }
 
