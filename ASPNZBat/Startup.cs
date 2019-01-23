@@ -19,8 +19,6 @@ using IEmailSender = ASPNZBat.Business.IEmailSender;
 
 namespace ASPNZBat
 {
-
-
     using Business.ICal;
     using DTO;
     using Microsoft.AspNetCore.Authentication.Cookies;
@@ -37,12 +35,9 @@ namespace ASPNZBat
             Configuration = configuration;
         }
 
-
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.Configure<RequestLocalizationOptions>(options =>
             {
                 //set the culture for New Zealand for the whole project this might not be working, check it out by commenting it out.
@@ -54,8 +49,6 @@ namespace ASPNZBat
                 //options.SupportedCultures = (IList<CultureInfo>)cultureInfo;
                 //options.SupportedUICultures = (IList<CultureInfo>)cultureInfo;
             });
-
-
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -96,21 +89,24 @@ namespace ASPNZBat
 
             // services.AddDbContext<SeatBookingDBContext>(options => options.UseSqlite(Configuration.GetConnectionString("Seating")));
 
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<IdentityUser>()
+            //    .AddRoles<IdentityRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             //https://scottsauber.com/2018/07/07/walkthrough-creating-an-html-email-template-with-razor-and-razor-class-libraries-and-rendering-it-from-a-net-standard-class-library/
 
             //services.AddScoped<IRegisterAccountService, RegisterAccountService>();
             //services.AddScoped<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
 
+            //https://www.dotnettricks.com/learn/aspnetcore/authentication-authentication-aspnet-identity-example 
 
+            //Identity Membership system allow us to defined role for the user and with the help of user role, we can identify whether user has privilege to access the page or not.
+            //With default template, only UserManager class of Identity service is available but to do the role-based authentication, RoleManager class is also required.
+            //Both the classes available together by using “AddIdentity” method that adds the identity configuration for specific role and user.
 
-
-            //https://www.dotnettricks.com/learn/aspnetcore/authentication-authentication-aspnet-identity-example
-            //   services.AddIdentity<IdentityUser, IdentityRole>()
-            //       .AddEntityFrameworkStores<ApplicationDbContext>();
-
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddRoles<IdentityRole>()
+                   .AddEntityFrameworkStores<ApplicationDbContext>();
 
             //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state?view=aspnetcore-2.2
             services.AddDistributedMemoryCache();
@@ -118,9 +114,9 @@ namespace ASPNZBat
 
             // The AddAuthentication() and AddCookie() methods register cookie authentication service with the framework. Notice that AddAuthentication() accepts a string parameter indicating name of the security scheme. This can be any developer defined value or you can use the default as indicated by AuthenticationScheme property of CookieAuthenticationDefaults class.
             //http://www.binaryintellect.net/articles/9780ad51-20f6-48f3-989e-7c6511a44810.aspx
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie();
-
+            //  services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //      .AddCookie();
+            //ABOVE KILLS THE LOGIN
 
             services.AddSession(options =>
                 {
@@ -132,7 +128,7 @@ namespace ASPNZBat
 
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
 
             // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-2.1&tabs=visual-studio
             // using Microsoft.AspNetCore.Identity.UI.Services;
@@ -171,23 +167,23 @@ namespace ASPNZBat
 
                 // User settings
                 options.User.RequireUniqueEmail = true;
+
+                //Token Option
+                options.Tokens.AuthenticatorTokenProvider = "Name of AuthenticatorTokenProvider";
             });
 
             services.ConfigureApplicationCookie(options =>
             {
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
-
+                // options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+                options.Cookie.Expiration = TimeSpan.FromDays(150);
                 options.LoginPath = "/Identity/Account/Login";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
 
-
-
-
-
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
 
         }
@@ -206,7 +202,7 @@ namespace ASPNZBat
                 app.UseHsts();
             }
 
-            //  CreateUsersAndRoles(serviceProvider).Wait();
+
 
             app.UseRequestLocalization(); //use NZ localization from above
             app.UseHttpsRedirection();
@@ -223,7 +219,7 @@ namespace ASPNZBat
                      );
 
             });
-
+            CreateUsersAndRoles(serviceProvider).Wait();
         }
 
 
@@ -234,6 +230,7 @@ namespace ASPNZBat
             //initializing custom roles 
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
             //a list of roles
             string[] roleNames = { "Admin", "User" };
 

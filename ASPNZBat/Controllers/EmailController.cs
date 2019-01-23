@@ -73,16 +73,16 @@ namespace ASPNZBat.Controllers
             _logger.LogInformation("EmailOfCurrentBookings username = {name}", CurrentUserName);
             _generateCalendarEventsForControllers.CalendarEventsForEmail(CurrentUserName);
 
-            return Ok();
+            //   return Ok();
 
-            var emails = _context.SeatBooking
+            var Sessions = _context.SeatBooking
                 .Where(s => s.SeatDate > DateTime.Today && s.StudentEmail == CurrentUserName)
                 .ToList();
 
             string listOfEmails = "";
-            foreach (var email in emails)
+            foreach (var session in Sessions)
             {
-                listOfEmails += email + "</br>";
+                listOfEmails += session + "</br>";
             }
 
             //no bookings
