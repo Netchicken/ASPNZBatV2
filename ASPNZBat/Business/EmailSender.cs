@@ -55,7 +55,7 @@ namespace ASPNZBat.Business
             //https://app.sendgrid.com/guide/integrate/langs/csharp
             //https://github.com/sendgrid/sendgrid-csharp#installation
 
-            var Title = ("<h1>Vision College</h1><h3>The New Zealand Business Administration Course </h3>");
+            var Title = ("<h2>Vision College</h2><h4>The New Zealand Business Administration Course </h4>");
             //    string body = await _registerAccountService.GetEmailHTMLBody();
 
             _logger.LogInformation("Details: {Message}", email + " " + subject + " " + message);

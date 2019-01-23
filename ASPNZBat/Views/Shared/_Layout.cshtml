@@ -2,7 +2,8 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    @*<meta name="viewport" content="width=device-width, initial-scale=1.0" />*@
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title>@ViewData["Title"] - ASPNZBat</title>
     @*<environment include="Development">*@
 
@@ -24,7 +25,7 @@
     <!-- Material Design Bootstrap -->
     @*</environment>*@
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 
     <environment exclude="Development">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -53,36 +54,41 @@
 
 
                 <ul class="nav navbar-nav navbar-right">
-
-                    <li class=" dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Admin
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" asp-controller="Students" asp-action="Timetable">View the Timetable</a>
-                            <a class="dropdown-item" asp-controller="Students" asp-action="Index">Student Details</a>
-                            <a class="dropdown-item" asp-controller="AdminDatas" asp-action="Edit">
-                                Edit Sessions
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class=" dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Admin
                             </a>
-                            <a class="dropdown-item" asp-controller="SiteSettings" asp-action="Edit"> Site Settings</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" asp-controller="Email" asp-action="TestEmail">Send Email</a>
-                            <a class="dropdown-item" asp-controller="Email" asp-action="TestCalendar">Send Calendar Events</a>
-                        </div>
-                    </li>
-                    <li class=" dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            What Shall We Do?
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" asp-controller="SeatBookings" asp-action="Create">Create A Booking</a>
-                            <a class="dropdown-item" asp-controller="SeatBookings" asp-action="Index">Check Your Bookings</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" asp-controller="Email" asp-action="TestEmail">Send Email - ToDo</a>
-                            <a class="dropdown-item" asp-controller="Email" asp-action="TestCalendar">Send Calendar Events - ToDo</a>
-                        </div>
-                    </li>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-controller="Students" asp-action="Timetable">View the Timetable</a>
+                                <a class="dropdown-item" asp-controller="Students" asp-action="Index">Student Details</a>
+                                <a class="dropdown-item" asp-controller="AdminDatas" asp-action="Edit">
+                                    Edit Sessions
+                                </a>
+                                <a class="dropdown-item" asp-controller="SiteSettings" asp-action="Edit"> Site Settings</a>
+                                @*<div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" asp-controller="Email" asp-action="EmailOfCurrentBookings">Send Email To DO</a>
+                                        <a class="dropdown-item" asp-controller="Email" asp-action="TestCalendar">Send Calendar Events</a>
+                                    </div>*@
+                        </li>
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
 
+                        <li class=" dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                What Shall We Do?
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-controller="SeatBookings" asp-action="Create">Create A Booking</a>
+                                <a class="dropdown-item" asp-controller="SeatBookings" asp-action="Index">Check Your Bookings</a>
+                                @*<div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-controller="Email" asp-action="EmailOfCurrentBookings">Send me my bookings - ToDo</a>
+                                        <a class="dropdown-item" asp-controller="Email" asp-action="TestCalendar">Send Calendar Events - ToDo</a>
+                                                        </div>*@
+                        </li>
+                    }
                     <li> <partial name="_LoginPartial" /></li>
                 </ul>
 

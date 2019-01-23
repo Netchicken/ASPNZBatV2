@@ -8,18 +8,21 @@ namespace ASPNZBat.Business.ICal
     using DTO;
     using Ical.Net;
     using Ical.Net.Serialization;
+    using Microsoft.Extensions.Logging;
     using Models;
 
     public class GenerateCalendarEventsForControllers : IGenerateCalendarEventsForControllers
     {
+        private readonly ILogger<GenerateCalendarEventsForControllers> _logger;
         private IEmailSender _emailSender;
         private ICalService _calService;
         private IDBCallsSessionDataDTO _dbCallsSessionData;
-        public GenerateCalendarEventsForControllers(IDBCallsSessionDataDTO dbCallsSessionData, ICalService calService, IEmailSender emailSender)
+        public GenerateCalendarEventsForControllers(IDBCallsSessionDataDTO dbCallsSessionData, ICalService calService, IEmailSender emailSender, ILogger<GenerateCalendarEventsForControllers> logger)
         {
             _dbCallsSessionData = dbCallsSessionData;
             _calService = calService;
             _emailSender = emailSender;
+            _logger = logger;
         }
 
         /// <summary>
@@ -33,7 +36,7 @@ namespace ASPNZBat.Business.ICal
             //https://github.com/rianjs/ical.net/wiki
 
             string allevents = "";
-            //get back all the calander events
+            //get back all the calendar events
 
             var seatBooking = _dbCallsSessionData.lastSeatBooking;
             //calendar as string to be outputted to screen
@@ -51,6 +54,8 @@ namespace ASPNZBat.Business.ICal
                 //outputted to email and saved to show on screen
                 allevents += serializedCalendar;
             }
+
+            _logger.LogInformation("CalendarEventsForEmail emails = {name}", allevents);
 
             return allevents;
         }

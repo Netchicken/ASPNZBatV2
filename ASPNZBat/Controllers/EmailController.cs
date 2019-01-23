@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace ASPNZBat.Controllers
 {
     using System;
+    using System.Linq;
     using Business.ICal;
     using Data;
     using DTO;
@@ -60,7 +61,49 @@ namespace ASPNZBat.Controllers
         /// Send Emails to overdue students - students who havn't a current booking
         /// </summary>
 
-        public Task<IActionResult> TestEmail()
+
+
+        /// <summary>
+        /// Send email to logged in student with their session bookings
+        /// </summary>
+        public IActionResult EmailOfCurrentBookings()
+        {
+
+            CurrentUserName = _userManager.GetUserName(User);
+            _logger.LogInformation("EmailOfCurrentBookings username = {name}", CurrentUserName);
+            _generateCalendarEventsForControllers.CalendarEventsForEmail(CurrentUserName);
+
+            return Ok();
+
+            var emails = _context.SeatBooking
+                .Where(s => s.SeatDate > DateTime.Today && s.StudentEmail == CurrentUserName)
+                .ToList();
+
+            string listOfEmails = "";
+            foreach (var email in emails)
+            {
+                listOfEmails += email + "</br>";
+            }
+
+            //no bookings
+            if (string.IsNullOrEmpty(listOfEmails))
+            {
+                listOfEmails = "There are no bookings, You need to make some";
+            }
+
+
+            _logger.LogInformation("EmailOfCurrentBookings emails = {name}", listOfEmails);
+
+            _emailSender.SendEmailAsync(CurrentUserName, "Your Bookings", listOfEmails);
+            return Ok();
+        }
+
+
+        /// <summary>
+        /// Send a reminder email to students with only 1 booking 
+        /// </summary>
+        /// <returns></returns>
+        public Task<IActionResult> EmailReminderToStudents()
         {
             CurrentUserName = _userManager.GetUserName(User);
 
@@ -73,7 +116,7 @@ namespace ASPNZBat.Controllers
                 if (!sender.Contains(student))
                 {
                     _emailSender.SendEmailAsync(student, "Vision College BAT Course ",
-                            "Update your Sessions. You only have one session booked. Come back and make some.");
+                            "Please update your Sessions. You only have one session booked. Come back and make some more!.");
                     //add the user to the dict so it doesn't go again.
                     sender.Add(student);
                 }

@@ -23,6 +23,7 @@ namespace ASPNZBat
 
     using Business.ICal;
     using DTO;
+    using Microsoft.AspNetCore.Authentication.Cookies;
     using Microsoft.Extensions.Logging;
     //using RazorHtmlEmails.Common;
     //using RazorHtmlEmails.RazorClassLib.Services;
@@ -63,6 +64,16 @@ namespace ASPNZBat
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //https://stackoverflow.com/questions/50628262/asp-net-core-2-0-identity-twofactorrememberme-expiry
+            //this sets the cookie for the RememberMe login
+            //services.Configure<CookieAuthenticationOptions>
+            //(IdentityConstants.TwoFactorRememberMeScheme, options =>
+            //{
+            //    //this will override the default 14 day expire time
+            //    options.ExpireTimeSpan = TimeSpan.FromDays(30);
+            //});
+
+
             //todo Commented this out to check for google auth uncomment it
             //services.AddAuthentication().AddGoogle(googleOptions =>
             //{
@@ -101,6 +112,26 @@ namespace ASPNZBat
             //       .AddEntityFrameworkStores<ApplicationDbContext>();
 
 
+            //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state?view=aspnetcore-2.2
+            services.AddDistributedMemoryCache();
+
+
+            // The AddAuthentication() and AddCookie() methods register cookie authentication service with the framework. Notice that AddAuthentication() accepts a string parameter indicating name of the security scheme. This can be any developer defined value or you can use the default as indicated by AuthenticationScheme property of CookieAuthenticationDefaults class.
+            //http://www.binaryintellect.net/articles/9780ad51-20f6-48f3-989e-7c6511a44810.aspx
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie();
+
+
+            services.AddSession(options =>
+                {
+                    // Set a short timeout for easy testing. 1 hour
+                    options.Cookie.Name = ".NZBat";
+                    options.IdleTimeout = TimeSpan.FromMinutes(60);
+                    options.Cookie.HttpOnly = true;
+                });
+
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-2.1&tabs=visual-studio
@@ -134,7 +165,7 @@ namespace ASPNZBat
                 options.Password.RequiredUniqueChars = 0;
 
                 // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(60);
                 options.Lockout.MaxFailedAccessAttempts = 10;
                 options.Lockout.AllowedForNewUsers = true;
 
@@ -174,12 +205,15 @@ namespace ASPNZBat
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            //  CreateUsersAndRoles(serviceProvider).Wait();
+
             app.UseRequestLocalization(); //use NZ localization from above
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
-            app.UseAuthentication(); //for Identity
+            app.UseSession(); //for session cookies
+            app.UseAuthentication(); //for Identity and for cookies
 
             app.UseMvc(routes =>
             {
@@ -189,7 +223,7 @@ namespace ASPNZBat
                      );
 
             });
-            //    CreateUsersAndRoles(serviceProvider).Wait();
+
         }
 
 
@@ -202,7 +236,7 @@ namespace ASPNZBat
             var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
             //a list of roles
             string[] roleNames = { "Admin", "User" };
-            IdentityResult roleResult;
+
 
             //===============================================
             //hard code in some rolls
@@ -216,7 +250,7 @@ namespace ASPNZBat
                 if (!roleExist)
                 {
                     //create the roles and seed them to the database:
-                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                    IdentityResult roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
                 }
             }
             //===============================================
@@ -224,27 +258,58 @@ namespace ASPNZBat
 
             //look for a user - add in your users email address for when they log in
 
-            string AdminUser = "Sarah.Chalmers@visioncollege.ac.nz";
-            string AdminPW = "SarahChalmers";
+            Dictionary<string, string> AdminUsers = new Dictionary<string, string>();
 
-            IdentityUser user = await UserManager.FindByEmailAsync(AdminUser);
-            //nope she isn't there so make her name and add to admin db
-            if (user == null)
-            {
-                //creae a new user 
-                user = new IdentityUser()
+            AdminUsers.Add("test@gmail.com", "testtest");
+            AdminUsers.Add("Sarah.Chalmers@visioncollege.ac.nz", "SarahChalmers");
+
+            foreach (var person in AdminUsers)
+            {//does the person exist in the db?
+                IdentityUser user = await UserManager.FindByEmailAsync(person.Key);
+
+                //nope she isn't there so make her name and add to admin db
+                if (user == null)
                 {
-                    UserName = AdminUser,
-                    Email = AdminUser,
-                };
+                    //create a new user 
+                    user = new IdentityUser()
+                    {
+                        UserName = person.Key,
+                        Email = person.Key,
+                    };
 
-                //add the user and the password as a string to the db
-                await UserManager.CreateAsync(user, AdminPW);
+                    //add the user and the password as a string to the db
+                    await UserManager.CreateAsync(user, person.Value);
+                }
+
+                //add a role of admin to Sarah change admin to other roles
+                await UserManager.AddToRoleAsync(user, "Admin");
+                //end adding using roles, you can loop through all members and assign if you want
+
+
             }
-            //add a role of admin to Sarah change admin to other roles
-            await UserManager.AddToRoleAsync(user, "Admin");
-            //end adding using roles, you can loop through all members and assign if you want
+
         }
+
+        //string AdminUser = "Sarah.Chalmers@visioncollege.ac.nz";
+        //           string AdminPW = "SarahChalmers";
+        //IdentityUser user = await UserManager.FindByEmailAsync(AdminUser);
+        //    //nope she isn't there so make her name and add to admin db
+        //    if (user == null)
+        //    {
+        //        //create a new user 
+        //        user = new IdentityUser()
+        //        {
+        //            UserName = AdminUser,
+        //            Email = AdminUser,
+        //        };
+
+        //        //add the user and the password as a string to the db
+        //        await UserManager.CreateAsync(user, AdminPW);
+        //    }
+        //    //add a role of admin to Sarah change admin to other roles
+        //    await UserManager.AddToRoleAsync(user, "Admin");
+        //    //end adding using roles, you can loop through all members and assign if you want
+        //}
 
     }
 }
