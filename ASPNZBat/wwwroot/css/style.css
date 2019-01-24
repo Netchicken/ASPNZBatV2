@@ -8,8 +8,6 @@ body, html {
     background-color: #d8edf0;
 }
 
-.sessioncheckbox {
-}
 
 h1 {
     font-weight: 400;
@@ -48,14 +46,11 @@ p {
         line-height: 24px;
     }
 
-a {
-    /*color: #fff;*/
-}
 
-    a:hover, a:focus {
-        text-decoration: none;
-        color: #053740;
-    }
+a:hover, a:focus {
+    text-decoration: none;
+    color: #053740;
+}
 
 ul, ol {
     list-style: none;
@@ -122,9 +117,7 @@ ul, ol {
         /*margin: 0px;*/
     }
 
-/*#menu.navbar-default .navbar-nav > li > a:hover {
-			color: #053740;
-		}*/
+
 
 .on {
     background-color: #03252b !important;
@@ -141,13 +134,12 @@ ul, ol {
 }
 
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    color: white;
     background-color: #25BAD0;
     border-color: #25BAD0;
 }
 
-    .navbar-default .navbar-toggle:hover > .icon-bar {
-        /*background-color: #FFF;*/
-    }
+
 
 .navbar-btn {
     margin-top: 0;
@@ -158,27 +150,33 @@ ul, ol {
     /*font-size: 17px;*/
     border: 1px solid #ccc;
     border-radius: 6px;
-    /*outline: none;*/
+    outline: none;
     color: white;
     /*padding: 14px 16px;*/
     background-color: inherit;
     font-family: inherit;
-    margin-left: 4px;
+    margin-left: 0;
 }
 
 
+
 .dropdown-menu {
-    color: white;
-    padding: 14px 16px;
+    color: white !important;
+    /*padding: 14px 16px;*/
+    /*position: absolute;*/
     background-color: rgba(42,174,211,1) !important;
+    /*min-width: 160px;*/
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     /*font-family: inherit;*/
     border-radius: 4px;
     box-shadow: slategrey;
     /*margin-top: 20px;*/
     /*width: 300px;*/
+    z-index: 1;
 }
 
 .dropdown ul.dropdown-menu:before {
+    color: white !important;
     content: "";
     background-color: transparent;
     border-bottom: 10px solid #fff;
@@ -186,11 +184,12 @@ ul, ol {
     border-left: 10px solid transparent;
     position: absolute;
     top: -10px;
-    right: 16px;
+    /*right: 16px;*/
     z-index: 10;
 }
 
 .dropdown ul.dropdown-menu:after {
+    color: white !important;
     content: "";
     background-color: transparent;
     border-bottom: 12px solid #ccc;
@@ -198,23 +197,24 @@ ul, ol {
     border-left: 12px solid transparent;
     position: absolute;
     top: -12px;
-    right: 14px;
+    /*right: 14px;*/
     z-index: 9;
 }
 /*Must keep its overwriting mdb.css*/
 .navbar .dropdown-menu a {
-    padding: 10px;
+    padding: 0px;
     font-size: 0.9375rem;
     font-weight: 300;
-    color: white;
+    color: white !important;
 }
 
 /*end new*/
 
 
 .dropdown-item {
-    color: white;
-    padding: 14px 16px;
+    position: absolute;
+    color: white !important;
+    padding: 5px 5px;
     background-color: inherit;
     font-family: inherit;
 }
@@ -258,7 +258,7 @@ ul, ol {
     height: auto;
     text-align: center;
     color: #fff;
-    background: url(../image/campus.jpg) no-repeat center center;
+    /*background: url(/image/campus.jpg) no-repeat center center;*/
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -274,12 +274,82 @@ ul, ol {
         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2aaed3', endColorstr='#007db9e8',GradientType=0 ); /* IE6-9 */
     }
 
+/*@media only screen and (min-device-width: 400px) {
+    .intro {
+        background-image: url('../image/banner1.svg');
+    }
+}*/
 .section-title {
     padding: 25px 0 60px 0;
 }
 
+header .intro-text {
+    padding-top: 80px;
+    padding-bottom: 100px;
+}
+
+/*Hide short text by default*/
+.shorttext {
+    display: none !important;
+}
+/*Show text by default */
+.fulltext {
+    display: block !important;
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+    .intro {
+        /*background: url(/image/logo-mobile.svg) no-repeat center center;*/
+    }
+
+    .section-title {
+        padding: 15px 0 10px 0;
+    }
+
+    header .intro-text {
+        padding-top: 20px;
+        padding-bottom: 10px;
+    }
+
+    .shorttext {
+        display: inline-block !important;
+    }
+
+    .fulltext {
+        display: none !important;
+    }
+}
+
+
+@media only screen and (min-device-width : 480px) {
+    .intro {
+        background: url(/image/campus.jpg) no-repeat center center;
+    }
+
+    .section-title {
+        padding: 25px 0 60px 0;
+    }
+
+    header .intro-text {
+        padding-top: 80px;
+        padding-bottom: 100px;
+    }
+
+
+    /*Hide short text by default*/
+    .shorttext {
+        display: none !important;
+    }
+
+    .fulltext {
+        display: inline-block !important;
+    }
+}
+
+
+
 .intro H1 {
-    font-size: 60px;
+    font-size: 40px;
     text-transform: uppercase;
     letter-spacing: 2px;
     color: #053740;
@@ -299,10 +369,7 @@ ul, ol {
     color: #25BAD0;
 }
 
-header .intro-text {
-    padding-top: 80px;
-    padding-bottom: 150px;
-}
+
 
 .Timetablelabel {
     min-width: 100px;

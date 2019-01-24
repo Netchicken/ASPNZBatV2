@@ -10,7 +10,8 @@ namespace ASPNZBat.DTO
 
     public interface IDBCallsSessionDataDTO
     {
-        List<SeatBooking> lastSeatBooking { get; set; }
+        //Save the bookings locally for sending to calendar
+        List<SeatBooking> AllSeatBookings { get; set; }
         Calendar SeatBookingsCalOutputToEmail { get; set; }
         List<CalendarEvent> SeatBookingsOutputToIndex { get; set; }
         SortedDictionary<DateTime, List<string>> SessionAndNames { get; set; }

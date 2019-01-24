@@ -89,9 +89,7 @@ namespace ASPNZBat
 
             // services.AddDbContext<SeatBookingDBContext>(options => options.UseSqlite(Configuration.GetConnectionString("Seating")));
 
-            //services.AddDefaultIdentity<IdentityUser>()
-            //    .AddRoles<IdentityRole>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
             //https://scottsauber.com/2018/07/07/walkthrough-creating-an-html-email-template-with-razor-and-razor-class-libraries-and-rendering-it-from-a-net-standard-class-library/
 
@@ -104,9 +102,17 @@ namespace ASPNZBat
             //With default template, only UserManager class of Identity service is available but to do the role-based authentication, RoleManager class is also required.
             //Both the classes available together by using “AddIdentity” method that adds the identity configuration for specific role and user.
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+
+            //AddDefaultIdentity does not have Roles so use AddIdentity instead
+
+            services.AddDefaultIdentity<IdentityUser>()
                 .AddRoles<IdentityRole>()
-                   .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            //services.AddIdentity<IdentityUser, IdentityRole>()
+            //    .AddRoles<IdentityRole>()
+            //       .AddEntityFrameworkStores<ApplicationDbContext>();
 
             //https://docs.microsoft.com/en-us/aspnet/core/fundamentals/app-state?view=aspnetcore-2.2
             services.AddDistributedMemoryCache();
@@ -127,9 +133,6 @@ namespace ASPNZBat
                 });
 
 
-
-
-
             // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/accconfirm?view=aspnetcore-2.1&tabs=visual-studio
             // using Microsoft.AspNetCore.Identity.UI.Services;
             // using WebPWrecover.Services;
@@ -141,8 +144,12 @@ namespace ASPNZBat
             services.AddTransient<ICalService, CalService>();
             services.AddTransient<IGenerateCalendarEventsForControllers, GenerateCalendarEventsForControllers>();
 
+            // using Microsoft.AspNetCore.Identity.UI.Services;
+            //https://docs.microsoft.com/en-us/aspnet/core/security/authentication/scaffold-identity?view=aspnetcore-2.1&tabs=visual-studio
+            services.AddSingleton<IEmailSender, EmailSender>();
 
-            services.AddTransient<IEmailSender, EmailSender>();
+            // services.AddTransient<IEmailSender, EmailSender>();
+
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
             services.AddTransient<IStudentNameDTO, StudentNameDTO>();
@@ -179,6 +186,7 @@ namespace ASPNZBat
                 // options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
                 options.Cookie.Expiration = TimeSpan.FromDays(150);
                 options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
                 options.AccessDeniedPath = "/Identity/Account/AccessDenied";
                 options.SlidingExpiration = true;
             });
@@ -258,6 +266,7 @@ namespace ASPNZBat
             Dictionary<string, string> AdminUsers = new Dictionary<string, string>();
 
             AdminUsers.Add("test@gmail.com", "testtest");
+            AdminUsers.Add("gary.dix@visioncollege.ac.nz", "testtest");
             AdminUsers.Add("Sarah.Chalmers@visioncollege.ac.nz", "SarahChalmers");
 
             foreach (var person in AdminUsers)

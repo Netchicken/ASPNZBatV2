@@ -35,8 +35,9 @@
     </environment>
 </head>
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+
     <nav id="menu" class="navbar navbar-default navbar-fixed-top">
-        <a class="navbar-brand" href="#page-top"><img src="~/image/logo.svg" height="40" alt="Atena" data-retina="true"></a>
+        <a class="navbar-brand" href="http://bat.stuffucanuse.com/"><img src="~/image/logo.svg" height="40" alt="Atena" data-retina="true"></a>
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -51,43 +52,47 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
-
-
                 <ul class="nav navbar-nav navbar-right">
-                    @if (User.IsInRole("Admin"))
+                    @if (User.Identity.IsAuthenticated) // (User.IsInRole("Admin"))
                     {
                         <li class=" dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Admin
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-controller="Students" asp-action="Timetable">View the Timetable</a>
-                                <a class="dropdown-item" asp-controller="Students" asp-action="Index">Student Details</a>
-                                <a class="dropdown-item" asp-controller="AdminDatas" asp-action="Edit">
-                                    Edit Sessions
-                                </a>
-                                <a class="dropdown-item" asp-controller="SiteSettings" asp-action="Edit"> Site Settings</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li> <a class="dropdown-item" asp-controller="Students" asp-action="Timetable">View the Timetable</a></li>
+                                <li> <a class="dropdown-item" asp-controller="Students" asp-action="Index">Student Details</a></li>
+                                <li>
+                                    <a class="dropdown-item" asp-controller="AdminDatas" asp-action="Edit">
+                                        Edit Sessions
+                                    </a>
+                                </li>
+                                <li> <a class="dropdown-item" asp-controller="SiteSettings" asp-action="Edit"> Site Settings</a></li>
                                 @*<div class="dropdown-divider"></div>
                                         <a class="dropdown-item" asp-controller="Email" asp-action="EmailOfCurrentBookings">Send Email To DO</a>
                                         <a class="dropdown-item" asp-controller="Email" asp-action="TestCalendar">Send Calendar Events</a>
                                     </div>*@
+                            </ul>
                         </li>
                     }
                     @if (User.Identity.IsAuthenticated)
                     {
-
                         <li class=" dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                What Shall We Do?
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-controller="SeatBookings" asp-action="Create">Create A Booking</a>
-                                <a class="dropdown-item" asp-controller="SeatBookings" asp-action="Index">Check Your Bookings</a>
-                                @*<div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" asp-controller="Email" asp-action="EmailOfCurrentBookings">Send me my bookings - ToDo</a>
-                                        <a class="dropdown-item" asp-controller="Email" asp-action="TestCalendar">Send Calendar Events - ToDo</a>
-                                                        </div>*@
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">What Shall We Do?</a>
+
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                <li> <a class="dropdown-item" asp-controller="SeatBookings" asp-action="Create">Create A Booking</a> </li>
+
+                                <li> <a class="dropdown-item" asp-controller="SeatBookings" asp-action="Index">Check Your Bookings</a></li>
+
+                                <div class="dropdown-divider"></div>
+
+                                <li> <a class="dropdown-item" asp-controller="Email" asp-action="EmailOfCurrentBookings">Send me my bookings - ToDo</a></li>
+
+                                <li> <a class="dropdown-item" asp-controller="Email" asp-action="TestCalendar">Send Calendar Events - ToDo</a> </li>
+                            </ul>
+
                         </li>
+
                     }
                     <li> <partial name="_LoginPartial" /></li>
                 </ul>
@@ -114,7 +119,7 @@
         <script src="~/lib/moment/moment.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
         <script src="~/js/jquery.mobile-1.4.5.min.js"></script>
-
+        <script src="~/js/site.js"></script>
         @*<script src="~/js/site.js" asp-append-version="true"></script>*@
         <script src="~/lib/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
         <!-- SCRIPTS -->

@@ -19,7 +19,7 @@ namespace ASPNZBat.DTO
     public class DbCallsSessionDataDto : IDBCallsSessionDataDTO
     {
 
-        public List<SeatBooking> lastSeatBooking { get; set; }
+        public List<SeatBooking> AllSeatBookings { get; set; }
         public Calendar SeatBookingsCalOutputToEmail { get; set; }
 
         public List<CalendarEvent> SeatBookingsOutputToIndex { get; set; }
@@ -31,7 +31,7 @@ namespace ASPNZBat.DTO
         public DbCallsSessionDataDto()
         {
             //need to instantiate the list
-            lastSeatBooking = new List<SeatBooking>();
+            AllSeatBookings = new List<SeatBooking>();
 
         }
     }

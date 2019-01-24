@@ -11,8 +11,9 @@
 <header id="header">
 
     <link href="~/css/awesome-bootstrap-checkbox.css" rel="stylesheet" />
-    <div class="intro ">
-        <div class="overlay">
+    <div class="intro">
+
+        <div class="overlay ">
             <div class="container">
                 <div class="row">
                     <div class="intro-text">
@@ -65,9 +66,6 @@
             </div>
         </div>
         <p></p>
-
-
-
         @await Html.PartialAsync("~/Views/Shared/_BookingTable.cshtml")
     </form>
 </div>
@@ -178,12 +176,37 @@
                         //document.getElementById(s1L).innerHTML = "Test";
 
                     } else if (students <= maxseats && students >= threeqseats) {
-                        $(this).css('background', 'rgb(233, 233, 45)');
+                        $(this).css('background', 'rgb(45, 59, 233)');
                     }
 
                 });
             });
         </script>
+
+
+        @*<script>
+                $(document).ready(function(){
+                    if($( window ).width() < 480){
+                        $('shorttext').css('display', 'inline-block');
+                        $('fulltext').css('display', 'none');
+                    }else{
+                        $('fulltext').css('display', 'inline-block');
+                        $('shorttext').css('display', 'none');
+                    }
+                });
+
+                $( window ).resize(function() {
+                    if($( window ).width() < 480){
+                        $('shorttext').css('display', 'inline-block');
+                        $('fulltext').css('display', 'none');
+                    }else{
+                        $('fulltext').css('display', 'inline-block');
+                        $('shorttext').css('display', 'none');
+                    }
+                });
+            </script>*@
+
+
 
         <script src="~/js/Create.js"></script>
     }

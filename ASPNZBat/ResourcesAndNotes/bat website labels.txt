@@ -1,0 +1,26 @@
+
+
+                <a asp-action="Edit" asp-route-id="@item.Summary">
+                    <label class="badge badge-light trigger">
+                        @*@item.DtStart.Date.Humanize()<br />*@
+                        @*<small>*@
+                        @item.DtStart.Date.ToShortDateString() @item.Categories[0] <br>
+
+                        @item.Categories[1] <br>
+                        @*</small>*@
+                        <small class="text-muted">
+                            Session @Html.DisplayFor(modelItem => item.Class) @item.Summary
+                        </small>
+                    </label>
+                </a><br />
+
+                @item.DtStart.Date.Humanize()
+
+                @if (LastID != item.Summary)
+                {
+                    @*<div class="clearfix   ">
+                            Boo
+                            <br style="clear: both;" />
+                        </div>*@
+                }
+                @{ LastID = item.Summary; }

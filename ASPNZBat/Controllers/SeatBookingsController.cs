@@ -152,8 +152,8 @@ namespace ASPNZBat.Controllers
             if (ModelState.IsValid)
             {
 
-                //Save locally for sending to calendar
-                _dbCallsSessionDataDTO.lastSeatBooking.Add(seatBooking);
+                //Save locally for sending to calendar in GenerateCalendarEvents
+                _dbCallsSessionDataDTO.AllSeatBookings.Add(seatBooking);
 
                 //get the user email
                 seatBooking.StudentEmail = _userManager.GetUserName(User);

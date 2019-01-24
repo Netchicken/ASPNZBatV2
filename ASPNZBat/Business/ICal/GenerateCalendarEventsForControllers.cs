@@ -36,9 +36,8 @@ namespace ASPNZBat.Business.ICal
             //https://github.com/rianjs/ical.net/wiki
 
             string allevents = "";
-            //get back all the calendar events
-
-            var seatBooking = _dbCallsSessionData.lastSeatBooking;
+            //get back a list of the calendar events created in SeatBookingController
+            var seatBooking = _dbCallsSessionData.AllSeatBookings;
             //calendar as string to be outputted to screen
             allevents += _calService.CalendarBooking(seatBooking, false);
 
@@ -72,7 +71,7 @@ namespace ASPNZBat.Business.ICal
             string allevents = null;
             //pass in all the booking events.
             var seatBooking = bookingsLastMonth;
-            //calendar as string to be outputted to screen
+            //calendar as string to be outputted to screen and sent to email
             allevents += _calService.CalendarBooking(seatBooking, true);
 
             Calendar cal = new Calendar();

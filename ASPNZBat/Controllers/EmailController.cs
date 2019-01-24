@@ -73,7 +73,7 @@ namespace ASPNZBat.Controllers
             _logger.LogInformation("EmailOfCurrentBookings username = {name}", CurrentUserName);
             _generateCalendarEventsForControllers.CalendarEventsForEmail(CurrentUserName);
 
-            //   return Ok();
+            return Ok();
 
             var Sessions = _context.SeatBooking
                 .Where(s => s.SeatDate > DateTime.Today && s.StudentEmail == CurrentUserName)
