@@ -150,16 +150,21 @@ namespace ASPNZBat.Controllers
             List<DateTime> nextFourWeeksDate = new List<DateTime>();
             nextFourWeeksDate = _sessions.GetNextFourWeeks().ToList();
             ViewData["BookingsRemoved"] = "";
-            //if there is already a booking for that date then remove it, so only show dates with no booking.
-            for (int i = 0; i < nextFourWeeksDate.Count; i++)
+
+            //if there are any bookings - ie: they are logged in. 
+            if (Bookeddate.Any())
             {
-                if (nextFourWeeksDate.Contains(Bookeddate[i]))
+
+                //if there is already a booking for that date then remove it, so only show dates with no booking.
+                for (int i = 0; i < nextFourWeeksDate.Count; i++)
                 {
-                    nextFourWeeksDate.Remove(Bookeddate[i]);
-                    ViewData["BookingsRemoved"] = "Please use Edit to change existing Bookings";
+                    if (nextFourWeeksDate.Contains(Bookeddate[i]))
+                    {
+                        nextFourWeeksDate.Remove(Bookeddate[i]);
+                        ViewData["BookingsRemoved"] = "Please use Edit to change existing Bookings";
+                    }
                 }
             }
-
 
 
 
