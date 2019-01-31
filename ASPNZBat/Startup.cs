@@ -82,6 +82,11 @@ namespace ASPNZBat
 
             // services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("BatAdmin")));
 
+
+            //.EnableSensitiveDataLogging() solves the The instance of entity type  cannot be tracked because another instance with the same key value for {'Id'} is already being tracked error https://www.pmichaels.net/tag/dbcontextoptionsbuilder-enablesensitivedatalogging/
+
+
+
             //temp as db won't connect
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source= BatAdmin.db"));
 

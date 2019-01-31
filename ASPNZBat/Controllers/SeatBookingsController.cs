@@ -120,8 +120,51 @@ namespace ASPNZBat.Controllers
         // GET: SeatBookings/Create
         public IActionResult Create()
         {
+            //return the future bookings for that user so we can stop repeated bookings to same date by deactivating radiobuttons for same booking
+
+            List<DateTime> Bookeddate = new List<DateTime>();
+
+            if (User != null)
+            {
+                Bookeddate = _context.SeatBooking
+                             .Where(s => s.StudentEmail == _userManager.GetUserName(User) && s.SeatDate > DateTime.Today)
+                              .Select(s => s.SeatDate)
+                             //.OrderByDescending(s => s.SeatDate)
+                             .ToList();
+
+                ViewData["FutureSeatBookings"] = Bookeddate;
+            }
+            else
+            {
+                ViewData["FutureSeatBookings"] = null;
+            }
+
+
+
+
+            //get all the fture bookings for the user - to hide ones already made We could cut them back in sessions but I want to show them greyed out so users can then edit them.
+
+
             //Show the next 4 weeks
-            ViewData["ThisWeek"] = _sessions.GetNextFourWeeks();
+
+            List<DateTime> nextFourWeeksDate = new List<DateTime>();
+            nextFourWeeksDate = _sessions.GetNextFourWeeks().ToList();
+            ViewData["BookingsRemoved"] = "";
+            //if there is already a booking for that date then remove it, so only show dates with no booking.
+            for (int i = 0; i < nextFourWeeksDate.Count; i++)
+            {
+                if (nextFourWeeksDate.Contains(Bookeddate[i]))
+                {
+                    nextFourWeeksDate.Remove(Bookeddate[i]);
+                    ViewData["BookingsRemoved"] = "Please use Edit to change existing Bookings";
+                }
+            }
+
+
+
+
+
+            ViewData["ThisWeek"] = nextFourWeeksDate;
 
             //Show data for the next 4 weeks
             ViewData["CountSessions"] = _sessions.StatsSummary();
@@ -166,20 +209,22 @@ namespace ASPNZBat.Controllers
 
                 // get session with the same date and same email
                 // UPDATE them if they exist
-                var matchSeatBooking = _context.SeatBooking.FirstOrDefault(s => s.SeatDate == seatBooking.SeatDate && s.StudentEmail == _userManager.GetUserName(User));
+                //var matchSeatBooking = _context.SeatBooking.FirstOrDefault(s => s.SeatDate == seatBooking.SeatDate && s.StudentEmail == _userManager.GetUserName(User));
 
-                if (matchSeatBooking != null)
-                {
-                    //just need the id of the saved entry
-                    seatBooking.ID = matchSeatBooking.ID;
-                    matchSeatBooking.ID = 100; //need to get rid of the other id throws an error
-                    //update the existing record
-                    _context.Update(seatBooking);
-                }
-                else
-                {//create a new record
-                    _context.Add(seatBooking);
-                }
+                //if (matchSeatBooking != null)
+                //{
+                //    //just need the id of the saved entry
+                //    seatBooking.ID = matchSeatBooking.ID;
+                //    matchSeatBooking.ID = 10000; //need to get rid of the other id throws an error
+                //    //update the existing record
+                //    _context.Update(seatBooking);
+                //}
+                //else
+                //{//create a new record
+                //    _context.Add(seatBooking);
+                //}
+
+                _context.Add(seatBooking);
 
                 await _context.SaveChangesAsync();
 

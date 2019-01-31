@@ -5,28 +5,28 @@
 
 
 
-$(document).ready(function () {
-    $('td.sess').each(function () {
-        var students = parseInt($(this).html());
-        var statID = $(this).attr("id"); //get the ID   <td id="sS1"
-        var sessID = statID.substring(1); //strip out the extra s to ge the session ID
+//$(document).ready(function () {
+//    $('td.sess').each(function () {
+//        var students = parseInt($(this).html());
+//        var statID = $(this).attr("id"); //get the ID   <td id="sS1"
+//        var sessID = statID.substring(1); //strip out the extra s to ge the session ID
 
-        //  alert(statID); // just a test
+//        //  alert(statID); // just a test
 
-        if (students < threeqseats) {
-            $(this).css('background', 'rgb(170, 218, 170)');
+//        if (students < threeqseats) {
+//            $(this).css('background', 'rgb(170, 218, 170)');
 
-        } else if (students > maxseats) {
-            $(this).css('background', 'rgb(239, 135, 135)');
-            //document.getElementById(sessID).enabled = false;
-            //document.getElementById(s1L).innerHTML = "Test";
+//        } else if (students > maxseats) {
+//            $(this).css('background', 'rgb(239, 135, 135)');
+//            //document.getElementById(sessID).enabled = false;
+//            //document.getElementById(s1L).innerHTML = "Test";
 
-        } else if (students <= maxseats && students >= threeqseats) {
-            $(this).css('background', 'rgb(233, 233, 45)');
-        }
+//        } else if (students <= maxseats && students >= threeqseats) {
+//            $(this).css('background', 'rgb(45, 59, 233)');
+//        }
 
-    });
-});
+//    });
+//});
 
 //RADIO BUTTON SELECTION
 var DateSelected;

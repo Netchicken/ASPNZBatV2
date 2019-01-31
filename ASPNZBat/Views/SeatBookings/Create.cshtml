@@ -43,6 +43,8 @@
                                 <label class="form-check-label text-left" asp-for="SeatDate">@week.Date.ToShortDateString()  - @week.Date.Humanize() </label>
                             </div>
                         }
+
+                        <label for="count-checkboxes" class="badge badge-default trigger"> @ViewData["BookingsRemoved"]</label>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-2 col-xs-0  no-gutters">  </div>
@@ -68,6 +70,7 @@
         <p></p>
         @await Html.PartialAsync("~/Views/Shared/_BookingTable.cshtml")
     </form>
+
 </div>
 
 
@@ -75,8 +78,9 @@
 
 @section Scripts {
     @{
-        //counting checkboxes and changing text
         <script>
+            //counting checkboxes and changing text
+
             //make a variable for each checkbox
             var $checkboxes = $('input[type="checkbox"]');
 
@@ -97,23 +101,23 @@
                 }
 
             });
+
         </script>
-
-
-
-
         //Show and hide sessions that are not being used
         var lblid = "#S1L"; //create a session label for the session
         var cbxid = "#S1"; //create a checkbox ID
         var fid = "#f1"; //create a form ID
         var idth = "#1th"; //create a cellheader ID id="1th hide the table header"
         var sSid = "#sS1"; //create a cell  ID id="sS1 hide the table cells"
-        var sessHide = "#sessHide"; //not used
+                           //   var sessHide = "#sessHide"; //not used
+
+
+
 
         //Cant move to js because of the Razor ViewData
         List<bool> IsSessionVis = new List<bool>();
-        IsSessionVis = ViewData["SessionVisible"] as List
-            <bool>;
+        IsSessionVis = ViewData["SessionVisible"] as List<bool>;
+
 
         for (int i = 1; i < 16; i++)
         {
@@ -126,93 +130,220 @@
             if (IsSessionVis[i] == false) //the bool shows if the session is running or not
             {
                 <script>
-                    $(document).ready(function() {
+
+                                $(document).ready(function() {
                         //Hide the checkbox intially id="S1L"
                         $('@cbxid').css('display', 'none');
                         $("label[id= '@lblid']").css('display', 'none');
                         $('@fid').css('display', 'none');
                         $("th[id= '@idth']").css('display', 'none');
                         $("td[id= '@sSid']").css('display', 'none');
-                    });
+                            });
                 </script>
             }
 
             else //false
             {
                 <script>
-                    $(document).ready(function() {
-                        //Show the checkbox intially id="S1L"
-                        $('@cbxid').css('display', 'block');
-                        $("label[id= '@lblid']").css('display', 'block');
-                        $('@fid').css('display', 'block');
-                    });
+                $(document).ready(function() {
+                    //Show the checkbox intially id="S1L"
+                    $('@cbxid').css('display', 'block');
+                    $("label[id= '@lblid']").css('display', 'block');
+                    $('@fid').css('display', 'block');
+                });
                 </script>
 
             }
 
         }
-
+        //COLORS CELLS BASED ON NUMBEER OF SESSIONS
         <script>
-            $(document).ready(function () {
+    $(document).ready(function() {
 
-                var maxseats = @ViewData["maxseats"]; //max bookings for a session - disables checkbox above that number
-                var threeqseats = @ViewData["nearlyFullSeats"]; //$(".nearlyfull").val(); //some middle range number set at 3 quarters but wherever you like
-                var oneqseats = @ViewData["plentySeats"]; // $(".empty").val(); //empty or lower level number not use?
-                //alert(maxseats);
-                //alert(threeqseats);
-                //alert(oneqseats);
+            var maxseats = @ViewData["maxseats"]; //max bookings for a session - disables checkbox above that number
+            var threeqseats = @ViewData["nearlyFullSeats"]; //$(".nearlyfull").val(); //some middle range number set at 3 quarters but wherever you like
+            var oneqseats = @ViewData["plentySeats"]; // $(".empty").val(); //empty or lower level number not use?
+        //alert(maxseats);
+        //alert(threeqseats);
+        //alert(oneqseats);
 
-                $('td.sess').each(function () {
-                    var students = parseInt($(this).html());
-                    var statID = $(this).attr("id"); //get the ID   <td id="sS1"
-                    var sessID = statID.substring(1); //strip out the extra s to ge the session ID
-                    //  alert(statID); // just a test
-                    if (students < threeqseats) {
-                        $(this).css('background', 'rgb(170, 218, 170)');
+        $('td.sess').each(function() {
+                var students = parseInt($(this).html());
+                var statID = $(this).attr("id"); //get the ID   <td id="sS1"
+                var sessID = statID.substring(1); //strip out the extra s to ge the session ID
+                                                  //  alert(statID); // just a test
+                if (students < threeqseats)
+                {
+                $(this).css('background', 'rgb(170, 218, 170)');
 
-                    } else if (students >= maxseats) {
-                        $(this).css('background', 'rgb(239, 135, 135)');
-                        //document.getElementById(sessID).enabled = false;
-                        //document.getElementById(s1L).innerHTML = "Test";
+                }
+                else if (students >= maxseats)
+                {
+                $(this).css('background', 'rgb(239, 135, 135)');
+                    //document.getElementById(sessID).enabled = false;
+                    //document.getElementById(s1L).innerHTML = "Test";
 
-                    } else if (students <= maxseats && students >= threeqseats) {
-                        $(this).css('background', 'rgb(45, 59, 233)');
+                }
+                else if (students <= maxseats && students >= threeqseats)
+                {
+                    $(this).css('background', 'rgb(160, 163, 205)');
+                }
+
+            });
+      //  });
+
+
+            //RADIO BUTTON SELECTION
+            var DateSelected;
+
+            //The change event on the radio button for the date
+       //     $(document).ready(function () {
+                $('input[type="radio"]').on("change",
+                    function (e) {
+                        e.preventDefault(); //catch any errors
+                        //get the value of the checked radio button - we want the date
+                        DateSelected = $('input[name=SeatDate]:checked').val();
+
+                        ////---------------------
+
+                        //SETTING THE LABEL COLOR AND ENABLED
+                        $('#tablestats tbody tr').each(function () {
+                            //get the first cell at 0
+                            var id = $(this).find("td").eq(0).html();
+                         //   alert(id + " " + DateSelected);
+                            if (id === DateSelected) {
+                                // alert(DateSelected + " Hit it! " + id);
+
+                                //use map to get an array of cells hold all the data in the td cells
+                                var tabledata = $(this).children("td").map(function () {
+                                    return $(this).text();
+                                }
+                                ).get();
+                                var data = DateSelected + " ";
+                                var lblid = "#S1L"; //create a session label for the session
+                                var cbxid = "#S1"; //create a checkbox ID
+
+                                //build for 16 sessions
+                                for (var i = 0; i < 16; i++) {
+                                    data += tabledata[i] + " "; //get the table data at the index
+                                    lblid = "#S" + i + "L"; //build the label
+                                    cbxid = "#S" + i;  //build the checkbox
+
+                                    //give colors to the css based on tabledata number
+                                    if (tabledata[i] < threeqseats) {
+                                        $(lblid).css("background-color", 'rgb(170, 218, 170)');
+                                        $(cbxid).attr('disabled', false);
+                                    }
+                                    else if (tabledata[i] > maxseats) {
+                                        $(lblid).css("background-color", 'rgb(239, 135, 135)');
+                                        $(cbxid).attr('disabled', true); //disable the checkboxes if over the limit
+                                    }
+                                    else if (tabledata[i] <= maxseats && tabledata[i] >= threeqseats) {
+                                        $(lblid).css("background-color", 'rgb(160, 163, 205)');
+                                        $(cbxid).attr('disabled', false);
+                                    }
+                                }
+                                //  alert(data);
+                                //https://forums.asp.net/t/2061858.aspx?Change+label+back+color+in+JQuery
+                                //$("#S1L").css("background-color", "Red");
+                                // $("#S1L").prop("enabled", false);
+                            }
+                        });
+
+                    });
+         //   });
+
+
+            //click event for table
+         //   $(document).ready(fun ction () {
+                $("#tablestats tbody tr").click(function () {
+                    //use map to get an array of cells
+                    var tabledata = $(this).children("td").map(function () {
+                        return $(this).text();
                     }
+                    ).get();
+                    var data = DateSelected + " ";
+
+                    for (var i = 0; i < 16; i++) {
+                        data += tabledata[i] + " ";
+                    }
+                    alert(data);
+
 
                 });
-            });
+
+    });
+
+
         </script>
 
 
+
+        @*<script src="~/js/Create.js"></script>*@
+
+
+        // List<DateTime> FutureBookings = new List<DateTime>();
+        var FutureBookings = ViewData["FutureSeatBookings"] as List<DateTime>;
+
+
+        //Cant move to js because of the Razor ViewData
+        //use this to deactivate booking dates that are already made
+
         @*<script>
-                $(document).ready(function(){
-                    if($( window ).width() < 480){
-                        $('shorttext').css('display', 'inline-block');
-                        $('fulltext').css('display', 'none');
-                    }else{
-                        $('fulltext').css('display', 'inline-block');
-                        $('shorttext').css('display', 'none');
-                    }
-                });
+                    //grey out date radiobuttons when there is a booking
+                    $(document).ready(function () {
+                        $('input[type="radio"]').each
+                            (
+                            function () {
+                                //   e.preventDefault(); //catch any errors
+                                //get the value of each date
+                                var Date = ($(this).val());
+                                //loop through the future bookings (sigh, JQ is such crap)
+                                alert(Date);
 
-                $( window ).resize(function() {
-                    if($( window ).width() < 480){
-                        $('shorttext').css('display', 'inline-block');
-                        $('fulltext').css('display', 'none');
-                    }else{
-                        $('fulltext').css('display', 'inline-block');
-                        $('shorttext').css('display', 'none');
-                    }
-                });
+                                Futurebookings.each(function (studentDate) {
+                                    //if there is a match
+                                    if (Date === studentDate) {
+                                        alert(Date - studentDate);
+                                        $(this).attr('disabled', true);
+                                    }
+                                })
+                            })
+                    });
+
+
             </script>*@
-
-
-
-        <script src="~/js/Create.js"></script>
     }
 }
 
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
 }
-}
+
+
+
+
+@*<script>
+        $(document).ready(function(){
+            if($( window ).width() < 480){
+                $('shorttext').css('display', 'inline-block');
+                $('fulltext').css('display', 'none');
+            }else{
+                $('fulltext').css('display', 'inline-block');
+                $('shorttext').css('display', 'none');
+            }
+        });
+
+        $( window ).resize(function() {
+            if($( window ).width() < 480){
+                $('shorttext').css('display', 'inline-block');
+                $('fulltext').css('display', 'none');
+            }else{
+                $('fulltext').css('display', 'inline-block');
+                $('shorttext').css('display', 'none');
+            }
+        });
+    </script>*@
+
+
+

@@ -37,7 +37,7 @@
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
     <nav id="menu" class="navbar navbar-default navbar-fixed-top">
-        <a class="navbar-brand" href="http://bat.stuffucanuse.com/"><img src="~/image/logo.svg" height="40" alt="Atena" data-retina="true"></a>
+        <a class="navbar-brand" asp-controller="SeatBookings" asp-action="Create"><img src="~/image/logo.svg" height="40" alt="Create a Booking" data-retina="true"></a>
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -53,7 +53,7 @@
 
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <ul class="nav navbar-nav navbar-right">
-                    @if (User.Identity.IsAuthenticated) // (User.IsInRole("Admin"))
+                    @if (User.IsInRole("Admin")) // (User.IsInRole("Admin"))
                     {
                         <li class=" dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
@@ -82,7 +82,7 @@
 
                                 <li> <a class="dropdown-item" asp-controller="SeatBookings" asp-action="Create">Create A Booking</a> </li>
 
-                                <li> <a class="dropdown-item" asp-controller="SeatBookings" asp-action="Index">Check Your Bookings</a></li>
+                                <li> <a class="dropdown-item" asp-controller="SeatBookings" asp-action="Index">Check / Edit Your Bookings</a></li>
 
                                 <div class="dropdown-divider"></div>
 

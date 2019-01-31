@@ -10,6 +10,7 @@ namespace ASPNZBat.Business
         void CountSeats();
         DateTime GetMondayDate();
         IEnumerable<DateTime> GetNextFourWeeks();
+        //   IEnumerable<DateTime> FutureBookings();
         IEnumerable<SummaryStatsVM> StatsSummary();
         SummaryStatsVM GetSingleWeekStats(DateTime WeekSelected);
         List<bool> GetAdminData();

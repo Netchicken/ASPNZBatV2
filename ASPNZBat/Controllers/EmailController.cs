@@ -75,27 +75,27 @@ namespace ASPNZBat.Controllers
 
             return Ok();
 
-            var Sessions = _context.SeatBooking
-                .Where(s => s.SeatDate > DateTime.Today && s.StudentEmail == CurrentUserName)
-                .ToList();
+            //var Sessions = _context.SeatBooking
+            //    .Where(s => s.SeatDate > DateTime.Today && s.StudentEmail == CurrentUserName)
+            //    .ToList();
 
-            string listOfEmails = "";
-            foreach (var session in Sessions)
-            {
-                listOfEmails += session + "</br>";
-            }
+            //string listOfEmails = "";
+            //foreach (var session in Sessions)
+            //{
+            //    listOfEmails += session + "</br>";
+            //}
 
-            //no bookings
-            if (string.IsNullOrEmpty(listOfEmails))
-            {
-                listOfEmails = "There are no bookings, You need to make some";
-            }
+            ////no bookings
+            //if (string.IsNullOrEmpty(listOfEmails))
+            //{
+            //    listOfEmails = "There are no bookings, You need to make some";
+            //}
 
 
-            _logger.LogInformation("EmailOfCurrentBookings emails = {name}", listOfEmails);
+            //_logger.LogInformation("EmailOfCurrentBookings emails = {name}", listOfEmails);
 
-            _emailSender.SendEmailAsync(CurrentUserName, "Your Bookings", listOfEmails);
-            return Ok();
+            //_emailSender.SendEmailAsync(CurrentUserName, "Your Bookings", listOfEmails);
+            //return Ok();
         }
 
 

@@ -37,6 +37,8 @@ namespace ASPNZBat.Business
 
         }
 
+
+
         public DateTime GetMondayDate()
         {
             var Now = DateTime.Now.Date;
@@ -79,6 +81,20 @@ namespace ASPNZBat.Business
 
             return Week;
         }
+
+        //public IEnumerable<DateTime> FutureBookings()
+        //{
+
+
+        //    ////return the future bookings for that user so we can stop repeated bookings to same date by deactivating radiobuttons for same booking
+        //    //var FutureBooking = _context.SeatBooking
+        //    //    .Where(s => s.StudentEmail == _userManager.GetUserName(User) && s.SeatDate > DateTime.Today)
+        //    //     .Select(s => s.SeatDate)
+        //    //    //.OrderByDescending(s => s.SeatDate)
+        //    //    .ToList();
+        //    return FutureBooking;
+
+        //}
 
         /// <summary>
         /// Generate the summary stats for the Create View
