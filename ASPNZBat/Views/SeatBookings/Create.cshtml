@@ -190,19 +190,31 @@
                 }
 
             });
-      //  });
+     // });
 
 
             //RADIO BUTTON SELECTION
             var DateSelected;
 
             //The change event on the radio button for the date
-       //     $(document).ready(function () {
-                $('input[type="radio"]').on("change",
-                    function (e) {
-                        e.preventDefault(); //catch any errors
+        //    $(document).ready(function () {
+              $('input[type="radio"][name=SeatDate]').on("change",
+                   function (e) {
+                      e.preventDefault(); //catch any errors
                         //get the value of the checked radio button - we want the date
-                        DateSelected = $('input[name=SeatDate]:checked').val();
+                      // DateSelected = $('input[name=SeatDate]:checked').val();
+                          DateSelected = $(this).val();
+
+                       //before we do the match and set the new colors we have to clear out the old disabled and colors from the 16 radiobuttons.
+                       //Otherwise when there isn't a sessin booked it keeps the colors from the last session booked
+                       for (var i = 0; i < 16; i++) {
+                         //  data += tabledata[i] + " "; //get the table data at the index
+                           lblid = "#S" + i + "L"; //build the label
+                           cbxid = "#S" + i;  //build the checkbox
+                             $(lblid).css("background-color", 'transparent');
+                             $(cbxid).attr('disabled', false);
+
+                       }
 
                         ////---------------------
 
@@ -210,7 +222,7 @@
                         $('#tablestats tbody tr').each(function () {
                             //get the first cell at 0
                             var id = $(this).find("td").eq(0).html();
-                         //   alert(id + " " + DateSelected);
+                       //     alert(id + " " + DateSelected);
                             if (id === DateSelected) {
                                 // alert(DateSelected + " Hit it! " + id);
 
@@ -251,11 +263,11 @@
                         });
 
                     });
-         //   });
+         //  });
 
 
             //click event for table
-         //   $(document).ready(fun ction () {
+        //   $(document).ready(function () {
                 $("#tablestats tbody tr").click(function () {
                     //use map to get an array of cells
                     var tabledata = $(this).children("td").map(function () {
